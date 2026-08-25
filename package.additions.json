@@ -1,0 +1,38 @@
+{
+  "release": {
+    "name": "PowerChain Copilot Mobile",
+    "version": "1.0.0",
+    "license": "MIT",
+    "expoSdk": "57",
+    "reactNative": "0.86",
+    "status": "production-baseline"
+  },
+  "mobileDependencies": {
+    "@wallet-ui/react-native-web3js": "4.3.0",
+    "@solana/web3.js": "^1.98.0",
+    "expo-dev-client": "^6.0.0",
+    "expo-secure-store": "^15.0.0",
+    "react-native-quick-crypto": "^0.7.0",
+    "bs58": "^6.0.0",
+    "@web3icons/react": "^4.1.21"
+  },
+  "serverDependencies": {
+    "@fastify/cors": "^11.0.0",
+    "@prisma/adapter-pg": "^7.0.0",
+    "@prisma/client": "^7.0.0",
+    "bs58": "^6.0.0",
+    "dotenv": "^17.0.0",
+    "fastify": "^5.0.0",
+    "openai": "^6.0.0",
+    "pg": "^8.0.0",
+    "tweetnacl": "^1.0.3",
+    "zod": "^4.0.0"
+  },
+  "serverDevDependencies": {
+    "@types/node": "^24.0.0",
+    "@types/pg": "^8.0.0",
+    "prisma": "^7.0.0",
+    "tsx": "^4.0.0",
+    "typescript": "^5.9.0"
+  }
+}

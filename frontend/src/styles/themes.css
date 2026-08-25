@@ -1,0 +1,152 @@
+:root,
+[data-theme="light"] {
+  color-scheme: light;
+
+  --pc-bg: #f7f8f7;
+  --pc-surface: #ffffff;
+  --pc-surface-raised: #ffffff;
+  --pc-surface-subtle: #f1f4f2;
+  --pc-text: #101412;
+  --pc-text-muted: #66706b;
+  --pc-border: #e2e7e4;
+  --pc-border-strong: #cdd5d0;
+
+  --pc-primary: #123d2c;
+  --pc-primary-hover: #0e3325;
+  --pc-primary-fg: #ffffff;
+
+  --pc-success: #18794e;
+  --pc-warning: #9a6700;
+  --pc-danger: #c9372c;
+  --pc-info: #2563eb;
+
+  --pc-input: #ffffff;
+  --pc-overlay: rgb(16 20 18 / 42%);
+  --pc-skeleton: #e7ebe8;
+
+  --pc-radius-xs: 6px;
+  --pc-radius-sm: 8px;
+  --pc-radius-md: 10px;
+  --pc-radius-lg: 12px;
+  --pc-radius-card: 14px;
+  --pc-radius-sheet: 20px;
+
+  --pc-shadow-card: 0 2px 12px rgb(0 0 0 / 4%);
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --pc-bg: #0c100e;
+  --pc-surface: #131815;
+  --pc-surface-raised: #181f1b;
+  --pc-surface-subtle: #1d2520;
+  --pc-text: #f4f7f5;
+  --pc-text-muted: #9ea9a3;
+  --pc-border: #28322c;
+  --pc-border-strong: #354239;
+
+  --pc-primary: #2e7d5b;
+  --pc-primary-hover: #266b4e;
+  --pc-primary-fg: #ffffff;
+
+  --pc-success: #42b883;
+  --pc-warning: #d5a53b;
+  --pc-danger: #f06a61;
+  --pc-info: #6c9cff;
+
+  --pc-input: #151b17;
+  --pc-overlay: rgb(0 0 0 / 58%);
+  --pc-skeleton: #273129;
+
+  --pc-shadow-card: 0 2px 14px rgb(0 0 0 / 20%);
+}
+
+[data-theme="dark-green"] {
+  color-scheme: dark;
+
+  --pc-bg: #07150f;
+  --pc-surface: #0b2118;
+  --pc-surface-raised: #0e2b20;
+  --pc-surface-subtle: #113426;
+  --pc-text: #f4f8f5;
+  --pc-text-muted: #a6b9ae;
+  --pc-border: #1d4937;
+  --pc-border-strong: #285c47;
+
+  --pc-primary: #2e8a62;
+  --pc-primary-hover: #267653;
+  --pc-primary-fg: #ffffff;
+
+  --pc-success: #49c38a;
+  --pc-warning: #d5ab4e;
+  --pc-danger: #f06a61;
+  --pc-info: #6da2ff;
+
+  --pc-input: #0d281d;
+  --pc-overlay: rgb(2 10 7 / 66%);
+  --pc-skeleton: #173d2e;
+
+  --pc-shadow-card: 0 2px 14px rgb(0 0 0 / 24%);
+}
+
+html,
+body {
+  background: var(--pc-bg);
+  color: var(--pc-text);
+}
+
+.pc-card {
+  background: var(--pc-surface);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius-card);
+  box-shadow: var(--pc-shadow-card);
+}
+
+.pc-button {
+  min-height: 44px;
+  border-radius: var(--pc-radius-md);
+}
+
+.pc-input {
+  min-height: 44px;
+  color: var(--pc-text);
+  background: var(--pc-input);
+  border: 1px solid var(--pc-border);
+  border-radius: var(--pc-radius-md);
+}
+
+.pc-muted {
+  color: var(--pc-text-muted);
+}
+
+.pc-skeleton {
+  background: var(--pc-skeleton);
+}
+
+
+/* Optional automatic system theme for Expo Web. */
+@media (prefers-color-scheme: dark) {
+  html[data-theme="system"] {
+    color-scheme: dark;
+
+    --pc-bg: #0c100e;
+    --pc-surface: #131815;
+    --pc-surface-raised: #181f1b;
+    --pc-surface-subtle: #1d2520;
+    --pc-text: #f4f7f5;
+    --pc-text-muted: #9ea9a3;
+    --pc-border: #28322c;
+    --pc-border-strong: #354239;
+    --pc-primary: #2e7d5b;
+    --pc-primary-hover: #266b4e;
+    --pc-primary-fg: #ffffff;
+    --pc-success: #42b883;
+    --pc-warning: #d5a53b;
+    --pc-danger: #f06a61;
+    --pc-info: #6c9cff;
+    --pc-input: #151b17;
+    --pc-overlay: rgb(0 0 0 / 58%);
+    --pc-skeleton: #273129;
+  }
+}

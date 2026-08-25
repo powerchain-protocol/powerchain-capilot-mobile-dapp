@@ -1,0 +1,18 @@
+import express from "express";
+import { z } from "zod";
+import { callMcpTool, listMcpTools, type McpSecurityLimits, type McpServerDefinition } from "@powerchain/mcp-client";
+const app = express(); app.disable("x-powered-by"); app.use(express.json({ limit: "64kb" }));
+const port = Number(process.env.PORT ?? 3011);
+const secret = process.env.MCP_INTERNAL_GATEWAY_SECRET ?? "";
+if (process.env.NODE_ENV === "production" && secret.length < 32) throw new Error("MCP_INTERNAL_GATEWAY_SECRET must be configured in production.");
+const servers = z.array(z.object({ id:z.string(), url:z.string().url(), allowedTools:z.array(z.string()).min(process.env.NODE_ENV === "production" ? 1 : 0), authorizationHeader:z.string().optional() })).parse(JSON.parse(process.env.MCP_SERVERS_JSON ?? "[]")) as McpServerDefinition[];
+const allowedHosts = new Set((process.env.MCP_ALLOWED_HOSTS ?? "").split(",").map((x)=>x.trim()).filter(Boolean));
+const limits: McpSecurityLimits = { maxTools:Number(process.env.MCP_MAX_TOOLS ?? 24), maxToolCalls:4, maxArgumentBytes:Number(process.env.MCP_MAX_ARGUMENT_BYTES ?? 8192), maxToolSchemaBytes:Number(process.env.MCP_MAX_TOOL_SCHEMA_BYTES ?? 65536), maxResultChars:Number(process.env.MCP_MAX_RESULT_CHARS ?? 12000), timeoutMs:Number(process.env.MCP_TOOL_TIMEOUT_MS ?? 15000) };
+const auth: express.RequestHandler = (req,res,next) => { const token=req.headers.authorization?.replace(/^Bearer\s+/i,"")??""; if(!secret || token!==secret) return res.status(401).json({error:"unauthorized"}); next(); };
+app.get("/health/live",(_req,res)=>res.json({ok:true,service:"powerchain-mcp-express",version:"1.0.0"}));
+app.get("/health/ready",(_req,res)=>res.json({ok:true,servers:servers.length}));
+app.get("/v1/servers",auth,(_req,res)=>res.json({servers:servers.map(({id,url,allowedTools})=>({id,url,allowedTools}))}));
+app.get("/v1/tools",auth,async(_req,res,next)=>{try{const production=process.env.NODE_ENV==="production";const rows=await Promise.all(servers.map(async server=>({serverId:server.id,tools:await listMcpTools({server,limits,production,allowedHosts})})));res.json({servers:rows});}catch(e){next(e)}});
+app.post("/v1/tools/call",auth,async(req,res,next)=>{try{const body=z.object({serverId:z.string(),toolName:z.string(),arguments:z.record(z.string(),z.unknown()).default({})}).parse(req.body);const server=servers.find(s=>s.id===body.serverId);if(!server)return res.status(404).json({error:"server_not_found"});const result=await callMcpTool({server,toolName:body.toolName,arguments:body.arguments,limits,production:process.env.NODE_ENV==="production",allowedHosts});res.json(result);}catch(e){next(e)}});
+app.use((error:unknown,_req:express.Request,res:express.Response,_next:express.NextFunction)=>res.status(400).json({error:"mcp_gateway_error",message:error instanceof Error?error.message:"Unknown error"}));
+app.listen(port,"0.0.0.0",()=>console.log(`PowerChain MCP Express gateway on :${port}`));

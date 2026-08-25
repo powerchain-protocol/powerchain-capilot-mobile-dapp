@@ -1,0 +1,16 @@
+packages:
+  - frontend
+  - server
+  - packages/*
+  - backend/express
+
+sharedWorkspaceLockfile: true
+
+onlyBuiltDependencies:
+  - "@prisma/engines"
+  - bigint-buffer
+  - bufferutil
+  - esbuild
+  - prisma
+  - sharp
+  - utf-8-validate
