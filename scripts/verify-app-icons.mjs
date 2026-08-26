@@ -1,7 +1,7 @@
 import { readFile, access } from "node:fs/promises";
 import { createHash } from "node:crypto";
 
-const roots = [".", "frontend"];
+const roots = ["apps/mobile"];
 const expected = [
   ["assets/icons/app-icon-light-1024.png", 1024, 1024],
   ["assets/icons/app-icon-dark-1024.png", 1024, 1024],
@@ -24,7 +24,7 @@ function pngSize(buf) {
 let failed = false;
 for (const root of roots) {
   for (const [relative, width, height] of expected) {
-    const path = root === "." ? relative : `${root}/${relative}`;
+    const path = `${root}/${relative}`;
     try {
       const buf = await readFile(path);
       const [w, h] = pngSize(buf);
@@ -39,16 +39,11 @@ for (const root of roots) {
 }
 
 for (const path of [
-  "public/favicon.ico",
-  "public/manifest.json",
-  "public/pwa/icon-192x192.png",
-  "public/pwa/icon-512x512.png",
-  "public/pwa/maskable-icon-512x512.png",
-  "frontend/public/favicon.ico",
-  "frontend/public/manifest.json",
-  "frontend/public/pwa/icon-192x192.png",
-  "frontend/public/pwa/icon-512x512.png",
-  "frontend/public/pwa/maskable-icon-512x512.png",
+  "apps/mobile/public/favicon.ico",
+  "apps/mobile/public/manifest.json",
+  "apps/mobile/public/pwa/icon-192x192.png",
+  "apps/mobile/public/pwa/icon-512x512.png",
+  "apps/mobile/public/pwa/maskable-icon-512x512.png",
   "docs/assets/app-icons/ICON-PACK-MANIFEST.json",
   "docs/assets/app-icons/ICON-PACK-VERSION",
 ]) {
@@ -61,7 +56,7 @@ for (const path of [
   }
 }
 
-for (const configPath of ["app.config.ts", "frontend/app.config.ts"]) {
+for (const configPath of ["apps/mobile/app.config.ts"]) {
   const text = await readFile(configPath, "utf8");
   const checks = [
     ['light iOS icon', 'light: "./assets/icons/app-icon-light-1024.png"'],

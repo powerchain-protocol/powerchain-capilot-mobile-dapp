@@ -1,0 +1,5 @@
+import { Text, View } from "react-native";
+import type { OperationalJournalEvent } from "@powerchain/energy-contracts";
+import { Card } from "../ui";
+import { usePowerChainTheme } from "../../theme";
+export function EventFeed({events}:{events:OperationalJournalEvent[]}){const{theme}=usePowerChainTheme();if(!events.length)return <Card padding="compact"><Text style={{color:theme.colors.textMuted}}>No operational events for this site.</Text></Card>;return <Card padding="compact"><View style={{gap:0}}>{events.map((event,index)=><View key={event.id} style={{paddingVertical:10,borderBottomWidth:index===events.length-1?0:1,borderColor:theme.colors.border,gap:3}}><Text style={{fontSize:13,fontWeight:"700",color:theme.colors.text}}>{event.eventType}</Text><Text style={{fontSize:11,color:theme.colors.textMuted}}>{event.source} · {event.severity} · {new Date(event.observedAt).toLocaleString()}</Text><Text numberOfLines={1} style={{fontSize:11,color:theme.colors.textMuted}}>hash {event.payloadHash.slice(0,16)}… · request {event.requestId}</Text></View>)}</View></Card>}

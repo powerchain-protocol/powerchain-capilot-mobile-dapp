@@ -6,7 +6,7 @@ const root = JSON.parse(
   await readFile("package.json", "utf8"),
 );
 const frontend = JSON.parse(
-  await readFile("frontend/package.json", "utf8"),
+  await readFile("apps/mobile/package.json", "utf8"),
 );
 
 let failed = false;

@@ -1,9 +1,6 @@
 packages:
-  - frontend
-  - server
-  - packages/*
-  - backend/express
-  - backend/platform-express
+  - "apps/*"
+  - "packages/*"
 
 sharedWorkspaceLockfile: true
 

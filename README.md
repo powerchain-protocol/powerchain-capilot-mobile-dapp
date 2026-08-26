@@ -1,4 +1,9 @@
-# PowerChain Copilot Mobile
+# PowerChain Copilot Monorepo
+
+## Monorepo layout
+
+The repository now has one canonical source tree: deployable Node/Expo applications live in `apps/`, the Python MCP service lives in `services/`, and cross-application contracts/clients live in `packages/`. See `docs/MONOREPO.md`.
+
 
 **Version 1.0.0** · Expo / React Native · Solana · AI · Renewable Energy · Energy RWA
 
@@ -83,61 +88,29 @@ External service credentials remain server-side. The Expo bundle must not contai
 ## Project structure
 
 ```text
-app/
-├── (onboarding)/
-│   ├── welcome.tsx
-│   ├── account.tsx
-│   ├── profile.tsx
-│   ├── wallet.tsx
-│   ├── integrations.tsx
-│   └── complete.tsx
-└── README.md
+apps/
+├── mobile/                 Expo Router iOS / Android / PWA
+├── api/                    Fastify auth / Copilot / PWRC / Payment Kernel
+│   └── prisma/             Copilot transactional schema + migrations
+├── operations-api/         Express EMS / IoT / DePIN + Prisma / Supabase
+└── mcp-gateway/            Internal TypeScript MCP gateway
 
-src/
-├── api/
-├── components/
-│   ├── brand/
-│   ├── chat/
-│   ├── charts/
-│   ├── integrations/
-│   ├── ui/
-│   └── web3/
-├── constants/
-├── data/
-├── features/
-├── hooks/
-├── integrations/
-│   ├── ai/
-│   ├── birdeye/
-│   ├── market/
-│   ├── pyth/
-│   ├── solana/
-│   └── status/
-├── styles/
-├── theme/
-├── types/
-└── utils/
+services/
+└── mcp-python/             Internal Python / FastAPI MCP gateway
 
-server/
-├── src/
-│   ├── config/
-│   ├── integrations/
-│   ├── lib/
-│   ├── routes/
-│   └── services/
-└── README.md
+packages/
+├── pwrc-credits/           Exact bigint PWRC accounting
+├── mcp-client/             MCP policy + client boundary
+├── energy-contracts/       EMS / IoT / DePIN contracts
+├── platform-adapters/      Provider-neutral auth / wallet adapters
+└── platform-clients/       Solana / Sui / market-data clients
 
-prisma/
-├── schema.prisma
-├── migrations/
-└── README.md
-
-docs/
-├── FULLSTACK-INTEGRATIONS.md
-├── PRODUCTION-CHECKLIST.md
-├── WEB3-ICONS.md
-└── README.md
+docs/                      Architecture, operations and runbooks
+scripts/                   Verification and workspace tooling
+types/                      Root orchestration type anchors
 ```
+
+**Dependency direction:** `apps → packages`; shared packages never import deployable applications. The mobile app communicates with backend apps through authenticated HTTP/contracts rather than direct backend imports.
 
 ## Mobile UI system
 
@@ -321,9 +294,9 @@ Onboarding progress is persisted and resumable. Wallet connection remains option
 Prisma configuration:
 
 ```text
-prisma.config.ts
-prisma/schema.prisma
-prisma/migrations/
+apps/api/prisma.config.ts
+apps/api/prisma/schema.prisma
+apps/api/prisma/migrations/
 ```
 
 Core models:
@@ -340,7 +313,7 @@ PriceSnapshot
 AuditEvent
 ```
 
-Generate and migrate with the scripts used by the workspace. Server-local equivalents are documented in `server/README.md`.
+Generate and migrate with the scripts used by the workspace. Server-local equivalents are documented in `apps/api/README.md`.
 
 ## API
 
@@ -428,7 +401,7 @@ pnpm exec expo run:android
 Server:
 
 ```bash
-cd server
+cd apps/api
 pnpm install
 pnpm prisma:generate
 pnpm prisma:migrate
@@ -471,7 +444,7 @@ Version sources:
 ```text
 VERSION
 app.config.example.ts
-server/package.json
+apps/api/package.json
 CHANGELOG.md
 ```
 
@@ -481,7 +454,7 @@ CHANGELOG.md
 - `docs/FULLSTACK-INTEGRATIONS.md` — service architecture and API boundaries
 - `docs/WEB3-ICONS.md` — token, network, and wallet icon system
 - `docs/PRODUCTION-CHECKLIST.md` — release hardening checklist
-- `server/README.md` — API development and deployment
+- `apps/api/README.md` — API development and deployment
 - `prisma/README.md` — schema and migration workflow
 - `app/README.md` — Expo routing and onboarding
 - `CHANGELOG.md` — release history
@@ -599,7 +572,7 @@ pnpm doctor
 
 ## Frontend install recovery
 
-If the `frontend` package reports:
+If the `apps/mobile` package reports:
 
 ```text
 expo: command not found
@@ -614,7 +587,7 @@ File 'expo/tsconfig.base' not found
 use the dedicated repair flow:
 
 ```bash
-cd frontend
+cd apps/mobile
 npm run repair:npm
 npm run verify
 npm run web
@@ -699,7 +672,7 @@ to detect stale static theme-color imports.
 The runnable Expo application now lives entirely under:
 
 ```text
-frontend/
+apps/mobile/
 ```
 
 Repository:
@@ -715,8 +688,8 @@ git clone https://github.com/powerchain-protocol/powerchain-capilot-mobile-app.g
 cd powerchain-capilot-mobile-app
 corepack use pnpm@11.23.0
 pnpm install
-pnpm --dir frontend run verify:installed
-pnpm --dir frontend exec expo start
+pnpm --dir apps/mobile run verify:installed
+pnpm --dir apps/mobile exec expo start
 ```
 
 If the repository is already cloned, run the same commands from the repository root. Repository documentation uses clone-relative paths only.
@@ -726,14 +699,14 @@ If the repository is already cloned, run the same commands from the repository r
 Before dependencies are installed:
 
 ```text
-frontend/tsconfig.json
-→ frontend/expo/tsconfig.base.json
+apps/mobile/tsconfig.json
+→ apps/mobile/expo/tsconfig.base.json
 ```
 
 After dependencies are installed:
 
 ```text
-frontend/tsconfig.expo.json
+apps/mobile/tsconfig.expo.json
 → node_modules/expo/tsconfig.base
 ```
 
@@ -752,13 +725,13 @@ The repository root is an orchestration workspace and does not compile the front
 tsconfig.json
 └── types/workspace.d.ts
 
-frontend/tsconfig.json
+apps/mobile/tsconfig.json
 └── Expo / React Native frontend
 
-frontend/tsconfig.expo.json
+apps/mobile/tsconfig.expo.json
 └── official installed Expo TypeScript base validation
 
-server/tsconfig.json
+apps/api/tsconfig.json
 └── API / Prisma backend
 ```
 
@@ -775,7 +748,7 @@ or both:
 npm run typecheck
 ```
 
-The root configuration intentionally excludes `frontend`, `server`, and `node_modules`.
+The root configuration intentionally excludes `apps/mobile`, `apps/api`, and `node_modules`.
 
 ## Full-stack environment
 
@@ -783,10 +756,10 @@ Environment configuration is now split by trust boundary:
 
 ```text
 .env.example
-frontend/.env.example
-frontend/.env.production.example
-server/.env.example
-server/.env.production.example
+apps/mobile/.env.example
+apps/mobile/.env.production.example
+apps/api/.env.example
+apps/api/.env.production.example
 ```
 
 Initialize local files:
@@ -872,7 +845,7 @@ has been replaced with the published stable:
 @wallet-ui/react-native-web3js@4.3.0
 ```
 
-`frontend/tsconfig.json` again extends the official:
+`apps/mobile/tsconfig.json` again extends the official:
 
 ```text
 expo/tsconfig.base
@@ -950,10 +923,10 @@ state:
 
 ```text
 packages/pwrc-credits     canonical bigint/domain + DTO contract
-server/src/credits        transactional persistence and Payment Kernel binding
+apps/api/src/credits        transactional persistence and Payment Kernel binding
 prisma                    DECIMAL(38,0), reservations, ledger, receipts, funding
-frontend/src/features/credits authenticated API client + presentation state
-frontend/app/(app)/copilot-credits.tsx operator credit center
+apps/mobile/src/features/credits authenticated API client + presentation state
+apps/mobile/app/(app)/copilot-credits.tsx operator credit center
 ```
 
 The numeric boundary is fixed:
@@ -994,7 +967,7 @@ frontend → Fastify Copilot/PWRC → OpenAI structured function calls → @powe
 
 Production rules include explicit host and tool allowlists, HTTPS, DNS/private-address checks, credential-field egress blocking, bounded schemas/arguments/results, timeouts, durable invocation hashes/audit, and untrusted-result prompting.
 
-Frontend TypeScript uses a checked-in editor bootstrap at `frontend/expo/tsconfig.base.json`; `frontend/tsconfig.expo.json` validates against the official installed Expo base after `pnpm install`.
+Frontend TypeScript uses a checked-in editor bootstrap at `apps/mobile/expo/tsconfig.base.json`; `apps/mobile/tsconfig.expo.json` validates against the official installed Expo base after `pnpm install`.
 
 ## Mobile API namespace and CORS
 
@@ -1027,7 +1000,7 @@ The frontend editor config remains dependency-independent:
 "extends": "./expo/tsconfig.base.json"
 ```
 
-while `frontend/tsconfig.expo.json` validates against the installed official
+while `apps/mobile/tsconfig.expo.json` validates against the installed official
 Expo base after `pnpm install`.
 
 ## Managed AI + chain infrastructure update
@@ -1082,7 +1055,7 @@ See `docs/INTERACTION-DESIGN.md` for the route matrix, toolbar policy, trust-bou
 
 ## Shared client infrastructure
 
-Application-wide client primitives now live under `frontend/src/shared`,
+Application-wide client primitives now live under `apps/mobile/src/shared`,
 `storage`, `store`, and `utils`. The API client consumes the shared session and
 error layers, while brand/PWRC UI consumes the semantic asset registry. See
 `docs/SHARED-APPLICATION-INFRASTRUCTURE.md`.
@@ -1093,10 +1066,15 @@ error layers, while brand/PWRC UI consumes the semantic asset registry. See
 Version 1.0.0 now includes shared energy contracts, provider-neutral auth/wallet
 adapters, Solana/Sui/market-data clients, reusable operational hooks/components,
 safe-action contracts and an isolated Express + Prisma + Supabase backend under
-`backend/platform-express`.
+`apps/operations-api`.
 
 The existing deployed Copilot/Fastify API remains separate. The Expo application
 uses `EXPO_PUBLIC_ENERGY_API_URL` when supplied and falls back to the existing API
 URL otherwise.
 
 See `docs/ENERGY-PLATFORM-ARCHITECTURE.md`.
+
+
+## API v1 contract
+
+The monorepo now includes a canonical API-v1 composition boundary at `apps/api/v1/`, OpenAPI 3.1 contract `powerchain-capilot.yaml`, Postman artifacts under `api/postman/`, and Swagger UI under `swagger/`. Runtime docs are available at `/swagger`, `/api/v1/openapi.yaml`, and `/api/v1/postman/collection`.

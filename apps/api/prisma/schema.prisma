@@ -1,0 +1,513 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  runtime  = "nodejs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  USER
+  OPERATOR
+  ADMIN
+  SUPERADMIN
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum OnboardingStatus {
+  NOT_STARTED
+  IN_PROGRESS
+  COMPLETE
+}
+
+enum WalletNetwork {
+  SOLANA
+}
+
+enum WalletType {
+  EXTERNAL
+  EMBEDDED
+  READ_ONLY
+}
+
+enum AiMessageRole {
+  USER
+  ASSISTANT
+  SYSTEM
+  TOOL
+}
+
+enum MarketDataSource {
+  PYTH
+  BIRDEYE
+}
+
+model User {
+  id               String           @id @default(cuid())
+  email            String           @unique
+  passwordHash     String
+  displayName      String
+  role             UserRole         @default(USER)
+  status           AccountStatus    @default(ACTIVE)
+  onboardingStatus OnboardingStatus @default(NOT_STARTED)
+  emailVerifiedAt  DateTime?
+  createdAt        DateTime         @default(now())
+  updatedAt        DateTime         @updatedAt
+
+  profile          AccountProfile?
+  sessions         Session[]
+  wallets          Wallet[]
+  walletChallenges WalletChallenge[]
+  conversations    AiConversation[]
+  memories         AiMemory[]
+  auditEvents      AuditEvent[]
+  pwrcCreditAccount      PwrcCreditAccount?
+  pwrcCreditReservations PwrcCreditReservation[]
+  pwrcMessageReceipts    PwrcMessageReceipt[]
+  pwrcCreditLedger       PwrcCreditLedgerEntry[]
+  pwrcCreditFunding      PwrcCreditFunding[]
+  pwrcPendingResponses    PwrcPendingResponse[]
+  pwrcTopupIntents       PwrcTopupIntent[]
+
+  @@index([status])
+  @@index([onboardingStatus])
+}
+
+model AccountProfile {
+  id             String   @id @default(cuid())
+  userId         String   @unique
+  organization   String?
+  jobTitle       String?
+  country        String?
+  timezone       String?
+  interests      String[] @default([])
+  preferences    Json?
+  onboardingStep Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Session {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  expiresAt DateTime
+  revokedAt DateTime?
+  ipAddress String?
+  userAgent String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+  @@index([revokedAt])
+}
+
+model Wallet {
+  id         String        @id @default(cuid())
+  userId     String
+  network    WalletNetwork @default(SOLANA)
+  type       WalletType    @default(EXTERNAL)
+  address    String        @unique
+  label      String?
+  isPrimary  Boolean       @default(false)
+  verifiedAt DateTime?
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, network])
+}
+
+model WalletChallenge {
+  id        String   @id @default(cuid())
+  userId    String
+  address   String
+  nonce     String   @unique
+  message   String
+  expiresAt DateTime
+  usedAt    DateTime?
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, address])
+  @@index([expiresAt])
+}
+
+model AiConversation {
+  id        String   @id @default(cuid())
+  userId    String
+  slug      String?
+  title     String?
+  context   Json?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages AiMessage[]
+
+  @@unique([userId, slug])
+  @@index([userId, updatedAt])
+}
+
+model AiMessage {
+  id             String        @id @default(cuid())
+  conversationId String
+  role           AiMessageRole
+  slug           String?
+  content        String
+  contentHash    String?
+  encryptedContent String? @db.Text
+  contentEncoding String @default("plain")
+  provider       String?
+  model          String?
+  metadata       Json?
+  createdAt      DateTime      @default(now())
+
+  conversation AiConversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  pwrcReceipt        PwrcMessageReceipt?
+  pwrcPendingResponse PwrcPendingResponse?
+
+  @@unique([conversationId, slug])
+  @@index([conversationId, createdAt])
+}
+
+model AiMemory {
+  id               String   @id @default(cuid())
+  userId           String
+  slug             String
+  kind             String
+  encryptedContent String   @db.Text
+  contentHash      String
+  metadata         Json?
+  expiresAt        DateTime?
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, slug])
+  @@index([userId, kind, updatedAt])
+  @@index([expiresAt])
+}
+
+model PriceSnapshot {
+  id         String           @id @default(cuid())
+  source     MarketDataSource
+  assetKey   String
+  symbol     String?
+  mint       String?
+  price      Decimal          @db.Decimal(38, 18)
+  confidence Decimal?         @db.Decimal(38, 18)
+  exponent   Int?
+  observedAt DateTime
+  createdAt  DateTime         @default(now())
+
+  @@index([source, assetKey, observedAt])
+}
+
+model AuditEvent {
+  id            String   @id @default(cuid())
+  userId        String?
+  action        String
+  resourceType  String
+  resourceId    String?
+  requestId     String?
+  correlationId String?
+  metadata      Json?
+  createdAt     DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([resourceType, resourceId])
+  @@index([requestId])
+}
+
+
+enum PwrcCreditReservationStatus {
+  RESERVED
+  SETTLED
+  RELEASED
+  EXPIRED
+}
+
+enum PwrcCreditLedgerEntryType {
+  DEMO_GRANT
+  FUNDING
+  RESERVE
+  SETTLE
+  RELEASE
+  EXPIRE
+}
+
+enum PwrcTopupStatus {
+  PENDING
+  SETTLED
+  EXPIRED
+  CANCELLED
+}
+
+enum PwrcPendingResponseStatus {
+  PENDING
+  ACKNOWLEDGED
+  EXPIRED
+  CANCELLED
+}
+
+model PwrcCreditAccount {
+  id                    String   @id @default(cuid())
+  userId                String   @unique
+  availableBaseUnits    Decimal  @default(0) @db.Decimal(38, 0)
+  reservedBaseUnits     Decimal  @default(0) @db.Decimal(38, 0)
+  spentBaseUnits        Decimal  @default(0) @db.Decimal(38, 0)
+  fundedBaseUnits       Decimal  @default(0) @db.Decimal(38, 0)
+  version               Int      @default(1)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  user         User                    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservations PwrcCreditReservation[]
+  receipts     PwrcMessageReceipt[]
+  ledger       PwrcCreditLedgerEntry[]
+  funding      PwrcCreditFunding[]
+  topupIntents PwrcTopupIntent[]
+
+  @@index([updatedAt])
+}
+
+model PwrcCreditReservation {
+  id               String                      @id
+  userId           String
+  accountId        String
+  conversationId   String?
+  clientRequestId  String
+  requestId        String
+  idempotencyKey   String
+  requestHash      String?
+  quoteHash        String
+  quoteSnapshot    Json?
+  quoteSchemaVersion String @default("1.0.0")
+  pricingVersion   String @default("pwrc-copilot-v1")
+  responseUnits    Int @default(1)
+  referenceUsdMicros Decimal @default(20000) @db.Decimal(38, 0)
+  referencePriceMicros Decimal @default(2) @db.Decimal(38, 0)
+  network          String @default("mainnet-beta")
+  mint             String @default("PWRCRXXZxbg6FdQZfK3PMD7KP8xfxs9acvifJiG46wc")
+  tokenProgram     String @default("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
+  amountBaseUnits  Decimal                     @db.Decimal(38, 0)
+  status           PwrcCreditReservationStatus @default(RESERVED)
+  expiresAt        DateTime
+  settledAt        DateTime?
+  releasedAt       DateTime?
+  releaseReason    String?
+  createdAt        DateTime                    @default(now())
+  updatedAt        DateTime                    @updatedAt
+
+  user    User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account PwrcCreditAccount @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  receipt         PwrcMessageReceipt?
+  pendingResponse PwrcPendingResponse?
+  ledger          PwrcCreditLedgerEntry[]
+
+  @@unique([userId, idempotencyKey])
+  @@unique([userId, clientRequestId])
+  @@index([requestHash])
+  @@index([userId, status, expiresAt])
+  @@index([accountId, createdAt])
+}
+
+model PwrcPendingResponse {
+  id                String                    @id
+  userId            String
+  reservationId     String                    @unique
+  conversationId    String
+  responseTokenHash String
+  content           String
+  provider          String
+  model             String
+  upstreamResponseId String?
+  mcpInvocations    Json?
+  status            PwrcPendingResponseStatus @default(PENDING)
+  expiresAt         DateTime
+  acknowledgedAt    DateTime?
+  aiMessageId       String?                   @unique
+  createdAt         DateTime                  @default(now())
+  updatedAt         DateTime                  @updatedAt
+
+  user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  reservation PwrcCreditReservation @relation(fields: [reservationId], references: [id], onDelete: Cascade)
+  aiMessage   AiMessage?            @relation(fields: [aiMessageId], references: [id], onDelete: SetNull)
+
+  @@index([userId, status, expiresAt])
+  @@index([conversationId, createdAt])
+}
+
+model PwrcMessageReceipt {
+  id                     String   @id
+  userId                 String
+  accountId              String
+  reservationId          String   @unique
+  conversationId         String
+  aiMessageId            String?  @unique
+  requestId              String
+  quoteHash              String
+  responseUnits          Int      @default(1)
+  debitBaseUnits         Decimal  @db.Decimal(38, 0)
+  referenceUsdMicros     Decimal  @db.Decimal(38, 0)
+  referencePriceMicros   Decimal  @db.Decimal(38, 0)
+  pricingVersion         String
+  quoteSchemaVersion     String   @default("1.0.0")
+  quoteKind              String   @default("copilot.completed_response")
+  billingTrigger         String   @default("delivery_acknowledged")
+  network                String   @default("mainnet-beta")
+  mint                   String   @default("PWRCRXXZxbg6FdQZfK3PMD7KP8xfxs9acvifJiG46wc")
+  tokenProgram           String   @default("TokenzQdBNbLqP5VEhdkAS6EPFLC1PHnBqCXEpPxuEb")
+  decimals               Int      @default(9)
+  mcpInvocations         Json?
+  createdAt              DateTime @default(now())
+
+  user        User                  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account     PwrcCreditAccount     @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  reservation PwrcCreditReservation @relation(fields: [reservationId], references: [id], onDelete: Restrict)
+  aiMessage   AiMessage?            @relation(fields: [aiMessageId], references: [id], onDelete: Restrict)
+  ledger      PwrcCreditLedgerEntry[]
+
+  @@index([userId, createdAt])
+  @@index([conversationId, createdAt])
+}
+
+model PwrcCreditLedgerEntry {
+  id                       String                    @id
+  userId                   String
+  accountId                String
+  entryType                PwrcCreditLedgerEntryType
+  deltaAvailableBaseUnits  Decimal                   @default(0) @db.Decimal(38, 0)
+  deltaReservedBaseUnits   Decimal                   @default(0) @db.Decimal(38, 0)
+  deltaSpentBaseUnits      Decimal                   @default(0) @db.Decimal(38, 0)
+  deltaFundedBaseUnits     Decimal                   @default(0) @db.Decimal(38, 0)
+  reservationId            String?
+  messageReceiptId         String?
+  paymentSettlementId      String?
+  description              String
+  metadata                 Json?
+  createdAt                DateTime                  @default(now())
+
+  user           User                   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account        PwrcCreditAccount      @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  reservation    PwrcCreditReservation? @relation(fields: [reservationId], references: [id], onDelete: SetNull)
+  messageReceipt PwrcMessageReceipt?    @relation(fields: [messageReceiptId], references: [id], onDelete: SetNull)
+
+  @@index([userId, createdAt])
+  @@index([accountId, createdAt])
+  @@index([reservationId])
+  @@index([paymentSettlementId])
+}
+
+model PwrcCreditFunding {
+  id                  String   @id
+  userId              String
+  accountId           String
+  topupIntentId       String?
+  paymentSettlementId String   @unique
+  paymentReference    String?
+  transactionSignature String?  @unique
+  recipient            String   @default("")
+  pricingVersion       String   @default("pwrc-copilot-v1")
+  messageQuoteHash     String   @default("")
+  grossTransferBaseUnits Decimal? @db.Decimal(38, 0)
+  withheldTransferFeeBaseUnits Decimal? @db.Decimal(38, 0)
+  recipientNetBaseUnits Decimal? @db.Decimal(38, 0)
+  amountBaseUnits     Decimal  @db.Decimal(38, 0)
+  network             String
+  mint                String
+  createdAt           DateTime @default(now())
+
+  user        User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account     PwrcCreditAccount  @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  topupIntent         PwrcTopupIntent?         @relation(fields: [topupIntentId], references: [id], onDelete: SetNull)
+  paymentKernelEvents PwrcPaymentKernelEvent[]
+
+  @@index([userId, createdAt])
+}
+
+model PwrcTopupIntent {
+  id               String          @id
+  userId           String
+  accountId        String
+  reference        String          @unique
+  idempotencyKey   String?
+  settlementId     String?         @unique
+  amountBaseUnits  Decimal         @db.Decimal(38, 0)
+  responseUnits    Int
+  pricingVersion   String @default("pwrc-copilot-v1")
+  messageQuoteHash String @default("")
+  network          String
+  mint             String
+  recipient        String
+  status           PwrcTopupStatus @default(PENDING)
+  expiresAt        DateTime
+  settledAt        DateTime?
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+
+  user    User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account PwrcCreditAccount  @relation(fields: [accountId], references: [id], onDelete: Restrict)
+  funding PwrcCreditFunding[]
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId, status, createdAt])
+  @@index([expiresAt])
+}
+
+model PwrcPaymentKernelEvent {
+  id                 String   @id
+  settlementId       String
+  eventType          String
+  payloadHash        String
+  signatureTimestamp DateTime
+  fundingId          String
+  receivedAt         DateTime @default(now())
+
+  funding PwrcCreditFunding @relation(fields: [fundingId], references: [id], onDelete: Restrict)
+
+  @@index([settlementId, receivedAt])
+  @@index([fundingId])
+}
+
+
+model McpToolInvocation {
+  id               String   @id
+  userId           String
+  conversationId   String?
+  reservationId    String?
+  requestId        String
+  serverId         String
+  toolName         String
+  functionName     String
+  readOnly         Boolean  @default(true)
+  argumentsHash    String
+  argumentsPreview String?
+  resultHash       String?
+  status           String
+  errorCode        String?
+  latencyMs        Int
+  createdAt        DateTime @default(now())
+
+  @@index([userId, createdAt])
+  @@index([conversationId, createdAt])
+  @@index([reservationId, createdAt])
+  @@index([requestId])
+}

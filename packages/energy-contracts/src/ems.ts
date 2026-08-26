@@ -1,18 +1,27 @@
 import type { IsoTimestamp, OperationalMode, SourceMeta } from "./common.ts";
 
+export type OperationalUnit =
+  | "W" | "kW" | "MW"
+  | "Wh" | "kWh" | "MWh" | "GWh"
+  | "%" | "Hz" | "V" | "kV" | "A" | "C";
+
 export interface EnergyValue {
-  value: string;
-  unit: "W" | "kW" | "MW" | "Wh" | "kWh" | "MWh" | "GWh" | "%";
+  value: string | null;
+  unit: OperationalUnit;
+  availability: "available" | "unavailable";
+  source?: SourceMeta;
 }
 
 export interface EmsOverview {
+  siteId: string;
   mode: OperationalMode;
   demand: EnergyValue;
   generation: EnergyValue;
   storageSoc: EnergyValue;
   gridExchange: EnergyValue;
+  gridFrequency?: EnergyValue;
   gridDirection: "import" | "export" | "balanced" | "unknown";
-  forecastDeviationPct: string;
+  forecastDeviationPct: string | null;
   flexibilityAvailable: EnergyValue;
   updatedAt: IsoTimestamp;
   source: SourceMeta;
@@ -34,6 +43,7 @@ export interface EnergyFlowEdge {
 }
 
 export interface EnergyFlowSnapshot {
+  siteId: string;
   mode: OperationalMode;
   nodes: EnergyFlowNode[];
   edges: EnergyFlowEdge[];
@@ -43,6 +53,7 @@ export interface EnergyFlowSnapshot {
 }
 
 export interface DispatchPreviewRequest {
+  siteId: string;
   assetId: string;
   targetPowerMw: string;
   durationMinutes: number;
@@ -53,6 +64,7 @@ export interface DispatchPreviewRequest {
 
 export interface DispatchPreview {
   previewId: string;
+  siteId: string;
   assetId: string;
   targetPowerMw: string;
   durationMinutes: number;

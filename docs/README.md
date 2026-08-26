@@ -15,7 +15,7 @@ The canonical product version is `1.0.0` and is recorded in:
 ```text
 /VERSION
 /app.config.example.ts
-/server/package.json
+/apps/api/package.json
 /CHANGELOG.md
 ```
 

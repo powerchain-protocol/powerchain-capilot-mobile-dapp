@@ -10,20 +10,20 @@ const required = [
   "packages/pwrc-credits/src/quote.ts",
   "packages/pwrc-credits/src/settlement.ts",
   "packages/pwrc-credits/test/accounting.test.ts",
-  "server/src/credits/constants.ts",
-  "server/src/credits/pricing.ts",
-  "server/src/credits/service.ts",
-  "server/src/credits/payment-kernel.ts",
-  "server/src/credits/pending-response.ts",
-  "server/src/credits/reaper.ts",
-  "server/src/routes/credits.ts",
-  "server/src/routes/payment-kernel.ts",
-  "frontend/src/features/credits/PwrcCreditsProvider.tsx",
-  "frontend/app/(app)/copilot-credits.tsx",
-  "prisma/migrations/20260825102000_pwrc_copilot_credits/migration.sql",
-  "prisma/migrations/20260825121000_pwrc_credit_hardening/migration.sql",
-  "prisma/migrations/20260825130000_pwrc_credit_module/migration.sql",
-  "prisma/migrations/20260825133000_pwrc_quote_snapshot_reconciliation/migration.sql",
+  "apps/api/src/credits/constants.ts",
+  "apps/api/src/credits/pricing.ts",
+  "apps/api/src/credits/service.ts",
+  "apps/api/src/credits/payment-kernel.ts",
+  "apps/api/src/credits/pending-response.ts",
+  "apps/api/src/credits/reaper.ts",
+  "apps/api/src/routes/credits.ts",
+  "apps/api/src/routes/payment-kernel.ts",
+  "apps/mobile/src/features/credits/PwrcCreditsProvider.tsx",
+  "apps/mobile/app/(app)/copilot-credits.tsx",
+  "apps/api/prisma/migrations/20260825102000_pwrc_copilot_credits/migration.sql",
+  "apps/api/prisma/migrations/20260825121000_pwrc_credit_hardening/migration.sql",
+  "apps/api/prisma/migrations/20260825130000_pwrc_credit_module/migration.sql",
+  "apps/api/prisma/migrations/20260825133000_pwrc_quote_snapshot_reconciliation/migration.sql",
 ];
 
 let failed = false;
@@ -43,40 +43,40 @@ const coreLedger = await readFile("packages/pwrc-credits/src/ledger.ts", "utf8")
 const coreQuote = await readFile("packages/pwrc-credits/src/quote.ts", "utf8");
 const coreContracts = await readFile("packages/pwrc-credits/src/contracts.ts", "utf8");
 const coreSettlement = await readFile("packages/pwrc-credits/src/settlement.ts", "utf8");
-const ai = await readFile("server/src/routes/ai.ts", "utf8");
-const pending = await readFile("server/src/credits/pending-response.ts", "utf8");
-const service = await readFile("server/src/credits/service.ts", "utf8");
-const payment = await readFile("server/src/credits/payment-kernel.ts", "utf8");
-const schema = await readFile("prisma/schema.prisma", "utf8");
+const ai = await readFile("apps/api/src/routes/ai.ts", "utf8");
+const pending = await readFile("apps/api/src/credits/pending-response.ts", "utf8");
+const service = await readFile("apps/api/src/credits/service.ts", "utf8");
+const payment = await readFile("apps/api/src/credits/payment-kernel.ts", "utf8");
+const schema = await readFile("apps/api/prisma/schema.prisma", "utf8");
 const initialMigration = await readFile(
-  "prisma/migrations/20260825102000_pwrc_copilot_credits/migration.sql",
+  "apps/api/prisma/migrations/20260825102000_pwrc_copilot_credits/migration.sql",
   "utf8",
 );
 const hardeningMigration = await readFile(
-  "prisma/migrations/20260825121000_pwrc_credit_hardening/migration.sql",
+  "apps/api/prisma/migrations/20260825121000_pwrc_credit_hardening/migration.sql",
   "utf8",
 );
 const moduleMigration = await readFile(
-  "prisma/migrations/20260825130000_pwrc_credit_module/migration.sql",
+  "apps/api/prisma/migrations/20260825130000_pwrc_credit_module/migration.sql",
   "utf8",
 );
 const quoteSnapshotMigration = await readFile(
-  "prisma/migrations/20260825133000_pwrc_quote_snapshot_reconciliation/migration.sql",
+  "apps/api/prisma/migrations/20260825133000_pwrc_quote_snapshot_reconciliation/migration.sql",
   "utf8",
 );
-const app = await readFile("server/src/app.ts", "utf8");
-const paymentRoute = await readFile("server/src/routes/payment-kernel.ts", "utf8");
-const creditRoutes = await readFile("server/src/routes/credits.ts", "utf8");
-const creditScreen = await readFile("frontend/app/(app)/copilot-credits.tsx", "utf8");
-const aiClient = await readFile("frontend/src/integrations/ai/client.ts", "utf8");
-const fingerprint = await readFile("server/src/credits/fingerprint.ts", "utf8");
-const reaper = await readFile("server/src/credits/reaper.ts", "utf8");
-const serverEnv = await readFile("server/src/config/env.ts", "utf8");
-const quickPrompts = await readFile("frontend/src/data/quick-prompts.ts", "utf8");
-const providers = await readFile("frontend/src/providers/AppProviders.tsx", "utf8");
+const app = `${await readFile("apps/api/src/app.ts", "utf8")}\n${await readFile("apps/api/v1/register.ts", "utf8")}`;
+const paymentRoute = await readFile("apps/api/src/routes/payment-kernel.ts", "utf8");
+const creditRoutes = await readFile("apps/api/src/routes/credits.ts", "utf8");
+const creditScreen = await readFile("apps/mobile/app/(app)/copilot-credits.tsx", "utf8");
+const aiClient = await readFile("apps/mobile/src/integrations/ai/client.ts", "utf8");
+const fingerprint = await readFile("apps/api/src/credits/fingerprint.ts", "utf8");
+const reaper = await readFile("apps/api/src/credits/reaper.ts", "utf8");
+const serverEnv = await readFile("apps/api/src/config/env.ts", "utf8");
+const quickPrompts = await readFile("apps/mobile/src/data/quick-prompts.ts", "utf8");
+const providers = await readFile("apps/mobile/src/providers/AppProviders.tsx", "utf8");
 const packageJson = JSON.parse(await readFile("package.json", "utf8"));
-const frontendPackage = JSON.parse(await readFile("frontend/package.json", "utf8"));
-const serverPackage = JSON.parse(await readFile("server/package.json", "utf8"));
+const frontendPackage = JSON.parse(await readFile("apps/mobile/package.json", "utf8"));
+const serverPackage = JSON.parse(await readFile("apps/api/package.json", "utf8"));
 const creditsPackage = JSON.parse(await readFile("packages/pwrc-credits/package.json", "utf8"));
 
 const reserveIndex = ai.indexOf("reserveMessageCredits({");
@@ -95,7 +95,7 @@ const checks = [
   ["pending response token hashed", pending.includes('createHash("sha256")') && schema.includes("responseTokenHash")],
   ["frontend waits for ACK", aiClient.includes('/ai/chat/ack') && aiClient.includes('creditSettlement === "settled"')],
   ["release on generation error", ai.includes("releaseReservation")],
-  ["HTTP 402 architecture", (await readFile("server/src/credits/errors.ts", "utf8")).includes("statusCode = 402")],
+  ["HTTP 402 architecture", (await readFile("apps/api/src/credits/errors.ts", "utf8")).includes("statusCode = 402")],
   ["message receipt model", schema.includes("model PwrcMessageReceipt")],
   ["pending response model", schema.includes("model PwrcPendingResponse")],
   ["append-only ledger model", schema.includes("model PwrcCreditLedgerEntry")],

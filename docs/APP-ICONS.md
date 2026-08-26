@@ -21,7 +21,7 @@ Product version remains **1.0.0**. The icon source is the verified PowerChain ic
 
 ## Web / PWA
 
-The verified favicon, Apple touch icon, Windows tile assets and PWA icons are copied under `public/` and `frontend/public/`. `manifest.json` and `site.webmanifest` use the same verified icon artwork with PowerChain Copilot application metadata.
+The verified favicon, Apple touch icon, Windows tile assets and PWA icons are copied under `public/` and `apps/mobile/public/`. `manifest.json` and `site.webmanifest` use the same verified icon artwork with PowerChain Copilot application metadata.
 
 ## Native reference resources
 

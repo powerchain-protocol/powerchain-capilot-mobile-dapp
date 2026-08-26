@@ -7,16 +7,16 @@ function check(label, ok) {
   if (!ok) failed = true;
 }
 
-const env = await readFile("server/.env.example", "utf8");
-const prod = await readFile("server/.env.production.example", "utf8");
-const front = await readFile("frontend/.env.example", "utf8");
-const providers = await readFile("server/src/integrations/ai-providers.ts", "utf8");
-const config = await readFile("server/src/config/env.ts", "utf8");
-const solana = await readFile("server/src/config/solana.ts", "utf8");
-const platform = await readFile("server/src/config/platform.ts", "utf8");
-const app = await readFile("server/src/app.ts", "utf8");
-const namespace = await readFile("server/src/http/api-namespace.ts", "utf8");
-const mobileEnv = await readFile("frontend/src/config/env.ts", "utf8");
+const env = await readFile("apps/api/.env.example", "utf8");
+const prod = await readFile("apps/api/.env.production.example", "utf8");
+const front = await readFile("apps/mobile/.env.example", "utf8");
+const providers = await readFile("apps/api/src/integrations/ai-providers.ts", "utf8");
+const config = await readFile("apps/api/src/config/env.ts", "utf8");
+const solana = await readFile("apps/api/src/config/solana.ts", "utf8");
+const platform = await readFile("apps/api/src/config/platform.ts", "utf8");
+const app = `${await readFile("apps/api/src/app.ts", "utf8")}\n${await readFile("apps/api/v1/register.ts", "utf8")}`;
+const namespace = await readFile("apps/api/src/http/api-namespace.ts", "utf8");
+const mobileEnv = await readFile("apps/mobile/src/config/env.ts", "utf8");
 
 for (const provider of ["OPENAI", "ANTHROPIC", "GEMINI", "DEEPSEEK", "OLLAMA", "GRIDLLM", "EMERGENT_LLM"]) {
   check(`${provider} environment`, env.includes(`${provider}_`) || env.includes(`${provider}=`));

@@ -70,7 +70,7 @@ GET    /api/v1/health/ready
 The schema uses the Prisma 7 `prisma-client` generator and generates the server client into:
 
 ```text
-server/src/generated/prisma
+apps/api/src/generated/prisma
 ```
 
 PostgreSQL connectivity uses:
@@ -80,7 +80,7 @@ PostgreSQL connectivity uses:
 pg
 ```
 
-The database URL is configured through `prisma.config.ts`, not in the Prisma datasource block.
+The database URL is configured through `apps/api/prisma.config.ts`, not in the Prisma datasource block.
 
 Commands:
 

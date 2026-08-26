@@ -5,7 +5,7 @@
 The Energy application remains stable while its operational backend contract
 becomes independently buildable. EMS, IoT and DePIN are exposed through pure
 contracts and provider-neutral clients; the new Express/Prisma/Supabase backend
-is isolated under `backend/platform-express`.
+is isolated under `apps/operations-api`.
 
 ```text
 Expo / Dashboard
@@ -18,7 +18,7 @@ Expo / Dashboard
 EXPO_PUBLIC_ENERGY_API_URL
       │
       ▼
-backend/platform-express
+apps/operations-api
       │
       ├── /api/v1/health
       ├── /api/v1/config
@@ -167,7 +167,7 @@ physical dispatch or device command can be unsafe.
 ## Isolated backend workspace
 
 ```text
-backend/platform-express/
+apps/operations-api/
 ├── prisma/
 │   └── schema.prisma
 ├── src/

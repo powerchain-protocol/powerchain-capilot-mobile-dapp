@@ -7,8 +7,8 @@ import {
 
 const targets = [
   [".env.example", ".env"],
-  ["frontend/.env.example", "frontend/.env"],
-  ["server/.env.example", "server/.env"],
+  ["apps/mobile/.env.example", "apps/mobile/.env"],
+  ["apps/api/.env.example", "apps/api/.env"],
 ];
 
 async function exists(path) {
@@ -34,7 +34,7 @@ console.log(`
 Environment templates initialized.
 
 Next:
-  1. Fill provider secrets only in server/.env
+  1. Fill provider secrets only in apps/api/.env
   2. Start PostgreSQL: npm run db:up
   3. Apply Prisma:     npm run prisma:generate && npm run prisma:migrate
   4. Start stack:      npm run dev:stack

@@ -1,0 +1,1226 @@
+openapi: 3.1.0
+info:
+  title: PowerChain Copilot API
+  version: 1.0.0
+  description: Canonical API contract for PowerChain Copilot Mobile, PWRC credits, AI/MCP orchestration, wallet
+    linking, market data, Solana/Sui health, and sanitized platform configuration.
+servers:
+- url: http://127.0.0.1:8000
+  description: Local development
+- url: https://api.powerchain.ventures
+  description: PowerChain API
+tags:
+- name: System
+- name: Documentation
+- name: Auth
+- name: Account
+- name: Onboarding
+- name: Wallets
+- name: Copilot
+- name: PWRC Credits
+- name: MCP
+- name: Market Data
+- name: Solana
+- name: Sui
+- name: Internal
+- name: Operations
+- name: Evidence
+- name: AI Runtime
+paths:
+  /api/v1/health:
+    get:
+      summary: API health
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/health/live:
+    get:
+      summary: Liveness probe
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/health/ready:
+    get:
+      summary: Readiness probe
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/config:
+    get:
+      summary: Sanitized runtime configuration
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/cors:
+    get:
+      summary: Sanitized CORS configuration
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/system/platform:
+    get:
+      summary: Platform runtime metadata
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/system/solana:
+    get:
+      summary: Solana runtime metadata
+      tags:
+      - System
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/integrations/status:
+    get:
+      summary: Integration status
+      tags:
+      - System
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/mcp/tools:
+    get:
+      summary: List permitted MCP tools
+      tags:
+      - MCP
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/auth/register:
+    post:
+      summary: Register account
+      tags:
+      - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        '201':
+          description: Registered
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/auth/login:
+    post:
+      summary: Login
+      tags:
+      - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthCredentials'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/auth/logout:
+    post:
+      summary: Logout
+      tags:
+      - Auth
+      security:
+      - BearerAuth: []
+      responses:
+        '204':
+          description: Logged out
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/account/me:
+    get:
+      summary: Current account
+      tags:
+      - Account
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/account/profile:
+    patch:
+      summary: Update account profile
+      tags:
+      - Account
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: true
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/account/sessions:
+    get:
+      summary: List active sessions
+      tags:
+      - Account
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/account/sessions/{id}:
+    delete:
+      summary: Revoke session
+      tags:
+      - Account
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Revoked
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/account/sessions/others:
+    delete:
+      summary: Revoke other sessions
+      tags:
+      - Account
+      security:
+      - BearerAuth: []
+      responses:
+        '204':
+          description: Revoked
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/onboarding:
+    patch:
+      summary: Update onboarding
+      tags:
+      - Onboarding
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OnboardingProgress'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/onboarding/complete:
+    post:
+      summary: Complete onboarding
+      tags:
+      - Onboarding
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/wallets/challenge:
+    post:
+      summary: Create wallet-signature challenge
+      tags:
+      - Wallets
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletChallengeRequest'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/wallets/verify:
+    post:
+      summary: Verify wallet challenge
+      tags:
+      - Wallets
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WalletVerifyRequest'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/ai/chat:
+    post:
+      summary: Generate Copilot response
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopilotChatRequest'
+      responses:
+        '200':
+          description: Generated or replayed response
+        '402':
+          $ref: '#/components/responses/PaymentRequired'
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/ai/chat/ack:
+    post:
+      summary: Acknowledge delivered response and settle PWRC
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopilotAckRequest'
+      responses:
+        '200':
+          description: Settled message receipt
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/ai/chat/cancel:
+    post:
+      summary: Cancel generation or pending delivery
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopilotRequestId'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/ai/chat/recover:
+    post:
+      summary: Recover a Copilot request by idempotency key
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CopilotRequestId'
+      responses:
+        '200':
+          description: Recovered request
+        '404':
+          description: Not found
+        '409':
+          $ref: '#/components/responses/Conflict'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/ai/conversations:
+    get:
+      summary: List conversations
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: cursor
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/ai/conversations/{id}:
+    get:
+      summary: Get conversation
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    delete:
+      summary: Delete conversation
+      tags:
+      - Copilot
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '204':
+          description: Deleted
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          description: Not found
+  /api/v1/credits/pricing:
+    get:
+      summary: PWRC Copilot pricing
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/quote:
+    get:
+      summary: Deterministic PWRC message quote
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/account:
+    get:
+      summary: PWRC credit account
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/reconciliation:
+    get:
+      summary: Credit-account reconciliation
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/ledger:
+    get:
+      summary: Credit ledger
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/funding:
+    get:
+      summary: Funding history
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/topups:
+    get:
+      summary: Top-up intents
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: limit
+        in: query
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+    post:
+      summary: Create Solana Pay PWRC top-up intent
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TopupRequest'
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/messages/{id}:
+    get:
+      summary: Get PWRC message receipt
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/credits/demo-grant:
+    post:
+      summary: Grant development/demo credits
+      tags:
+      - PWRC Credits
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Grant result
+        '403':
+          description: Disabled outside allowed environment
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/market/price:
+    get:
+      summary: Normalized market price
+      tags:
+      - Market Data
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: symbol
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/market/pyth:
+    get:
+      summary: Pyth market data
+      tags:
+      - Market Data
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: feedId
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/market/birdeye/price:
+    get:
+      summary: Birdeye token price
+      tags:
+      - Market Data
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: address
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/solana/balance:
+    get:
+      summary: Solana wallet balance
+      tags:
+      - Solana
+      security:
+      - BearerAuth: []
+      parameters:
+      - name: address
+        in: query
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/solana/health:
+    get:
+      summary: Solana RPC health
+      tags:
+      - Solana
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/sui/health:
+    get:
+      summary: Sui RPC health
+      tags:
+      - Sui
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/internal/payment-kernel/events:
+    post:
+      summary: Apply verified Payment Kernel settlement event
+      tags:
+      - Internal
+      description: Server-to-server only. Requires event ID, timestamp, and HMAC signature headers. Never expose
+        the HMAC secret to clients.
+      security:
+      - PaymentKernelHmac: []
+      parameters:
+      - name: X-Payment-Kernel-Event-Id
+        in: header
+        required: true
+        schema:
+          type: string
+      - name: X-Payment-Kernel-Timestamp
+        in: header
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PaymentSettled'
+      responses:
+        '200':
+          description: Applied or idempotent replay
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '409':
+          $ref: '#/components/responses/Conflict'
+  /api/v1/openapi.yaml:
+    get:
+      summary: OpenAPI 3.1 contract
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: YAML contract
+          content:
+            application/yaml:
+              schema:
+                type: string
+  /api/v1/postman/collection:
+    get:
+      summary: Postman collection
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: Success
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/v1/capilot-mobile:
+    get:
+      summary: Mobile compatibility namespace metadata
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: Namespace metadata
+  /api/v1/copilot-mobile:
+    get:
+      summary: Corrected mobile namespace alias metadata
+      tags:
+      - Documentation
+      responses:
+        '200':
+          description: Namespace metadata
+  /api/v1/sites:
+    get:
+      summary: List authorized operational sites
+      tags: [Operations]
+      security: [{BearerAuth: []}]
+      responses:
+        '200': {description: Authorized sites}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /api/v1/twin:
+    get:
+      summary: Read per-site operational digital twin
+      tags: [Operations]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: query, name: siteId, required: true, schema: {type: string}}
+      responses:
+        '200': {description: Site digital twin with EMS state, IoT/DePIN health and alarm counts}
+        '401': {$ref: '#/components/responses/Unauthorized'}
+  /api/v1/alarms:
+    get:
+      summary: List site-scoped operational alarms
+      tags: [Operations]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: query, name: siteId, required: true, schema: {type: string}}
+      - {in: query, name: cursor, required: false, schema: {type: string}}
+      - {in: query, name: limit, required: false, schema: {type: integer, minimum: 1, maximum: 100}}
+      responses:
+        '200': {description: Cursor-paginated alarms}
+  /api/v1/events:
+    get:
+      summary: List append-only operational events
+      tags: [Operations]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: query, name: siteId, required: true, schema: {type: string}}
+      - {in: query, name: cursor, required: false, schema: {type: string}}
+      - {in: query, name: limit, required: false, schema: {type: integer, minimum: 1, maximum: 100}}
+      responses:
+        '200': {description: Cursor-paginated operational journal events}
+  /api/v1/flow/validate:
+    post:
+      summary: Deterministically validate live-flow balance against tolerance
+      tags: [Operations]
+      security: [{BearerAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [siteId, generationMw, demandMw]
+              properties:
+                siteId: {type: string}
+                generationMw: {$ref: '#/components/schemas/DecimalString'}
+                demandMw: {$ref: '#/components/schemas/DecimalString'}
+                gridImportMw: {$ref: '#/components/schemas/DecimalString'}
+                gridExportMw: {$ref: '#/components/schemas/DecimalString'}
+                storageChargeMw: {$ref: '#/components/schemas/DecimalString'}
+                storageDischargeMw: {$ref: '#/components/schemas/DecimalString'}
+                toleranceMw: {$ref: '#/components/schemas/DecimalString'}
+      responses:
+        '200': {description: Balance is within tolerance}
+        '422': {description: Balance variance exceeds tolerance}
+  /api/v1/actions/prepare:
+    post:
+      summary: Prepare a fail-closed Safe Action without physical execution
+      tags: [Operations]
+      security: [{BearerAuth: []}]
+      responses:
+        '201': {description: Prepared/rejected/read-only action preview; physicalExecution=false}
+        '409': {$ref: '#/components/responses/Conflict'}
+  /api/v1/exports/{siteId}/evidence.json:
+    get:
+      summary: Export canonical JSON evidence envelopes
+      tags: [Evidence]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: path, name: siteId, required: true, schema: {type: string}}
+      responses:
+        '200': {description: Evidence JSON export}
+  /api/v1/exports/{siteId}/snapshot.json:
+    get:
+      summary: Export deterministic site digital-twin snapshot
+      tags: [Evidence]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: path, name: siteId, required: true, schema: {type: string}}
+      responses:
+        '200': {description: Twin snapshot JSON with SHA-256 snapshot hash}
+  /api/v1/chat/{conversationId}/messages:
+    get:
+      summary: Read authenticated conversation messages from secure chat storage
+      tags: [Copilot]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: path, name: conversationId, required: true, schema: {type: string}}
+      - {in: query, name: cursor, required: false, schema: {type: string}}
+      - {in: query, name: limit, required: false, schema: {type: integer, minimum: 1, maximum: 100}}
+      responses:
+        '200': {description: Secure owner-scoped messages with id, slug and content hashes}
+  /api/v1/ai/memory:
+    get:
+      summary: List encrypted owner-scoped AI memory
+      tags: [AI Runtime]
+      security: [{BearerAuth: []}]
+      responses:
+        '200': {description: Decrypted memory for the authenticated owner}
+  /api/v1/ai/memory/{slug}:
+    put:
+      summary: Upsert encrypted AI memory by slug
+      tags: [AI Runtime]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: path, name: slug, required: true, schema: {type: string}}
+      responses:
+        '200': {description: Memory metadata; plaintext is never returned by persistence writes}
+    delete:
+      summary: Delete authenticated user's memory item
+      tags: [AI Runtime]
+      security: [{BearerAuth: []}]
+      parameters:
+      - {in: path, name: slug, required: true, schema: {type: string}}
+      responses:
+        '204': {description: Deleted}
+  /api/v1/llm/providers:
+    get:
+      summary: Sanitized managed LLM routing plan
+      tags: [AI Runtime]
+      security: [{BearerAuth: []}]
+      responses:
+        '200': {description: Provider eligibility/order without credentials}
+  /api/v1/lora:
+    get:
+      summary: Sanitized LoRA runtime descriptor
+      tags: [AI Runtime]
+      security: [{BearerAuth: []}]
+      responses:
+        '200': {description: Server-only LoRA status; training is not exposed}
+  /api/v1/mpc/agents:
+    get:
+      summary: List bounded PowerChain agent roles
+      tags: [AI Runtime]
+      security: [{BearerAuth: []}]
+      responses:
+        '200': {description: Agent capabilities; canApprove/canSign/canDispatchPhysical are false}
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT or opaque session token
+    PaymentKernelHmac:
+      type: apiKey
+      in: header
+      name: X-Payment-Kernel-Signature
+      description: HMAC signature. Event ID and timestamp headers are also required.
+  schemas:
+    DecimalString:
+      type: string
+      pattern: '^-?\d+(?:\.\d+)?$'
+      description: Exact decimal value encoded as a JSON string.
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        message:
+          type: string
+        details: {}
+        requestId:
+          type: string
+    MoneyBaseUnits:
+      type: string
+      pattern: ^(0|[1-9]\d*)$
+      description: Unsigned integer encoded as a decimal string. Never parse financial values through JavaScript
+        Number.
+    AuthCredentials:
+      type: object
+      required:
+      - email
+      - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 10
+    CopilotChatRequest:
+      type: object
+      required:
+      - clientRequestId
+      - message
+      properties:
+        conversationId:
+          type: string
+        clientRequestId:
+          type: string
+          minLength: 8
+          maxLength: 128
+        message:
+          type: string
+          minLength: 1
+          maxLength: 2000
+        context:
+          type: object
+          additionalProperties: true
+    CopilotAckRequest:
+      type: object
+      required:
+      - clientRequestId
+      - responseToken
+      properties:
+        clientRequestId:
+          type: string
+        responseToken:
+          type: string
+    CopilotRequestId:
+      type: object
+      required:
+      - clientRequestId
+      properties:
+        clientRequestId:
+          type: string
+    WalletChallengeRequest:
+      type: object
+      required:
+      - address
+      properties:
+        address:
+          type: string
+          minLength: 32
+          maxLength: 64
+    WalletVerifyRequest:
+      type: object
+      required:
+      - challengeId
+      - address
+      - signatureBase58
+      properties:
+        challengeId:
+          type: string
+        address:
+          type: string
+          minLength: 32
+          maxLength: 64
+        signatureBase58:
+          type: string
+    TopupRequest:
+      type: object
+      required:
+      - responses
+      - idempotencyKey
+      properties:
+        responses:
+          type: integer
+          enum:
+          - 50
+          - 250
+          - 500
+          - 1000
+        idempotencyKey:
+          type: string
+          minLength: 16
+          maxLength: 128
+    PaymentSettled:
+      type: object
+      required:
+      - eventType
+      - settlementId
+      - reference
+      - amountBaseUnits
+      - network
+      - mint
+      - recipient
+      - transactionSignature
+      properties:
+        eventType:
+          const: payment.settled
+        settlementId:
+          type: string
+        reference:
+          type: string
+        amountBaseUnits:
+          $ref: '#/components/schemas/MoneyBaseUnits'
+        network:
+          type: string
+          enum:
+          - devnet
+          - mainnet-beta
+        mint:
+          type: string
+        recipient:
+          type: string
+        transactionSignature:
+          type: string
+        grossTransferBaseUnits:
+          $ref: '#/components/schemas/MoneyBaseUnits'
+        withheldTransferFeeBaseUnits:
+          $ref: '#/components/schemas/MoneyBaseUnits'
+        recipientNetBaseUnits:
+          $ref: '#/components/schemas/MoneyBaseUnits'
+    RegisterRequest:
+      type: object
+      required:
+      - email
+      - password
+      - displayName
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          minLength: 10
+          maxLength: 128
+        displayName:
+          type: string
+          minLength: 2
+          maxLength: 100
+    OnboardingProgress:
+      type: object
+      required:
+      - step
+      properties:
+        step:
+          type: integer
+          minimum: 0
+          maximum: 6
+        profile:
+          type: object
+          properties:
+            organization:
+              type:
+              - string
+              - 'null'
+              maxLength: 160
+            jobTitle:
+              type:
+              - string
+              - 'null'
+              maxLength: 120
+            country:
+              type:
+              - string
+              - 'null'
+              maxLength: 80
+            timezone:
+              type:
+              - string
+              - 'null'
+              maxLength: 100
+            interests:
+              type: array
+              maxItems: 20
+              items:
+                type: string
+                maxLength: 50
+  responses:
+    BadRequest:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: Authentication required or invalid
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    PaymentRequired:
+      description: Insufficient PWRC credits
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Conflict:
+      description: Idempotency, state, or reconciliation conflict
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+x-powerchain-contract:
+  financialEncoding: decimal-string
+  internalNumericType: bigint
+  pwrcBillingTrigger: delivery_acknowledged
+  mobileCompatibilityPrefix: /api/v1/capilot-mobile
+  mobileCorrectedAlias: /api/v1/copilot-mobile
+  internalRoutesMirroredToMobile: false

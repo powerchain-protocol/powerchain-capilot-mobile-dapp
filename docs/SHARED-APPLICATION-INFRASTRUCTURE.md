@@ -6,7 +6,7 @@ previously duplicated or coupled directly to Expo APIs.
 ## Layout
 
 ```text
-frontend/src/
+apps/mobile/src/
 ├── shared/
 │   ├── assets.ts
 │   ├── errors.ts

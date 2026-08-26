@@ -1,14 +1,14 @@
 import { access, readFile } from "node:fs/promises";
 
 const required = [
-  "server/src/http/api-namespace.ts",
-  "server/src/http/cors-policy.ts",
-  "server/src/routes/cors.ts",
-  "server/src/routes/capilot-mobile.ts",
-  "server/test/api-namespace.test.ts",
+  "apps/api/src/http/api-namespace.ts",
+  "apps/api/src/http/cors-policy.ts",
+  "apps/api/src/routes/cors.ts",
+  "apps/api/src/routes/capilot-mobile.ts",
+  "apps/api/test/api-namespace.test.ts",
   "docs/API-NAMESPACE-CORS.md",
-  "frontend/expo/tsconfig.base.json",
-  "frontend/tsconfig.expo.json",
+  "apps/mobile/expo/tsconfig.base.json",
+  "apps/mobile/tsconfig.expo.json",
 ];
 
 let failed = false;
@@ -22,12 +22,12 @@ for (const path of required) {
   }
 }
 
-const tsconfig = JSON.parse(await readFile("frontend/tsconfig.json", "utf8"));
-const expoConfig = JSON.parse(await readFile("frontend/tsconfig.expo.json", "utf8"));
-const namespace = await readFile("server/src/http/api-namespace.ts", "utf8");
-const cors = await readFile("server/src/http/cors-policy.ts", "utf8");
-const app = await readFile("server/src/app.ts", "utf8");
-const frontendEnv = await readFile("frontend/.env.example", "utf8");
+const tsconfig = JSON.parse(await readFile("apps/mobile/tsconfig.json", "utf8"));
+const expoConfig = JSON.parse(await readFile("apps/mobile/tsconfig.expo.json", "utf8"));
+const namespace = await readFile("apps/api/src/http/api-namespace.ts", "utf8");
+const cors = await readFile("apps/api/src/http/cors-policy.ts", "utf8");
+const app = await readFile("apps/api/src/app.ts", "utf8");
+const frontendEnv = await readFile("apps/mobile/.env.example", "utf8");
 
 const checks = [
   ["frontend editor uses local Expo base", tsconfig.extends === "./expo/tsconfig.base.json"],
@@ -40,7 +40,7 @@ const checks = [
   ["central CORS policy is active", app.includes("buildCorsOptions()")],
   ["native no-Origin requests are supported", cors.includes("if (!origin) return true")],
   ["production wildcard is fail-closed", cors.includes('env.NODE_ENV !== "production"')],
-  ["strict CORS origin syntax validation", (await readFile("server/src/config/env.ts", "utf8")).includes("validCorsOrigin")],
+  ["strict CORS origin syntax validation", (await readFile("apps/api/src/config/env.ts", "utf8")).includes("validCorsOrigin")],
   ["frontend uses canonical API root", frontendEnv.includes("EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1")],
   ["system root is mobile-safe", namespace.includes('"system"')],
 ];

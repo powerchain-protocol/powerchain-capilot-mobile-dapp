@@ -40,7 +40,7 @@ const requiredExamples = {
     "METAPLEX_TOKEN_METADATA_PROGRAM_ID",
     "AI_PROVIDER_ORDER",
   ],
-  "frontend/.env.example": [
+  "apps/mobile/.env.example": [
     "EXPO_PUBLIC_API_URL",
     "EXPO_PUBLIC_NETWORK",
     "EXPO_PUBLIC_DATA_MODE",
@@ -54,7 +54,7 @@ const requiredExamples = {
     "EXPO_PUBLIC_SUI_NETWORK",
     "EXPO_PUBLIC_SUI_RPC_URL",
   ],
-  "server/.env.example": [
+  "apps/api/.env.example": [
     "DATABASE_URL",
     "DIRECT_URL",
     "SUPABASE_URL",
@@ -114,11 +114,11 @@ for (const [file, keys] of Object.entries(requiredExamples)) {
   console.log(`✓ ${file}`);
 }
 
-const frontend = await readFile("frontend/.env.example", "utf8");
+const frontend = await readFile("apps/mobile/.env.example", "utf8");
 for (const pattern of secretPatterns) {
   if (pattern.test(frontend)) {
     failed = true;
-    console.error("✗ frontend/.env.example contains a server-only secret field");
+    console.error("✗ apps/mobile/.env.example contains a server-only secret field");
   }
 }
 
@@ -127,7 +127,7 @@ if (/EXPO_PUBLIC_PWRC_MINT=PWRCRXXZ/.test(frontend) && /EXPO_PUBLIC_CREDIT_NETWO
   console.error("✗ frontend devnet configuration must not default to the mainnet PWRC mint");
 }
 
-for (const file of [".env", "frontend/.env", "server/.env"]) {
+for (const file of [".env", "apps/mobile/.env", "apps/api/.env"]) {
   try {
     await access(file);
     console.log(`• found ${file}`);

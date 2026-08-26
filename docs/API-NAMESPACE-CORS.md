@@ -47,7 +47,7 @@ GET /api/v1/copilot-mobile
 
 ## CORS
 
-CORS is centralized in `server/src/http/cors-policy.ts`.
+CORS is centralized in `apps/api/src/http/cors-policy.ts`.
 
 Development defaults:
 
@@ -91,7 +91,7 @@ credentials or secrets.
 
 ## TypeScript bootstrap
 
-`frontend/tsconfig.json` intentionally extends the checked-in editor bootstrap:
+`apps/mobile/tsconfig.json` intentionally extends the checked-in editor bootstrap:
 
 ```json
 {
@@ -101,7 +101,7 @@ credentials or secrets.
 
 This prevents VS Code from failing before `pnpm install` has installed Expo.
 
-After installation, `frontend/tsconfig.expo.json` validates against the official
+After installation, `apps/mobile/tsconfig.expo.json` validates against the official
 package-owned base:
 
 ```json
@@ -113,9 +113,9 @@ package-owned base:
 Run:
 
 ```bash
-pnpm --dir frontend run verify:bootstrap
-pnpm --dir frontend run typecheck:bootstrap
+pnpm --dir apps/mobile run verify:bootstrap
+pnpm --dir apps/mobile run typecheck:bootstrap
 
 # after pnpm install
-pnpm --dir frontend run verify:installed
+pnpm --dir apps/mobile run verify:installed
 ```

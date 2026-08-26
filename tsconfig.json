@@ -1,18 +1,15 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "target": "ES2023",
-    "module": "ESNext",
-    "moduleResolution": "Bundler",
-    "strict": true,
-    "skipLibCheck": true,
     "noEmit": true
   },
   "include": [
     "types/**/*.d.ts"
   ],
   "exclude": [
-    "frontend",
-    "server",
+    "apps",
+    "packages",
+    "services",
     "node_modules"
   ]
 }

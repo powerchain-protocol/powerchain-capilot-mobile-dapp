@@ -4,7 +4,7 @@ PowerChain uses two TypeScript entry points for different lifecycle stages.
 
 ## Editor / bootstrap
 
-`frontend/tsconfig.json`:
+`apps/mobile/tsconfig.json`:
 
 ```json
 { "extends": "./expo/tsconfig.base.json" }
@@ -16,7 +16,7 @@ React Native / bundler compiler defaults and no package-owned Expo internals.
 
 ## Installed Expo validation
 
-`frontend/tsconfig.expo.json`:
+`apps/mobile/tsconfig.expo.json`:
 
 ```json
 { "extends": "expo/tsconfig.base" }
@@ -25,7 +25,7 @@ React Native / bundler compiler defaults and no package-owned Expo internals.
 After `pnpm install`, run:
 
 ```bash
-cd frontend
+cd apps/mobile
 pnpm run verify:expo
 pnpm run typecheck:expo
 ```
@@ -37,7 +37,7 @@ in `node_modules`.
 
 ```bash
 pnpm install
-cd frontend
+cd apps/mobile
 pnpm exec expo start
 pnpm exec expo run:ios
 pnpm exec expo run:android

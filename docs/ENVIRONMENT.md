@@ -6,10 +6,10 @@ PowerChain Copilot Mobile **1.0.0** separates environment values by trust bounda
 
 ```text
 .env.example
-frontend/.env.example
-frontend/.env.production.example
-server/.env.example
-server/.env.production.example
+apps/mobile/.env.example
+apps/mobile/.env.production.example
+apps/api/.env.example
+apps/api/.env.production.example
 ```
 
 ## Trust boundary
@@ -89,8 +89,8 @@ Then edit:
 
 ```text
 .env
-frontend/.env
-server/.env
+apps/mobile/.env
+apps/api/.env
 ```
 
 ## Validate examples
@@ -102,7 +102,7 @@ npm run env:check
 Validate the actual API environment:
 
 ```bash
-cd server
+cd apps/api
 npm run env:check
 ```
 
@@ -129,8 +129,8 @@ npm run dev:stack
 The launcher starts:
 
 ```text
-server/    Fastify API
-frontend/  Expo / Metro
+apps/api/    Fastify API
+apps/mobile/  Expo / Metro
 ```
 
 PostgreSQL remains controlled through Docker Compose.
@@ -176,8 +176,8 @@ GET /health/ready
 Use:
 
 ```text
-frontend/.env.production.example
-server/.env.production.example
+apps/mobile/.env.production.example
+apps/api/.env.production.example
 ```
 
 Production rules include:

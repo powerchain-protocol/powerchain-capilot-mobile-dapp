@@ -6,6 +6,15 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 ## [1.0.0] - 2026-08-24
 
+### Monorepo organization
+
+- Canonical deployables moved under `apps/`: `mobile`, `api`, `operations-api`, and `mcp-gateway`.
+- Python MCP gateway moved under `services/mcp-python`.
+- Shared PWRC, MCP, energy contracts, adapters and clients remain under `packages/`.
+- Removed duplicated root Expo `app/src/assets/public` compatibility tree.
+- Copilot Prisma schema/migrations now live with the owning `apps/api` service.
+- Added shared `tsconfig.base.json` and monorepo verification.
+
 ### Added
 
 - Expo / React Native mobile application architecture.
@@ -76,7 +85,7 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 ### Fixed
 
-- Added a dedicated `frontend/` Expo recovery baseline for incomplete local installs.
+- Added a dedicated `apps/mobile/` Expo recovery baseline for incomplete local installs.
 - Added preflight detection for missing `expo`, `expo/tsconfig.base`, Expo Router, React Native Web, React DOM, and Expo Metro Runtime.
 - Added `npm run repair:npm` and `pnpm repair:pnpm`.
 - Added web-specific Expo dependencies and Metro web configuration.
@@ -110,14 +119,14 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 ### Fixed
 
-- Converted `frontend/` into a complete standalone Expo application containing its own `app/`, `src/`, `assets/`, `public/`, entrypoint, Metro configuration, environment example, and runtime scripts.
-- Added checked-in `frontend/expo/tsconfig.base.json` so VS Code no longer reports a missing Expo TypeScript base before dependencies are installed.
-- Added `frontend/tsconfig.expo.json` to validate against the official installed `expo/tsconfig.base` after bootstrap.
+- Converted `apps/mobile/` into a complete standalone Expo application containing its own `app/`, `src/`, `assets/`, `public/`, entrypoint, Metro configuration, environment example, and runtime scripts.
+- Added checked-in `apps/mobile/expo/tsconfig.base.json` so VS Code no longer reports a missing Expo TypeScript base before dependencies are installed.
+- Added `apps/mobile/tsconfig.expo.json` to validate against the official installed `expo/tsconfig.base` after bootstrap.
 - Changed the frontend entrypoint to `index.js` so the React Native crypto polyfill is installed before Expo Router and Solana modules initialize.
 - Replaced machine-specific path examples with the canonical GitHub repository URL and repository-relative `cd powerchain-capilot-mobile-app/frontend`.
 - Added frontend Node-version, directory, Expo, Router, web-runtime, and Metro preflight checks.
 - Added a single `npm run bootstrap` recovery command for install, Expo compatibility alignment, Expo Doctor, and dependency verification.
-- Converted the root package into a workspace/orchestration boundary for `frontend` and `server`.
+- Converted the root package into a workspace/orchestration boundary for `apps/mobile` and `apps/api`.
 - Added root verification for the frontend application layout and dual TypeScript configuration.
 - Kept the public release version at 1.0.0.
 
@@ -126,8 +135,8 @@ The project follows Semantic Versioning. Internal development iterations do not 
 - Fixed the repository-root TypeScript configuration so it no longer reports `No inputs were found`.
 - Removed the invalid `scripts/**/*.mjs` root TypeScript include.
 - Added `types/workspace.d.ts` as the root workspace TypeScript anchor.
-- Kept Expo TypeScript compilation owned by `frontend/tsconfig.json`.
-- Kept backend TypeScript compilation owned by `server/tsconfig.json`.
+- Kept Expo TypeScript compilation owned by `apps/mobile/tsconfig.json`.
+- Kept backend TypeScript compilation owned by `apps/api/tsconfig.json`.
 - Added explicit frontend and server typecheck scripts.
 - Added `scripts/verify-tsconfig-layout.mjs`.
 
@@ -157,10 +166,10 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 - Fixed `ERR_PNPM_NO_MATCHING_VERSION` by replacing `@wallet-ui/react-native-web3js@^1.0.0` with `@wallet-ui/react-native-web3js@4.3.0`.
 - Standardized the workspace on pnpm 11.23.0.
-- Restored `frontend/tsconfig.json` to the official `expo/tsconfig.base`.
+- Restored `apps/mobile/tsconfig.json` to the official `expo/tsconfig.base`.
 - Removed the duplicate checked-in Expo TypeScript base and duplicate `tsconfig.expo.json`.
 - Added dependency regression validation for Wallet UI, Expo and pnpm.
-- Converted root frontend/server/Prisma scripts from mixed npm/npx usage to pnpm.
+- Converted root apps/mobile/apps/api/Prisma scripts from mixed npm/npx usage to pnpm.
 - Added first-class `pnpm exec expo start`, `pnpm exec expo run:ios`, `pnpm exec expo run:android`, and web instructions.
 - Added `pnpm run setup` for install, Expo dependency alignment, Expo Doctor and dependency verification.
 - Added pnpm build dependency approvals for Prisma, esbuild, sharp and native buffer packages.
@@ -242,8 +251,8 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 ### MCP / TypeScript hardening
 
-- Added checked-in `frontend/expo/tsconfig.base.json` and changed `frontend/tsconfig.json` to extend `./expo/tsconfig.base.json` so VS Code works before dependencies install.
-- Added `frontend/tsconfig.expo.json` for post-install validation against Expo's official package base.
+- Added checked-in `apps/mobile/expo/tsconfig.base.json` and changed `apps/mobile/tsconfig.json` to extend `./expo/tsconfig.base.json` so VS Code works before dependencies install.
+- Added `apps/mobile/tsconfig.expo.json` for post-install validation against Expo's official package base.
 - Added MCP v2 client package using `@modelcontextprotocol/client@2.0.0`.
 - Added structured OpenAI Responses function-calling loop for read-only MCP tools.
 - Added MCP host/tool allowlists, HTTPS/SSRF checks, credential egress guards, tool/schema/result limits and timeouts.
@@ -253,9 +262,9 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 ### Improved — frontend TypeScript / API namespace / CORS
 
-- Kept `frontend/tsconfig.json` on the checked-in `./expo/tsconfig.base.json` editor bootstrap.
+- Kept `apps/mobile/tsconfig.json` on the checked-in `./expo/tsconfig.base.json` editor bootstrap.
 - Added React Native custom condition support to the local Expo bootstrap base.
-- Preserved `frontend/tsconfig.expo.json` for validation against the official installed Expo base.
+- Preserved `apps/mobile/tsconfig.expo.json` for validation against the official installed Expo base.
 - Added `/api/v1/capilot-mobile/*` as the Expo/mobile API compatibility namespace.
 - Added `/api/v1/copilot-mobile/*` as the corrected spelling alias.
 - Added fail-closed mobile route rewriting so internal API routes are never automatically mirrored.
@@ -331,11 +340,33 @@ The project follows Semantic Versioning. Internal development iterations do not 
 - Added provider-neutral Solana, Sui and backend market-data clients.
 - Added Energy/IoT/DePIN frontend services, hooks, operational components and routes.
 - Added safe-action preview/confirm flow with fail-closed execution and UNKNOWN transport handling.
-- Added isolated `backend/platform-express` workspace using Express, Prisma/PostgreSQL and optional Supabase Auth.
+- Added isolated `apps/operations-api` workspace using Express, Prisma/PostgreSQL and optional Supabase Auth.
 - Added `/api/v1/health`, `/api/v1/config`, EMS, IoT, DePIN and safe-action API routes to the isolated backend.
 - Preserved the existing deployed Copilot/Fastify API and product version 1.0.0.
 
 ### Frontend TypeScript bootstrap correction
 
-- Confirmed `frontend/tsconfig.json` extends the checked-in `./expo/tsconfig.base.json`.
-- Preserved `frontend/tsconfig.expo.json` for post-install validation against the official `expo/tsconfig.base`.
+- Confirmed `apps/mobile/tsconfig.json` extends the checked-in `./expo/tsconfig.base.json`.
+- Preserved `apps/mobile/tsconfig.expo.json` for post-install validation against the official `expo/tsconfig.base`.
+
+
+### API v1 documentation architecture
+
+- Added `apps/api/v1/` canonical Fastify registration boundary.
+- Added OpenAPI 3.1 contract `powerchain-capilot.yaml`.
+- Added Postman collection and local/devnet/mainnet environment templates.
+- Added Swagger UI and runtime contract endpoints.
+- Added API contract verification.
+
+### Operational intelligence & truth hardening
+
+- Added per-site digital twin, deterministic flow-balance validation and reusable evidence envelopes.
+- Added sequence-aware telemetry ingestion receipts with SHA-256 hashing, idempotency conflict rejection and late-update auditing.
+- Added operational alarms and append-only event journal with bounded cursor APIs.
+- Hardened Safe Actions with resource authorization, wallet ownership, request hashing, expiry and fail-closed dispatch simulation.
+- Added provider response bounds, timeouts, redirect rejection and DB/Solana/Sui/market readiness checks.
+- Added `/api/v1/sites`, `/alarms`, `/events`, `/twin`, `/flow/validate` and JSON evidence/snapshot exports through the Fastify gateway while private ingestion remains isolated.
+- Added encrypted user-message storage, `/api/v1/chat/:conversationId/messages`, `ai/memory`, `llm`, `lora`, and bounded `mpc/agents` namespaces.
+- Added mobile site selector, SWR cache, request deduplication, AppState refresh, digital-twin summary, real alarm/event feeds and `⌘/Ctrl+K` command menu.
+- Added mobile Copilot skill/character/instruction files while preserving the requested `CAPILOT.md` compatibility filename.
+- Physical equipment execution and server-side transaction signing remain disabled.

@@ -3,20 +3,20 @@ import { createHash } from "node:crypto";
 
 const required = [
   "docs/INTERACTION-DESIGN.md",
-  "frontend/src/constants/routes.ts",
-  "frontend/src/components/layout/ScreenToolbar.tsx",
-  "frontend/src/data/operations-demo.ts",
-  "frontend/src/integrations/status/diagnostics.ts",
-  "frontend/app/(app)/(tabs)/action-center.tsx",
-  "frontend/app/(app)/approvals/batch.tsx",
-  "frontend/app/(app)/assets/[assetId].tsx",
-  "frontend/app/(app)/reports.tsx",
-  "frontend/app/(app)/settlements/review.tsx",
-  "frontend/app/(app)/service-health.tsx",
-  "frontend/app/(app)/diagnostics.tsx",
-  "frontend/app/(app)/settings.tsx",
-  "frontend/assets/brand/logo-green.png",
-  "frontend/assets/icons/icon.png",
+  "apps/mobile/src/constants/routes.ts",
+  "apps/mobile/src/components/layout/ScreenToolbar.tsx",
+  "apps/mobile/src/data/operations-demo.ts",
+  "apps/mobile/src/integrations/status/diagnostics.ts",
+  "apps/mobile/app/(app)/(tabs)/action-center.tsx",
+  "apps/mobile/app/(app)/approvals/batch.tsx",
+  "apps/mobile/app/(app)/assets/[assetId].tsx",
+  "apps/mobile/app/(app)/reports.tsx",
+  "apps/mobile/app/(app)/settlements/review.tsx",
+  "apps/mobile/app/(app)/service-health.tsx",
+  "apps/mobile/app/(app)/diagnostics.tsx",
+  "apps/mobile/app/(app)/settings.tsx",
+  "apps/mobile/assets/brand/logo-green.png",
+  "apps/mobile/assets/icons/icon.png",
 ];
 
 let failed = false;
@@ -25,11 +25,11 @@ for (const file of required) {
   catch { failed = true; console.error(`✗ missing ${file}`); }
 }
 
-const tabs = await readFile("frontend/app/(app)/(tabs)/_layout.tsx", "utf8");
-const routes = await readFile("frontend/src/constants/routes.ts", "utf8");
-const diagnostics = await readFile("frontend/src/integrations/status/diagnostics.ts", "utf8");
-const themeSelector = await readFile("frontend/src/theme/ThemeSelector.tsx", "utf8");
-const demo = await readFile("frontend/src/data/operations-demo.ts", "utf8");
+const tabs = await readFile("apps/mobile/app/(app)/(tabs)/_layout.tsx", "utf8");
+const routes = await readFile("apps/mobile/src/constants/routes.ts", "utf8");
+const diagnostics = await readFile("apps/mobile/src/integrations/status/diagnostics.ts", "utf8");
+const themeSelector = await readFile("apps/mobile/src/theme/ThemeSelector.tsx", "utf8");
+const demo = await readFile("apps/mobile/src/data/operations-demo.ts", "utf8");
 
 const checks = [
   ["exact five tab screens", (tabs.match(/<Tabs\.Screen/g) ?? []).length === 5],
@@ -57,14 +57,14 @@ for (const [label, ok] of checks) {
 }
 
 try {
-  await access("frontend/app/(app)/(tabs)/settings.tsx");
+  await access("apps/mobile/app/(app)/(tabs)/settings.tsx");
   console.error("✗ legacy Settings tab still exists");
   failed = true;
 } catch {
   console.log("✓ Settings moved out of primary tabs");
 }
 
-const logo = await readFile("frontend/assets/brand/logo-green.png");
+const logo = await readFile("apps/mobile/assets/brand/logo-green.png");
 console.log(`✓ brand logo sha256 ${createHash("sha256").update(logo).digest("hex").slice(0, 16)}…`);
 
 if (failed) process.exit(1);

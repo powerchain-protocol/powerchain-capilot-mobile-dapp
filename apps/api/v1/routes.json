@@ -1,0 +1,450 @@
+[
+  {
+    "method": "GET",
+    "path": "/api/v1/health",
+    "summary": "API health",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/health/live",
+    "summary": "Liveness probe",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/health/ready",
+    "summary": "Readiness probe",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/config",
+    "summary": "Sanitized runtime configuration",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/cors",
+    "summary": "Sanitized CORS configuration",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/system/platform",
+    "summary": "Platform runtime metadata",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/system/solana",
+    "summary": "Solana runtime metadata",
+    "tag": "System",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/integrations/status",
+    "summary": "Integration status",
+    "tag": "System",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/mcp/tools",
+    "summary": "List permitted MCP tools",
+    "tag": "MCP",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/auth/register",
+    "summary": "Register account",
+    "tag": "Auth",
+    "authenticated": false
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/auth/login",
+    "summary": "Login",
+    "tag": "Auth",
+    "authenticated": false
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/auth/logout",
+    "summary": "Logout",
+    "tag": "Auth",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account/me",
+    "summary": "Current account",
+    "tag": "Account",
+    "authenticated": true
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/v1/account/profile",
+    "summary": "Update account profile",
+    "tag": "Account",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/account/sessions",
+    "summary": "List active sessions",
+    "tag": "Account",
+    "authenticated": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/account/sessions/{id}",
+    "summary": "Revoke session",
+    "tag": "Account",
+    "authenticated": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/account/sessions/others",
+    "summary": "Revoke other sessions",
+    "tag": "Account",
+    "authenticated": true
+  },
+  {
+    "method": "PATCH",
+    "path": "/api/v1/onboarding",
+    "summary": "Update onboarding",
+    "tag": "Onboarding",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/onboarding/complete",
+    "summary": "Complete onboarding",
+    "tag": "Onboarding",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/wallets/challenge",
+    "summary": "Create wallet-signature challenge",
+    "tag": "Wallets",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/wallets/verify",
+    "summary": "Verify wallet challenge",
+    "tag": "Wallets",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/chat",
+    "summary": "Generate Copilot response",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/chat/ack",
+    "summary": "Acknowledge delivered response and settle PWRC",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/chat/cancel",
+    "summary": "Cancel generation or pending delivery",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/ai/chat/recover",
+    "summary": "Recover a Copilot request by idempotency key",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/conversations",
+    "summary": "List conversations",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/conversations/{id}",
+    "summary": "Get conversation",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/ai/conversations/{id}",
+    "summary": "Delete conversation",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/pricing",
+    "summary": "PWRC Copilot pricing",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/quote",
+    "summary": "Deterministic PWRC message quote",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/account",
+    "summary": "PWRC credit account",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/reconciliation",
+    "summary": "Credit-account reconciliation",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/ledger",
+    "summary": "Credit ledger",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/funding",
+    "summary": "Funding history",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/topups",
+    "summary": "Top-up intents",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/credits/topups",
+    "summary": "Create Solana Pay PWRC top-up intent",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/credits/messages/{id}",
+    "summary": "Get PWRC message receipt",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/credits/demo-grant",
+    "summary": "Grant development/demo credits",
+    "tag": "PWRC Credits",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/market/price",
+    "summary": "Normalized market price",
+    "tag": "Market Data",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/market/pyth",
+    "summary": "Pyth market data",
+    "tag": "Market Data",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/market/birdeye/price",
+    "summary": "Birdeye token price",
+    "tag": "Market Data",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/solana/balance",
+    "summary": "Solana wallet balance",
+    "tag": "Solana",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/solana/health",
+    "summary": "Solana RPC health",
+    "tag": "Solana",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/sui/health",
+    "summary": "Sui RPC health",
+    "tag": "Sui",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/internal/payment-kernel/events",
+    "summary": "Apply verified Payment Kernel settlement event",
+    "tag": "Internal",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/openapi.yaml",
+    "summary": "OpenAPI 3.1 contract",
+    "tag": "Documentation",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/postman/collection",
+    "summary": "Postman collection",
+    "tag": "Documentation",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/capilot-mobile",
+    "summary": "Mobile compatibility namespace metadata",
+    "tag": "Documentation",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/copilot-mobile",
+    "summary": "Corrected mobile namespace alias metadata",
+    "tag": "Documentation",
+    "authenticated": false
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/sites",
+    "summary": "List authorized operational sites",
+    "tag": "Operations",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/twin",
+    "summary": "Get site digital twin",
+    "tag": "Operations",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/alarms",
+    "summary": "List operational alarms",
+    "tag": "Operations",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/events",
+    "summary": "List operational events",
+    "tag": "Operations",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/flow/validate",
+    "summary": "Validate live-flow balance",
+    "tag": "Operations",
+    "authenticated": true
+  },
+  {
+    "method": "POST",
+    "path": "/api/v1/actions/prepare",
+    "summary": "Prepare fail-closed Safe Action",
+    "tag": "Operations",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/exports/{siteId}/evidence.json",
+    "summary": "Export evidence JSON",
+    "tag": "Evidence",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/exports/{siteId}/snapshot.json",
+    "summary": "Export twin snapshot JSON",
+    "tag": "Evidence",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/chat/{conversationId}/messages",
+    "summary": "Read secure chat messages",
+    "tag": "Copilot",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/ai/memory",
+    "summary": "List AI memory",
+    "tag": "AI Runtime",
+    "authenticated": true
+  },
+  {
+    "method": "PUT",
+    "path": "/api/v1/ai/memory/{slug}",
+    "summary": "Upsert encrypted AI memory",
+    "tag": "AI Runtime",
+    "authenticated": true
+  },
+  {
+    "method": "DELETE",
+    "path": "/api/v1/ai/memory/{slug}",
+    "summary": "Delete AI memory",
+    "tag": "AI Runtime",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/llm/providers",
+    "summary": "LLM provider routing plan",
+    "tag": "AI Runtime",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/lora",
+    "summary": "LoRA runtime descriptor",
+    "tag": "AI Runtime",
+    "authenticated": true
+  },
+  {
+    "method": "GET",
+    "path": "/api/v1/mpc/agents",
+    "summary": "Bounded agent registry",
+    "tag": "AI Runtime",
+    "authenticated": true
+  }
+]
