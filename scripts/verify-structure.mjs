@@ -1,6 +1,23 @@
 import { access } from "node:fs/promises";
 
 const required = [
+  "scripts/verify-providers-solana.mjs",
+  "server/src/lib/settings-crypto.ts",
+  "server/src/lib/jwt.ts",
+  "server/src/lib/redis.ts",
+  "server/src/lib/mongo.ts",
+  "server/src/routes/system-solana.ts",
+  "server/src/config/solana.ts",
+  "server/src/integrations/ai-providers.ts",
+  "docs/AI-PROVIDERS-SOLANA.md",
+  "docs/INTERACTION-DESIGN.md",
+  "frontend/src/constants/routes.ts",
+  "frontend/src/components/layout/ScreenToolbar.tsx",
+  "frontend/app/(app)/(tabs)/action-center.tsx",
+  "frontend/app/(app)/service-health.tsx",
+  "frontend/app/(app)/diagnostics.tsx",
+  "frontend/app/(app)/approvals/batch.tsx",
+  "frontend/app/(app)/settlements/review.tsx",
   "README.md",
   "server/src/integrations/sui.ts",
   "server/src/routes/sui.ts",

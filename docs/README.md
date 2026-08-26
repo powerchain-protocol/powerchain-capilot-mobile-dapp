@@ -20,3 +20,5 @@ The canonical product version is `1.0.0` and is recorded in:
 ```
 
 Internal implementation pass numbers are not product versions.
+
+- [Environment & Configuration Architecture](./ENVIRONMENT-CONFIGURATION.md) - network-safe PWRC resolution, Solana/Metaplex registry, databases, Supabase, market data and managed AI providers.

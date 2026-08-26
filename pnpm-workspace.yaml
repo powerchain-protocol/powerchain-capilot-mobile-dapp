@@ -3,6 +3,7 @@ packages:
   - server
   - packages/*
   - backend/express
+  - backend/platform-express
 
 sharedWorkspaceLockfile: true
 

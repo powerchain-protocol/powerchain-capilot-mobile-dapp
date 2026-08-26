@@ -1,17 +1,23 @@
 import type { FastifyRequest } from "fastify";
-import { env } from "../config/env";
-import { prisma } from "./prisma";
-import { randomToken, sha256 } from "./crypto";
+import { env } from "../config/env.js";
+import { prisma } from "./prisma.js";
+import { randomToken, sha256 } from "./crypto.js";
+import { createSessionJwt, verifySessionJwt } from "./jwt.js";
 
 export async function createSession(
   userId: string,
   request?: FastifyRequest,
 ) {
-  const rawToken = randomToken();
-  const tokenHash = sha256(rawToken);
   const expiresAt = new Date(
     Date.now() + env.SESSION_TTL_DAYS * 24 * 60 * 60 * 1000,
   );
+
+  const jti = randomToken();
+  const rawToken =
+    env.AUTH_TOKEN_MODE === "jwt"
+      ? createSessionJwt({ userId, expiresAt, jti })
+      : jti;
+  const tokenHash = sha256(rawToken);
 
   await prisma.session.create({
     data: {
@@ -39,8 +45,15 @@ export async function authenticate(request: FastifyRequest) {
   }
 
   const raw = authorization.slice("Bearer ".length);
-  const tokenHash = sha256(raw);
+  const jwtPayload =
+    env.AUTH_TOKEN_MODE === "jwt" ? verifySessionJwt(raw) : null;
+  if (env.AUTH_TOKEN_MODE === "jwt" && !jwtPayload) {
+    throw Object.assign(new Error("JWT is invalid or expired."), {
+      statusCode: 401,
+    });
+  }
 
+  const tokenHash = sha256(raw);
   const session = await prisma.session.findUnique({
     where: { tokenHash },
     include: {
@@ -57,7 +70,8 @@ export async function authenticate(request: FastifyRequest) {
     !session ||
     session.revokedAt ||
     session.expiresAt <= new Date() ||
-    session.user.status !== "ACTIVE"
+    session.user.status !== "ACTIVE" ||
+    (jwtPayload && jwtPayload.sub !== session.userId)
   ) {
     throw Object.assign(new Error("Session is invalid or expired."), {
       statusCode: 401,

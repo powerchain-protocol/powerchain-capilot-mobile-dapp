@@ -192,7 +192,7 @@ all secrets remain server-side
 
 ## CORS and mobile API namespace
 
-The Expo client defaults to `http://localhost:3001/api/v1/capilot-mobile`.
+The Expo client defaults to `http://127.0.0.1:8000/api/v1`.
 The corrected `/api/v1/copilot-mobile` alias is also supported.
 
 Development CORS:

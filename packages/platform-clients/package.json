@@ -1,0 +1,24 @@
+{
+  "name": "@powerchain/platform-clients",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./solana": "./src/solana/index.ts",
+    "./sui": "./src/sui/index.ts",
+    "./market": "./src/market/index.ts",
+    "./system": "./src/system/index.ts"
+  },
+  "dependencies": {
+    "@powerchain/energy-contracts": "workspace:*"
+  },
+  "scripts": {
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --experimental-strip-types --test test/*.test.ts"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0",
+    "@types/node": "^24.0.0"
+  }
+}

@@ -4,6 +4,7 @@ import type {
   Web3IconVariant,
 } from "../../types/web3-assets";
 import { web3Assets } from "../../data/web3-assets";
+import { APP_PUBLIC_ASSETS } from "../../shared/assets";
 
 export function AssetIcon({
   symbol,
@@ -20,7 +21,7 @@ export function AssetIcon({
     return (
       <img
         alt={`${asset.name} icon`}
-        src="/assets/tokens/pwrc.png"
+        src={APP_PUBLIC_ASSETS.tokenPwrc}
         width={size}
         height={size}
         style={{

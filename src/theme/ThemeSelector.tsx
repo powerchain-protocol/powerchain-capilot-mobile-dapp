@@ -5,7 +5,7 @@ import type { ThemeName } from "./themes";
 const options: Array<{ value: ThemeName; label: string }> = [
   { value: "light", label: "Light" },
   { value: "dark", label: "Dark" },
-  { value: "darkGreen", label: "Dark Green" },
+  { value: "darkGreen", label: "Carbon Dark" },
 ];
 
 export function ThemeSelector() {

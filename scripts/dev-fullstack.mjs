@@ -36,7 +36,7 @@ process.on("SIGINT", () => stop(0));
 process.on("SIGTERM", () => stop(0));
 
 console.log("PowerChain Copilot full-stack development");
-console.log("• API      http://localhost:3001/api/v1");
+console.log("• API      http://127.0.0.1:8000/api/v1");
 console.log("• Frontend Expo / Metro");
 console.log("");
 

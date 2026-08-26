@@ -1,13 +1,4 @@
-import OpenAI from "openai";
-import { env } from "../config/env.js";
-import { runCopilotMcpLoop } from "../mcp/copilot-loop.js";
-
-let client: OpenAI | null = null;
-function getClient() {
-  if (!env.OPENAI_API_KEY) throw Object.assign(new Error("OPENAI_API_KEY is not configured."), { statusCode: 503 });
-  client ??= new OpenAI({ apiKey: env.OPENAI_API_KEY });
-  return client;
-}
+import { generateWithProviderRouting } from "./ai-providers.js";
 
 export async function generateCopilotResponse(input: {
   message: string;
@@ -19,8 +10,6 @@ export async function generateCopilotResponse(input: {
   reservationId?: string;
   requestId: string;
 }) {
-  const openai = getClient();
-  const contextText = input.context ? `\nOperational context JSON:\n${JSON.stringify(input.context)}` : "";
   const instructions = [
     "You are PowerChain Copilot, an operational assistant for renewable infrastructure, Energy RWA, evidence and Solana workflows.",
     "AI may analyze, explain and prepare proposed actions, but may not sign transactions or self-approve sensitive actions.",
@@ -31,27 +20,8 @@ export async function generateCopilotResponse(input: {
     "One completed Copilot response is one PWRC message unit regardless of the number of permitted MCP reads used internally.",
   ].join(" ");
 
-  const initialInput = [
-    ...input.history.map((message) => ({ role: message.role, content: message.content })),
-    { role: "user" as const, content: `${input.message}${contextText}` },
-  ];
-
-  const { response, invocations } = await runCopilotMcpLoop({
-    openai,
-    model: env.OPENAI_MODEL,
+  return generateWithProviderRouting({
+    ...input,
     instructions,
-    initialInput,
-    signal: input.signal,
-    userId: input.userId,
-    conversationId: input.conversationId,
-    reservationId: input.reservationId,
-    requestId: input.requestId,
   });
-
-  return {
-    content: response?.output_text ?? "",
-    model: env.OPENAI_MODEL,
-    responseId: response?.id ?? null,
-    mcpInvocations: invocations,
-  };
 }

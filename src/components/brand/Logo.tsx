@@ -1,12 +1,13 @@
 import { Image, StyleSheet, type ImageStyle, type StyleProp } from "react-native";
 import { usePowerChainTheme } from "../../theme";
+import { APP_ASSETS } from "../../shared/assets";
 
 type LogoVariant = "auto" | "green" | "white" | "dark";
 
 const sources = {
-  green: require("../../../assets/brand/logo-green.png"),
-  white: require("../../../assets/brand/logo-white.png"),
-  dark: require("../../../assets/brand/logo-dark.png"),
+  green: APP_ASSETS.brand.logoGreen,
+  white: APP_ASSETS.brand.logoWhite,
+  dark: APP_ASSETS.brand.logoDark,
 };
 
 export function PowerChainLogo({

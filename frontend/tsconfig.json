@@ -8,6 +8,18 @@
     "paths": {
       "@/*": [
         "./src/*"
+      ],
+      "@shared/*": [
+        "./src/shared/*"
+      ],
+      "@storage/*": [
+        "./src/storage/*"
+      ],
+      "@store/*": [
+        "./src/store/*"
+      ],
+      "@utils/*": [
+        "./src/utils/*"
       ]
     }
   },

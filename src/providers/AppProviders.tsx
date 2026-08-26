@@ -7,6 +7,7 @@ import { AccountProvider } from "../features/account";
 import { NetworkProvider } from "../features/network";
 import { SolanaWalletProvider } from "../integrations/solana";
 import { PowerChainThemeProvider } from "../theme";
+import { PwrcCreditsProvider } from "../features/credits";
 
 export function AppProviders({ children }: PropsWithChildren) {
   return (
@@ -14,9 +15,11 @@ export function AppProviders({ children }: PropsWithChildren) {
       <PowerChainThemeProvider defaultTheme="light">
         <NetworkProvider>
           <AccountProvider>
-            <SolanaWalletProvider>
-              {children}
-            </SolanaWalletProvider>
+            <PwrcCreditsProvider>
+              <SolanaWalletProvider>
+                {children}
+              </SolanaWalletProvider>
+            </PwrcCreditsProvider>
           </AccountProvider>
         </NetworkProvider>
       </PowerChainThemeProvider>

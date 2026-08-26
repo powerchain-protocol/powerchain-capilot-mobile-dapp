@@ -30,7 +30,7 @@ export const web3Assets: Record<
     network: "solana",
     kind: "token",
     decimals: 9,
-    mint: mobileEnv.pwrcMint ?? "PWRCRXXZxbg6FdQZfK3PMD7KP8xfxs9acvifJiG46wc",
+    mint: mobileEnv.pwrcMint,
     icon: {
       provider: "powerchain",
       localAsset: "pwrc",
@@ -43,7 +43,7 @@ export const web3Assets: Record<
     network: "solana",
     kind: "token",
     decimals: 6,
-    mint: mobileEnv.usdcMint ?? "EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",
+    mint: mobileEnv.usdcMint,
     icon: {
       provider: "web3icons",
       symbol: "USDC",

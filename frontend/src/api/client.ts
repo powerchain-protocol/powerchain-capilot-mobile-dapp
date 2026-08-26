@@ -1,9 +1,9 @@
-import * as SecureStore from "expo-secure-store";
 import { mobileEnv } from "../config/env";
+import { AppError, mapHttpStatusToErrorCode } from "../shared/errors";
+import { sessionStore } from "../store/session-store";
 
 const API_URL = mobileEnv.apiUrl;
 
-const SESSION_KEY = "powerchain.session";
 
 export type ApiErrorPayload = {
   error: string;
@@ -12,17 +12,17 @@ export type ApiErrorPayload = {
 };
 
 export async function getSessionToken() {
-  return SecureStore.getItemAsync(SESSION_KEY);
+  const current = sessionStore.getState();
+  if (current.hydrated) return current.token;
+  return sessionStore.hydrate();
 }
 
 export async function setSessionToken(token: string) {
-  await SecureStore.setItemAsync(SESSION_KEY, token, {
-    keychainAccessible: SecureStore.WHEN_UNLOCKED_THIS_DEVICE_ONLY,
-  });
+  await sessionStore.setToken(token);
 }
 
 export async function clearSessionToken() {
-  await SecureStore.deleteItemAsync(SESSION_KEY);
+  await sessionStore.clear();
 }
 
 export async function apiFetch<T>(
@@ -49,16 +49,15 @@ export async function apiFetch<T>(
       // Ignore malformed server error payload.
     }
 
-    const error = new Error(
+    throw new AppError(
       payload?.message ?? payload?.error ?? `Request failed (${response.status})`,
-    ) as Error & {
-      status?: number;
-      payload?: ApiErrorPayload | null;
-    };
-
-    error.status = response.status;
-    error.payload = payload;
-    throw error;
+      {
+        code: mapHttpStatusToErrorCode(response.status),
+        status: response.status,
+        details: payload,
+        retryable: response.status === 429 || response.status >= 500,
+      },
+    );
   }
 
   if (response.status === 204) {

@@ -1,0 +1,1537 @@
+{
+  "name": "PowerChain Icon Pack",
+  "version": "2.0.0",
+  "asset_count": 306,
+  "assets": [
+    {
+      "path": "README.md",
+      "bytes": 3447,
+      "sha256": "293eb2f1ddcef618c2bf5828ef5d220f56a764829f8b5ec66a601f468577d1f9"
+    },
+    {
+      "path": "VERSION",
+      "bytes": 6,
+      "sha256": "c28fcca53637bc88e124af1725df13cb98c69dedefd62fb3cdbe1cdb6b760624"
+    },
+    {
+      "path": "desktop/electron-tauri/128x128.png",
+      "bytes": 15214,
+      "sha256": "f9d63ace904546fd1cfd95341aee1b0025c96d218528b4183bbd9ab8fbdea494"
+    },
+    {
+      "path": "desktop/electron-tauri/128x128@2x.png",
+      "bytes": 67837,
+      "sha256": "260114fb6b04d22115c94732e2231ab7cdfea7dfccc02b14ed26f0da87705d3c"
+    },
+    {
+      "path": "desktop/electron-tauri/32x32.png",
+      "bytes": 1596,
+      "sha256": "360bb675fc3b26e1739acf62c30933a57886ff4bbd959fd6f1ee6ad5e45ce6b3"
+    },
+    {
+      "path": "desktop/electron-tauri/icon.icns",
+      "bytes": 1745449,
+      "sha256": "904c4c708b3c92acef579257f543567f0291f5dba06f8467df565502cbbe75bf"
+    },
+    {
+      "path": "desktop/electron-tauri/icon.ico",
+      "bytes": 85681,
+      "sha256": "1baa3380acd9110bb7dd8219a197ac4ba7824b2d46eadb73bf6ba5890a823705"
+    },
+    {
+      "path": "desktop/electron-tauri/icon.png",
+      "bytes": 310725,
+      "sha256": "b6095b0eb5b774f7c1aaa9efb59b3b00054602bcf30f32d5ae44718691066c03"
+    },
+    {
+      "path": "desktop/linux/hicolor/128x128/apps/powerchain.png",
+      "bytes": 15214,
+      "sha256": "f9d63ace904546fd1cfd95341aee1b0025c96d218528b4183bbd9ab8fbdea494"
+    },
+    {
+      "path": "desktop/linux/hicolor/16x16/apps/powerchain.png",
+      "bytes": 615,
+      "sha256": "56589855636566033144b99cc042a546b48d2bd2249d8c718d3f863077f467fc"
+    },
+    {
+      "path": "desktop/linux/hicolor/24x24/apps/powerchain.png",
+      "bytes": 1068,
+      "sha256": "d0951c7bd16492fceb8abd1ef800f8d4db75d28f6cc37be4763fc134533d28c6"
+    },
+    {
+      "path": "desktop/linux/hicolor/256x256/apps/powerchain.png",
+      "bytes": 67837,
+      "sha256": "260114fb6b04d22115c94732e2231ab7cdfea7dfccc02b14ed26f0da87705d3c"
+    },
+    {
+      "path": "desktop/linux/hicolor/32x32/apps/powerchain.png",
+      "bytes": 1596,
+      "sha256": "360bb675fc3b26e1739acf62c30933a57886ff4bbd959fd6f1ee6ad5e45ce6b3"
+    },
+    {
+      "path": "desktop/linux/hicolor/48x48/apps/powerchain.png",
+      "bytes": 2994,
+      "sha256": "47d849c95696604edd56e3c5dbc126c92156cbc33d56dfac8031ccdfafc79a55"
+    },
+    {
+      "path": "desktop/linux/hicolor/512x512/apps/powerchain.png",
+      "bytes": 310725,
+      "sha256": "b6095b0eb5b774f7c1aaa9efb59b3b00054602bcf30f32d5ae44718691066c03"
+    },
+    {
+      "path": "desktop/linux/hicolor/64x64/apps/powerchain.png",
+      "bytes": 4548,
+      "sha256": "4016a41870c08cb57598cf7bb2fee7cec2f2e6841fc313233ebe37a263ba3a93"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/Contents.json",
+      "bytes": 1252,
+      "sha256": "4664067a65771149fe99cfac24bd43ccbeeeeabca68f958645288b8ef6f83298"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-1024.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-128.png",
+      "bytes": 15214,
+      "sha256": "f9d63ace904546fd1cfd95341aee1b0025c96d218528b4183bbd9ab8fbdea494"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-16.png",
+      "bytes": 615,
+      "sha256": "56589855636566033144b99cc042a546b48d2bd2249d8c718d3f863077f467fc"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-256.png",
+      "bytes": 67837,
+      "sha256": "260114fb6b04d22115c94732e2231ab7cdfea7dfccc02b14ed26f0da87705d3c"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-32.png",
+      "bytes": 1596,
+      "sha256": "360bb675fc3b26e1739acf62c30933a57886ff4bbd959fd6f1ee6ad5e45ce6b3"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-512.png",
+      "bytes": 310725,
+      "sha256": "b6095b0eb5b774f7c1aaa9efb59b3b00054602bcf30f32d5ae44718691066c03"
+    },
+    {
+      "path": "desktop/macos/AppIcon.appiconset/app-icon-64.png",
+      "bytes": 4548,
+      "sha256": "4016a41870c08cb57598cf7bb2fee7cec2f2e6841fc313233ebe37a263ba3a93"
+    },
+    {
+      "path": "desktop/macos/powerchain.icns",
+      "bytes": 1745449,
+      "sha256": "904c4c708b3c92acef579257f543567f0291f5dba06f8467df565502cbbe75bf"
+    },
+    {
+      "path": "desktop/windows/assets/BadgeLogo-24.png",
+      "bytes": 439,
+      "sha256": "656b8e177ef8d292636fb655ca74a1f79791c15206057c99343cf3b1aebabefb"
+    },
+    {
+      "path": "desktop/windows/assets/Square150x150Logo.png",
+      "bytes": 13839,
+      "sha256": "62b20fd5b85d9a13cd006d80fcf1880d445fc4be6312e10ab3102b0c7f2b89d9"
+    },
+    {
+      "path": "desktop/windows/assets/Square310x310Logo.png",
+      "bytes": 50148,
+      "sha256": "7108d748ac0cbc66a9b6e43a3aef2aaf587eea423d01c0a6bdbb256322680ddd"
+    },
+    {
+      "path": "desktop/windows/assets/Square44x44Logo.png",
+      "bytes": 2042,
+      "sha256": "57987a833004b0dc57d08d50b47dde8a1fe500eea200c73e9f346c8327a1febb"
+    },
+    {
+      "path": "desktop/windows/assets/Square50x50Logo.png",
+      "bytes": 2462,
+      "sha256": "cb50a00ed5198925124192af03f0c9f1e43378fbd4275292f5b0566d6d2a1444"
+    },
+    {
+      "path": "desktop/windows/assets/Square512x512Logo.png",
+      "bytes": 131400,
+      "sha256": "ad03b5638563917de327288e275748f1258629ccfdf29263fe561424e4131323"
+    },
+    {
+      "path": "desktop/windows/assets/Square71x71Logo.png",
+      "bytes": 4109,
+      "sha256": "9777c37a29143b5c5785d352f860ebf2a693a6c9bede42e3e6b9654edb1db0ea"
+    },
+    {
+      "path": "desktop/windows/assets/Wide310x150Logo.png",
+      "bytes": 15247,
+      "sha256": "1aac734ace9f70789d3b6d77d90eb4f07556b012a85e61040bf9cfc99d90b033"
+    },
+    {
+      "path": "desktop/windows/powerchain.ico",
+      "bytes": 85681,
+      "sha256": "1baa3380acd9110bb7dd8219a197ac4ba7824b2d46eadb73bf6ba5890a823705"
+    },
+    {
+      "path": "masters/app-icon-dark-1024.png",
+      "bytes": 1518405,
+      "sha256": "37e07dbb17e799777248bf4fab21303aa53284ec9270fdb44a116bbd4492cd03"
+    },
+    {
+      "path": "masters/app-icon-dark-box-green-1024.png",
+      "bytes": 1466862,
+      "sha256": "4209ca938e813be435dfa179413c51ba4d245263247fbe8eb73f00eb28a4662d"
+    },
+    {
+      "path": "masters/app-icon-green-box-1024.png",
+      "bytes": 1711284,
+      "sha256": "98f4aa26f5d6694ff3c1eabe530b205976231e6fb3d1f4edc85c008a955c3d53"
+    },
+    {
+      "path": "masters/app-icon-light-1024.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "masters/mark-dark-transparent-1024.png",
+      "bytes": 477224,
+      "sha256": "a722cf5536c3686e11d69975eefbf14ed69b1c1fd34b76b028e46de7590240fb"
+    },
+    {
+      "path": "masters/mark-light-transparent-1024.png",
+      "bytes": 554301,
+      "sha256": "dc009c5ff568d059753180f7f29f36750cbf141f53c5483d7c196df28906e9e6"
+    },
+    {
+      "path": "mobile/android/drawable-hdpi/ic_stat_powerchain.png",
+      "bytes": 713,
+      "sha256": "d8be0e342fcd78a51e446485c7cecfc982883a2fc117f7e2cc494e2d1ce86447"
+    },
+    {
+      "path": "mobile/android/drawable-ldpi/ic_stat_powerchain.png",
+      "bytes": 322,
+      "sha256": "8c2019daca271001703d635a0b92334f078cd8e164a4aa5549c6e2b4e960d4d1"
+    },
+    {
+      "path": "mobile/android/drawable-mdpi/ic_stat_powerchain.png",
+      "bytes": 439,
+      "sha256": "656b8e177ef8d292636fb655ca74a1f79791c15206057c99343cf3b1aebabefb"
+    },
+    {
+      "path": "mobile/android/drawable-xhdpi/ic_stat_powerchain.png",
+      "bytes": 1000,
+      "sha256": "fc20cfae5b6d1614654184bd2812e211706f702cf972d07e69ad3cc1539cb658"
+    },
+    {
+      "path": "mobile/android/drawable-xxhdpi/ic_stat_powerchain.png",
+      "bytes": 1713,
+      "sha256": "074543e60044cef989a640ffac464777e85189199cf6458be707cb2d45154265"
+    },
+    {
+      "path": "mobile/android/drawable-xxxhdpi/ic_stat_powerchain.png",
+      "bytes": 2453,
+      "sha256": "c8f22263c6a232d1e186f4b12cf2d0370c91281aab9d1a9ea6f11ebeb0df7442"
+    },
+    {
+      "path": "mobile/android/mipmap-anydpi-v26/ic_launcher.xml",
+      "bytes": 328,
+      "sha256": "b7cf056a4f5e0f04ff995053ab12272232a0db7ecf4c5030777db86f02b07f28"
+    },
+    {
+      "path": "mobile/android/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "bytes": 328,
+      "sha256": "b7cf056a4f5e0f04ff995053ab12272232a0db7ecf4c5030777db86f02b07f28"
+    },
+    {
+      "path": "mobile/android/mipmap-hdpi/ic_launcher.png",
+      "bytes": 5407,
+      "sha256": "dc08a21a33b5175116e006b587d27d68011af0b39c0a44145b9120b760ae0d79"
+    },
+    {
+      "path": "mobile/android/mipmap-hdpi/ic_launcher_foreground.png",
+      "bytes": 11366,
+      "sha256": "d16518ceff686a2964a87f984198783a1e67717a8367e015bebb043ae9481d6c"
+    },
+    {
+      "path": "mobile/android/mipmap-hdpi/ic_launcher_monochrome.png",
+      "bytes": 3082,
+      "sha256": "ce7045d7decfa7ec4168af3d66727d4f1727e4714d0c8f41d266188edc029681"
+    },
+    {
+      "path": "mobile/android/mipmap-hdpi/ic_launcher_round.png",
+      "bytes": 5407,
+      "sha256": "dc08a21a33b5175116e006b587d27d68011af0b39c0a44145b9120b760ae0d79"
+    },
+    {
+      "path": "mobile/android/mipmap-ldpi/ic_launcher.png",
+      "bytes": 1881,
+      "sha256": "40fc10a49666ce32793af6fa89fb6456cc157abaddf229300a1258a559fd8a55"
+    },
+    {
+      "path": "mobile/android/mipmap-ldpi/ic_launcher_foreground.png",
+      "bytes": 4237,
+      "sha256": "bf52777676ab432a4253c61494b89da3b463a1e94cc441efc03342cceedafb9c"
+    },
+    {
+      "path": "mobile/android/mipmap-ldpi/ic_launcher_monochrome.png",
+      "bytes": 1415,
+      "sha256": "d3ffc3797ae4c304cecfaf0258aca33c01f0d40efff669d95e5860086a2d5a4e"
+    },
+    {
+      "path": "mobile/android/mipmap-ldpi/ic_launcher_round.png",
+      "bytes": 1881,
+      "sha256": "40fc10a49666ce32793af6fa89fb6456cc157abaddf229300a1258a559fd8a55"
+    },
+    {
+      "path": "mobile/android/mipmap-mdpi/ic_launcher.png",
+      "bytes": 2994,
+      "sha256": "47d849c95696604edd56e3c5dbc126c92156cbc33d56dfac8031ccdfafc79a55"
+    },
+    {
+      "path": "mobile/android/mipmap-mdpi/ic_launcher_foreground.png",
+      "bytes": 6314,
+      "sha256": "9d056300bb8305b2fe25998f7387e16feffa04356efed1a3c425e905fe5f47ab"
+    },
+    {
+      "path": "mobile/android/mipmap-mdpi/ic_launcher_monochrome.png",
+      "bytes": 1970,
+      "sha256": "a86bc086d701a879c3fe037bc06065ac86a228f9d1c6c4d7bc14b29d6eea8c6d"
+    },
+    {
+      "path": "mobile/android/mipmap-mdpi/ic_launcher_round.png",
+      "bytes": 2994,
+      "sha256": "47d849c95696604edd56e3c5dbc126c92156cbc33d56dfac8031ccdfafc79a55"
+    },
+    {
+      "path": "mobile/android/mipmap-xhdpi/ic_launcher.png",
+      "bytes": 8836,
+      "sha256": "fd326ad21e29f7b91b3ee71e8854184c5be3ff6b9c9949a54fa164933e675279"
+    },
+    {
+      "path": "mobile/android/mipmap-xhdpi/ic_launcher_foreground.png",
+      "bytes": 17734,
+      "sha256": "88d2fe89d3819aab7289a8a161b48d8dfdc8768e7a9853cba7ff7755153ede22"
+    },
+    {
+      "path": "mobile/android/mipmap-xhdpi/ic_launcher_monochrome.png",
+      "bytes": 4514,
+      "sha256": "fa4b17431425332911ed0226acd3c96e6f0485983ebc8314f42ff73bb97887e0"
+    },
+    {
+      "path": "mobile/android/mipmap-xhdpi/ic_launcher_round.png",
+      "bytes": 8836,
+      "sha256": "fd326ad21e29f7b91b3ee71e8854184c5be3ff6b9c9949a54fa164933e675279"
+    },
+    {
+      "path": "mobile/android/mipmap-xxhdpi/ic_launcher.png",
+      "bytes": 19035,
+      "sha256": "d9209856dfa686fc9e85e013d60d2d629c86b136f3e561ddc90cf90ded452077"
+    },
+    {
+      "path": "mobile/android/mipmap-xxhdpi/ic_launcher_foreground.png",
+      "bytes": 34931,
+      "sha256": "8467eba83b8435838b44e4e1d0d41f43780e5392a872549d08f9196868421938"
+    },
+    {
+      "path": "mobile/android/mipmap-xxhdpi/ic_launcher_monochrome.png",
+      "bytes": 8773,
+      "sha256": "43a6f4c0ad20f5a3718f27ed3dd0ec6621653abac6898b97208016e3fead429b"
+    },
+    {
+      "path": "mobile/android/mipmap-xxhdpi/ic_launcher_round.png",
+      "bytes": 19035,
+      "sha256": "d9209856dfa686fc9e85e013d60d2d629c86b136f3e561ddc90cf90ded452077"
+    },
+    {
+      "path": "mobile/android/mipmap-xxxhdpi/ic_launcher.png",
+      "bytes": 35054,
+      "sha256": "5548e4d24eb8536be0c961aa7304471777e1bc1f50842c8c04b80b1db5601946"
+    },
+    {
+      "path": "mobile/android/mipmap-xxxhdpi/ic_launcher_foreground.png",
+      "bytes": 59935,
+      "sha256": "f370b8022320917ab86f7eafb71d15b6658930a62fd6513f8e91f95285060182"
+    },
+    {
+      "path": "mobile/android/mipmap-xxxhdpi/ic_launcher_monochrome.png",
+      "bytes": 16141,
+      "sha256": "0e22352aaaf18ec425082fc6718e9f63212b514774b176de0840f5257b5226e6"
+    },
+    {
+      "path": "mobile/android/mipmap-xxxhdpi/ic_launcher_round.png",
+      "bytes": 35054,
+      "sha256": "5548e4d24eb8536be0c961aa7304471777e1bc1f50842c8c04b80b1db5601946"
+    },
+    {
+      "path": "mobile/android/play-store-icon.png",
+      "bytes": 431800,
+      "sha256": "54ba9ce8c5bc8862810dc350189463ede3cbaf367e004b208ee2b7ab97dca537"
+    },
+    {
+      "path": "mobile/android/values/colors.xml",
+      "bytes": 115,
+      "sha256": "ae5dae7dd497dea65d7b7a9dad5a4e7d4a30ea34abb2b0fe043e98b4d2fc8153"
+    },
+    {
+      "path": "mobile/expo/adaptive-icon-foreground.png",
+      "bytes": 321916,
+      "sha256": "ebe7b7215bb10fc580761ed7f41a72eb816fe52f49b32b7e162bb1d79f005bb6"
+    },
+    {
+      "path": "mobile/expo/adaptive-icon-monochrome.png",
+      "bytes": 96431,
+      "sha256": "1bceae65398519fd2b47030e95b5c8b8d638967327c23f35740e0c6076f93927"
+    },
+    {
+      "path": "mobile/expo/favicon.png",
+      "bytes": 2994,
+      "sha256": "47d849c95696604edd56e3c5dbc126c92156cbc33d56dfac8031ccdfafc79a55"
+    },
+    {
+      "path": "mobile/expo/icon-dark-box-green.png",
+      "bytes": 1466862,
+      "sha256": "4209ca938e813be435dfa179413c51ba4d245263247fbe8eb73f00eb28a4662d"
+    },
+    {
+      "path": "mobile/expo/icon-green-box.png",
+      "bytes": 1711284,
+      "sha256": "98f4aa26f5d6694ff3c1eabe530b205976231e6fb3d1f4edc85c008a955c3d53"
+    },
+    {
+      "path": "mobile/expo/icon-transparent-dark.png",
+      "bytes": 554301,
+      "sha256": "dc009c5ff568d059753180f7f29f36750cbf141f53c5483d7c196df28906e9e6"
+    },
+    {
+      "path": "mobile/expo/icon-transparent.png",
+      "bytes": 477224,
+      "sha256": "a722cf5536c3686e11d69975eefbf14ed69b1c1fd34b76b028e46de7590240fb"
+    },
+    {
+      "path": "mobile/expo/icon.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "mobile/expo/notification-icon.png",
+      "bytes": 2453,
+      "sha256": "c8f22263c6a232d1e186f4b12cf2d0370c91281aab9d1a9ea6f11ebeb0df7442"
+    },
+    {
+      "path": "mobile/ios/AppIcon-Modern.appiconset/Contents.json",
+      "bytes": 726,
+      "sha256": "46d422f205759e790400a2d5df8f785966da661d141ac7c8a9c3eee8b79bbfca"
+    },
+    {
+      "path": "mobile/ios/AppIcon-Modern.appiconset/app-icon-any-1024.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "mobile/ios/AppIcon-Modern.appiconset/app-icon-dark-1024.png",
+      "bytes": 1466862,
+      "sha256": "4209ca938e813be435dfa179413c51ba4d245263247fbe8eb73f00eb28a4662d"
+    },
+    {
+      "path": "mobile/ios/AppIcon-Modern.appiconset/app-icon-tinted-1024.png",
+      "bytes": 1711284,
+      "sha256": "98f4aa26f5d6694ff3c1eabe530b205976231e6fb3d1f4edc85c008a955c3d53"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/Contents.json",
+      "bytes": 2211,
+      "sha256": "9ec71feeb2d49e2b4152b5f3f346d6b8f2eb546ed5c44261eb919f715a212884"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-1024.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-120.png",
+      "bytes": 13382,
+      "sha256": "e91df035c218c49f1c0e56e048dce1cf82f1400a4276da15478c90229685d998"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-152.png",
+      "bytes": 21233,
+      "sha256": "88b4a0dbb02da838d58d95a6cd1f1e86bafa30cd8a769f9461408ae18fff295e"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-167.png",
+      "bytes": 25721,
+      "sha256": "16a8749e85ac0385c99dd48075563c4efdb4e172f068d3f5fcc1ca86220fb8e5"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-180.png",
+      "bytes": 30354,
+      "sha256": "7bb1eb1c7f0e9db49f52e5332360d7d284c51a667bd96d1cf212c312d8c1cc97"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-20.png",
+      "bytes": 846,
+      "sha256": "611780e3d43a8c6cc04ef0c7ac09be6793ff7501824e415e73d9d48a890c40f2"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-29.png",
+      "bytes": 1399,
+      "sha256": "ff48c42c2fdea78456f9b9ae7f2e0f87a6a0ab4a080450d019cfc72f44b3d19e"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-40.png",
+      "bytes": 2268,
+      "sha256": "9633e614dc061832513b441af79c4c085a1f2a9fac6b7644fa70a6353b3f3a64"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-58.png",
+      "bytes": 3889,
+      "sha256": "4cf54fe542ca779caebfb61cfcb0fe5eb139b20739fe0e3ea2f2947bd6a01826"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-60.png",
+      "bytes": 4141,
+      "sha256": "f72a24428f63c71d016975933c0a64e1961efba070e2aff6be7e1c54edd8eb51"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-76.png",
+      "bytes": 5962,
+      "sha256": "4644aa28951a8615c4d75713fdbcc099085b212f1ce1311c4c6b956abc35033d"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-80.png",
+      "bytes": 6505,
+      "sha256": "42875a25805fb8e81f5ee11fdbeba516172d69ae8232278dc70cddc27fd50a8a"
+    },
+    {
+      "path": "mobile/ios/AppIcon.appiconset/app-icon-87.png",
+      "bytes": 7482,
+      "sha256": "645db3b55f3bd5b43fa05277b952c484d606dd01cab8229a70ab2b3a52dba1ac"
+    },
+    {
+      "path": "mobile/store/amazon-appstore-512.png",
+      "bytes": 431800,
+      "sha256": "54ba9ce8c5bc8862810dc350189463ede3cbaf367e004b208ee2b7ab97dca537"
+    },
+    {
+      "path": "mobile/store/apple-app-store-1024.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "mobile/store/google-play-512.png",
+      "bytes": 431800,
+      "sha256": "54ba9ce8c5bc8862810dc350189463ede3cbaf367e004b208ee2b7ab97dca537"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-100x100.png",
+      "bytes": 17129,
+      "sha256": "dd9b1dd61b40c1a300435852fc314cb8f8776a1dc9d84a1f2d23e72fe59d7209"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-1024x1024.png",
+      "bytes": 1466862,
+      "sha256": "4209ca938e813be435dfa179413c51ba4d245263247fbe8eb73f00eb28a4662d"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-114x114.png",
+      "bytes": 22080,
+      "sha256": "5c22db502af6587a3e5d56eaf1309d737fe05b2bbc1c9cd76e38664137805626"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-120x120.png",
+      "bytes": 24217,
+      "sha256": "7cfcd740163f6f353f31aad972a8a361bfd3acde3e6bd6f66c60d729c70b4626"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-128x128.png",
+      "bytes": 27447,
+      "sha256": "d03261815041c9bf514afba94fc0bd89f1637d4105e6f034ba31e42681368f72"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-144x144.png",
+      "bytes": 34309,
+      "sha256": "c381bda44d7ed70351bb4b032d4797991f5ffda08fb4417b3fef81daf2ad5c40"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-152x152.png",
+      "bytes": 37911,
+      "sha256": "bb72439347fd32260edd65036fc5c2b0947de6c784af0718382a9995d35267e6"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-167x167.png",
+      "bytes": 45235,
+      "sha256": "744021008fa87f633e979a98e7762bd4381ddecda6914778d59716120886155d"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-16x16.png",
+      "bytes": 699,
+      "sha256": "cf5e34c8aa4c0a612328d46856f315bcecc7b7a210da4e444451e019f7e1d659"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-180x180.png",
+      "bytes": 51970,
+      "sha256": "6210af01a7c83e31497ba626a36f209e4d89c9574e6e1a58c781eb1c7a39a6ab"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-192x192.png",
+      "bytes": 58738,
+      "sha256": "9c0bb7933c3aa9995c0f5fa3ae240efcecece2ad3fff2f573714f59f0aba8dc7"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-20x20.png",
+      "bytes": 1002,
+      "sha256": "10304279afa49669dde062e710dbb5336cf3445ce99b07d56dd23078decc9a61"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-24x24.png",
+      "bytes": 1353,
+      "sha256": "86cb10a8730778102abdf66bc40b8d1a68a1f09fada1f653007f9a4d9bf670ac"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-256x256.png",
+      "bytes": 100468,
+      "sha256": "a51830beddc4c819c51de7d1d2e4532e563e0349c5336c7299935a664bdcd43d"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-29x29.png",
+      "bytes": 1807,
+      "sha256": "2943dbe57cec3212b95805511d35cc202dfa17a276bccb7a1725c52186e46de3"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-32x32.png",
+      "bytes": 2131,
+      "sha256": "2b7c8cfacc67e8b6dd07d8ab50be2302257de2c736940f7da7686cd3b1f1b309"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-384x384.png",
+      "bytes": 221222,
+      "sha256": "b64f8d93e5251990e69a16a63c56f54c0fd504a50c42d25b958b04b6654409e7"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-40x40.png",
+      "bytes": 3123,
+      "sha256": "6257d0cb8ad959508ec10b0c496f14eaa5a9c023ddcc85cd589d5ef500c23844"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-48x48.png",
+      "bytes": 4210,
+      "sha256": "fdd9ddfbea0ec949f881728551278b477b2c30162d964f2430110e71e0835e6c"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-50x50.png",
+      "bytes": 4546,
+      "sha256": "184a53fa5f1b8314623065e725caac3e45f2260cd729007edd977f0e49ef23f1"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-512x512.png",
+      "bytes": 383545,
+      "sha256": "b9da29e0da4ef823ea183f96864d90f72f33e864d0d238d9637fbdc1f9183de2"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-57x57.png",
+      "bytes": 5739,
+      "sha256": "3bf4076ad313c110bd90171ab696cce929da9dfaef8646f1f5be70f24f05670d"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-58x58.png",
+      "bytes": 5949,
+      "sha256": "d79caa311d0a1d40b80f28faecb942e0499185a8019e4061fd06b180c7dd4086"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-60x60.png",
+      "bytes": 6280,
+      "sha256": "b6fb2afa92929ece8b56a22d2a634b245b02f3f5f7f8db9bb2d8244d080eab3b"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-64x64.png",
+      "bytes": 7057,
+      "sha256": "a68fde8afe60eb8c63c1ea0ee9a8afe4195ffcae5e369a5881cd0bbd40f52632"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-72x72.png",
+      "bytes": 8869,
+      "sha256": "a9b9beaccc08d0c79c86257b30b8c614f0c1b20538621cfd9a65eed5db0f6df7"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-76x76.png",
+      "bytes": 9903,
+      "sha256": "59d3ee4313315b93938ab84653218af10ead53615b6e13c9f95f16b138edd096"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-80x80.png",
+      "bytes": 10981,
+      "sha256": "23516554a2fe3d60de59db308d3d455b8af031cd1a067c7d6d5c47d8f0cfc4e1"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-87x87.png",
+      "bytes": 12998,
+      "sha256": "3e2f5cce1b7d01ac9000681a7ddc21738a2e4adb1600c91074a55ca1133a9832"
+    },
+    {
+      "path": "variants/dark-box-green-mark/icon-96x96.png",
+      "bytes": 15718,
+      "sha256": "aab479375d26238407f716ade6c95da540b7802e6397b9cd510abe8c4519bc72"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-100x100.png",
+      "bytes": 16315,
+      "sha256": "2774a8572bfb55507c622e71026404ee245283c3c540275ea69c0fbbfa07332d"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-1024x1024.png",
+      "bytes": 1518405,
+      "sha256": "37e07dbb17e799777248bf4fab21303aa53284ec9270fdb44a116bbd4492cd03"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-114x114.png",
+      "bytes": 21174,
+      "sha256": "f0c7e21e8812a9716e9ddf51804a7d24fa50c46238d311a90be411e34ef1ce6a"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-120x120.png",
+      "bytes": 23284,
+      "sha256": "6b73b7c19365e8089cab2169b7d2df72b0ce380e7be04685a5e1a889d880c4f6"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-128x128.png",
+      "bytes": 26525,
+      "sha256": "fe1d29f3671e07dcfb864ffc312827f6f1cf3dbe5e255350c3b9163987f76967"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-144x144.png",
+      "bytes": 33011,
+      "sha256": "c991e36461d71d8434104974617719ab714212d0827688bc4043b4a5b7f81563"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-152x152.png",
+      "bytes": 36497,
+      "sha256": "63d6a3480e43d066efcf7c8a1491ba62eda23f57e05f92cc417cf56d63e1ddac"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-167x167.png",
+      "bytes": 43800,
+      "sha256": "b198035dc684be3a712d87ecac0f0b3006eb1185544908dc5e525c82be9824f0"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-16x16.png",
+      "bytes": 771,
+      "sha256": "86bc7daefcd01189181be4734f80632fc5a5c1420f917ab2d2c7d5b1949686c5"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-180x180.png",
+      "bytes": 50018,
+      "sha256": "7dee62bd246eaf90bc8e4b0c314e36f75afb822d2a59d5ed63f1dbe8ef19236e"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-192x192.png",
+      "bytes": 56653,
+      "sha256": "925b645e0dd618d4591a9cca62e14e51e9cc93ecb8a5770ff6238f21a2c8f156"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-20x20.png",
+      "bytes": 1070,
+      "sha256": "46418071b8c661008646fbc4b470af9054b1aa194dff73b23783ad8a8ac2db57"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-24x24.png",
+      "bytes": 1370,
+      "sha256": "838cbae5b8aac22525f6a6962688deb333c03a1435076bedc2fc24134adbb3a0"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-256x256.png",
+      "bytes": 97366,
+      "sha256": "edd9b397c444c248d2fea151c57c3af8a728ceef4b121cee9fce7f53e7c5ac42"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-29x29.png",
+      "bytes": 1813,
+      "sha256": "c6116d1d632e21c4070ff6f80c2495635ffc8eca4b36031e2d4191eacb25f1e3"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-32x32.png",
+      "bytes": 2085,
+      "sha256": "e1afe56a5ec280cd55b0d5527fa24e2de0149d6f8c88ead35a9ebb3c1bef1075"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-384x384.png",
+      "bytes": 215984,
+      "sha256": "21faa20fa4c32871bdad5819041261f555d6752cb5612cd25c62d19fe0d634a4"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-40x40.png",
+      "bytes": 2984,
+      "sha256": "59f8246f1b87902b6f0460d45be209c359e6ffecaea93acbbc65d0504e531ff5"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-48x48.png",
+      "bytes": 4018,
+      "sha256": "a28fdbd391641d93853212b8ba7861984388b9e85ffc991863c3ef7b03d4868e"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-50x50.png",
+      "bytes": 4248,
+      "sha256": "c01dc9e8cdc727c97f24837b1fde84593d2d3cdab9e913f07f183eaa68022908"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-512x512.png",
+      "bytes": 381505,
+      "sha256": "e67813402f1cbb5d9568342d661a05ae501d5c44e047c653984f7db30c97745b"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-57x57.png",
+      "bytes": 5365,
+      "sha256": "cf4f5d010d256dbfea3087bb7ca1dfa9cd688d94c3e720d0d2d77b37bec02958"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-58x58.png",
+      "bytes": 5536,
+      "sha256": "eae2ebda8c8d5c419b2453125ad9e53b342052e1798e8fb2700a2e247ad36375"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-60x60.png",
+      "bytes": 5882,
+      "sha256": "c1e3e7a57f237316136180584fa9106ad0649ad3c2961ced628dc72bd910d510"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-64x64.png",
+      "bytes": 6709,
+      "sha256": "6c6d674f242ca72d4bf1a5213ae23f48edb1ec4e83aa29a2e859dc58a263e23c"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-72x72.png",
+      "bytes": 8321,
+      "sha256": "3b95648ccde2c24a6a3d248aef4c00a34756ffacec8c56101bb6dc700f9903b7"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-76x76.png",
+      "bytes": 9299,
+      "sha256": "d7227fa6c495fdbd72595e7ce1e99df7025b53aaca2c1e10ac34e7d7dd333af3"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-80x80.png",
+      "bytes": 10273,
+      "sha256": "37935680b6ddfadf035d5875d5101e329925efe49ea5d4603c7fea0a3156a0ef"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-87x87.png",
+      "bytes": 12219,
+      "sha256": "2420d2c3f49a78b890c23680526e4b1bc5786d971f0232d38722216f16e1516e"
+    },
+    {
+      "path": "variants/dark-box-white-mark/icon-96x96.png",
+      "bytes": 15014,
+      "sha256": "b9db15fd86d59b28405ebacc42d55bd630ed39bec35f4d24c3295b3c27e03fe8"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-100x100.png",
+      "bytes": 18584,
+      "sha256": "6f9c1d21db80a7b4445e2a948217915590fc5895b578b25a322a59913e4764f0"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-1024x1024.png",
+      "bytes": 1711284,
+      "sha256": "98f4aa26f5d6694ff3c1eabe530b205976231e6fb3d1f4edc85c008a955c3d53"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-114x114.png",
+      "bytes": 24218,
+      "sha256": "a7e764f85235af0e18cf10ad944434836c997bb3ab3bb575ce4ee877bb8ce9e1"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-120x120.png",
+      "bytes": 26844,
+      "sha256": "fc90e549fdb3d5438a6d391b8386542bc440826e2552566e9095104cb4fe0589"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-128x128.png",
+      "bytes": 30334,
+      "sha256": "fd898ff6bef136fd0043f453c8957cecae61cc2599dc255c5eee9104b358940b"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-144x144.png",
+      "bytes": 37804,
+      "sha256": "0c4e1880065632efef2b2174ff204e73a493c895ce09264184ef3f04b7b7e293"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-152x152.png",
+      "bytes": 41942,
+      "sha256": "53a4ef01c44be298329ff0fad6907fd56c379687f384c531ca37e6119b458c31"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-167x167.png",
+      "bytes": 49705,
+      "sha256": "260817ee55202d27e0f2f8bb3013ff3723a10d64df3449f4ccc46db09d2b0e98"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-16x16.png",
+      "bytes": 785,
+      "sha256": "16e37ef239566e06d5495f70391935c9c82ca86d13914721754878b49104c714"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-180x180.png",
+      "bytes": 57246,
+      "sha256": "ade6ca981700912f19ac5f75fad116395c96e5d1646fbe4838bafbe2a8a147c2"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-192x192.png",
+      "bytes": 64458,
+      "sha256": "dd5fc7d912323f96683e5307d2bfd825ce461a670190aea766edb5e9f4c15c2c"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-20x20.png",
+      "bytes": 1097,
+      "sha256": "e1078d316ced83c373fdfc2736055c4ae34f973140ee50e3df6b8c5ca7a775ff"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-24x24.png",
+      "bytes": 1407,
+      "sha256": "f0690601f1ef95e4829ca4bb762b6064c8a05e411d54286e99da7cc7bcb19977"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-256x256.png",
+      "bytes": 111520,
+      "sha256": "b8a5062e585dd8e9a1b5d371808003f16ee467ba92a49d9ab891cb290afa09a9"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-29x29.png",
+      "bytes": 1884,
+      "sha256": "45de1f8bdf1395f5bd3b66fe80a101961287a73dc18f498f36de57cde6743d39"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-32x32.png",
+      "bytes": 2208,
+      "sha256": "a487b21ddbb307ff3d230595806e53cc759e2bb5387da18772c8beafcec75c47"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-384x384.png",
+      "bytes": 245336,
+      "sha256": "325a04f0c426c6cd92d78f8150c836dbca117699dfcf1306c60ea46e08982a36"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-40x40.png",
+      "bytes": 3133,
+      "sha256": "40d75787b12fa64038e6966ab2b3829c898857c1af0fa7b538e319df0129f84d"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-48x48.png",
+      "bytes": 4257,
+      "sha256": "fc47695a1f2a93893600447ad61bc32dd20811f6cee21e469eda3f4903c75f27"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-50x50.png",
+      "bytes": 4538,
+      "sha256": "d327321a4a37236815d064a413a3f41882b3cc40cfdaf558ab38ca56a984d64f"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-512x512.png",
+      "bytes": 431800,
+      "sha256": "54ba9ce8c5bc8862810dc350189463ede3cbaf367e004b208ee2b7ab97dca537"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-57x57.png",
+      "bytes": 5804,
+      "sha256": "d13a2b11a362286bcf24aed74a0ae532c26a16c29dbf9f81a326ea57b54e7ae1"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-58x58.png",
+      "bytes": 6006,
+      "sha256": "29bc587fe81d3b5e26004b05fd44d491a733e883d573f1beeb8eb65fd525d664"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-60x60.png",
+      "bytes": 6355,
+      "sha256": "5c250ef165bed94dec2e139b958d1fb7bf4a1b2866ac9322f134d3ea1a9959c5"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-64x64.png",
+      "bytes": 7183,
+      "sha256": "58e4b19f003ce3f6083c0ebc625b30a8180360fa8157c9ad55f6490282d82e16"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-72x72.png",
+      "bytes": 9164,
+      "sha256": "1b624ea1e713beea04002383d45f439fdc6232edd562f9fc1bbdb24159fcb327"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-76x76.png",
+      "bytes": 10235,
+      "sha256": "dafac11a7a5ade4fcd51347e42581c53e32ac039bb35c5d4caedae47385a9afe"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-80x80.png",
+      "bytes": 11542,
+      "sha256": "956c8606cebc17bd919c88851b47363c99a54fa58448d2ec419e83e667406e47"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-87x87.png",
+      "bytes": 13864,
+      "sha256": "abc217ea75e238867ff85d66828fba0c82b0a493e167ee7c1cc52f952d685a6a"
+    },
+    {
+      "path": "variants/green-box-white-mark/icon-96x96.png",
+      "bytes": 17089,
+      "sha256": "e0822db174b72e6f1e84ab178ba05902aaa59975eabcf6e5e32ecc3416e5e1fa"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-100x100.png",
+      "bytes": 9562,
+      "sha256": "69a6f94b17dd46e85cc14cbbf1d3527fe55bf50bb985917615e05cd6ad55b8ad"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-1024x1024.png",
+      "bytes": 1225749,
+      "sha256": "3c333bc33f5bda30ebe35c201859b22d35066e46d7421719ddcaaf97515ef143"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-114x114.png",
+      "bytes": 12188,
+      "sha256": "1d1c265ba69d940c9b7097395d7a367719a84d4f016ed1eac18cbafaa42c2fec"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-120x120.png",
+      "bytes": 13382,
+      "sha256": "e91df035c218c49f1c0e56e048dce1cf82f1400a4276da15478c90229685d998"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-128x128.png",
+      "bytes": 15214,
+      "sha256": "f9d63ace904546fd1cfd95341aee1b0025c96d218528b4183bbd9ab8fbdea494"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-144x144.png",
+      "bytes": 19035,
+      "sha256": "d9209856dfa686fc9e85e013d60d2d629c86b136f3e561ddc90cf90ded452077"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-152x152.png",
+      "bytes": 21233,
+      "sha256": "88b4a0dbb02da838d58d95a6cd1f1e86bafa30cd8a769f9461408ae18fff295e"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-167x167.png",
+      "bytes": 25721,
+      "sha256": "16a8749e85ac0385c99dd48075563c4efdb4e172f068d3f5fcc1ca86220fb8e5"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-16x16.png",
+      "bytes": 615,
+      "sha256": "56589855636566033144b99cc042a546b48d2bd2249d8c718d3f863077f467fc"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-180x180.png",
+      "bytes": 30354,
+      "sha256": "7bb1eb1c7f0e9db49f52e5332360d7d284c51a667bd96d1cf212c312d8c1cc97"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-192x192.png",
+      "bytes": 35054,
+      "sha256": "5548e4d24eb8536be0c961aa7304471777e1bc1f50842c8c04b80b1db5601946"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-20x20.png",
+      "bytes": 846,
+      "sha256": "611780e3d43a8c6cc04ef0c7ac09be6793ff7501824e415e73d9d48a890c40f2"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-24x24.png",
+      "bytes": 1068,
+      "sha256": "d0951c7bd16492fceb8abd1ef800f8d4db75d28f6cc37be4763fc134533d28c6"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-256x256.png",
+      "bytes": 67837,
+      "sha256": "260114fb6b04d22115c94732e2231ab7cdfea7dfccc02b14ed26f0da87705d3c"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-29x29.png",
+      "bytes": 1399,
+      "sha256": "ff48c42c2fdea78456f9b9ae7f2e0f87a6a0ab4a080450d019cfc72f44b3d19e"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-32x32.png",
+      "bytes": 1596,
+      "sha256": "360bb675fc3b26e1739acf62c30933a57886ff4bbd959fd6f1ee6ad5e45ce6b3"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-384x384.png",
+      "bytes": 172879,
+      "sha256": "6c0fb757a996deaafffd18e95efb042a039da33f8114f68970ab1ddcb7ca03ae"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-40x40.png",
+      "bytes": 2268,
+      "sha256": "9633e614dc061832513b441af79c4c085a1f2a9fac6b7644fa70a6353b3f3a64"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-48x48.png",
+      "bytes": 2994,
+      "sha256": "47d849c95696604edd56e3c5dbc126c92156cbc33d56dfac8031ccdfafc79a55"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-50x50.png",
+      "bytes": 3157,
+      "sha256": "a88353ca87df880fdc233bd4a9580e4820e1a04bdd60ecde1b0624d60aa2a776"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-512x512.png",
+      "bytes": 310725,
+      "sha256": "b6095b0eb5b774f7c1aaa9efb59b3b00054602bcf30f32d5ae44718691066c03"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-57x57.png",
+      "bytes": 3836,
+      "sha256": "8cc5cd112ad1f76f9edf5a31466377aba0a06a63345d1b0bdf6f8638e1b4f374"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-58x58.png",
+      "bytes": 3889,
+      "sha256": "4cf54fe542ca779caebfb61cfcb0fe5eb139b20739fe0e3ea2f2947bd6a01826"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-60x60.png",
+      "bytes": 4141,
+      "sha256": "f72a24428f63c71d016975933c0a64e1961efba070e2aff6be7e1c54edd8eb51"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-64x64.png",
+      "bytes": 4548,
+      "sha256": "4016a41870c08cb57598cf7bb2fee7cec2f2e6841fc313233ebe37a263ba3a93"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-72x72.png",
+      "bytes": 5407,
+      "sha256": "dc08a21a33b5175116e006b587d27d68011af0b39c0a44145b9120b760ae0d79"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-76x76.png",
+      "bytes": 5962,
+      "sha256": "4644aa28951a8615c4d75713fdbcc099085b212f1ce1311c4c6b956abc35033d"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-80x80.png",
+      "bytes": 6505,
+      "sha256": "42875a25805fb8e81f5ee11fdbeba516172d69ae8232278dc70cddc27fd50a8a"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-87x87.png",
+      "bytes": 7482,
+      "sha256": "645db3b55f3bd5b43fa05277b952c484d606dd01cab8229a70ab2b3a52dba1ac"
+    },
+    {
+      "path": "variants/light-box-green-mark/icon-96x96.png",
+      "bytes": 8836,
+      "sha256": "fd326ad21e29f7b91b3ee71e8854184c5be3ff6b9c9949a54fa164933e675279"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-1024x1024.png",
+      "bytes": 477224,
+      "sha256": "a722cf5536c3686e11d69975eefbf14ed69b1c1fd34b76b028e46de7590240fb"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-128x128.png",
+      "bytes": 11649,
+      "sha256": "e53a53830789a31a19f08ec88dfeb89fb4cef46e9028417a518b80fa0658efa0"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-16x16.png",
+      "bytes": 636,
+      "sha256": "53f94a27764b397d13c16d3e10a6df9f9a336f021eb95e84854e7d2a3adc6c7d"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-192x192.png",
+      "bytes": 21905,
+      "sha256": "a551182cd4800c817f770c930d517ef4e1b5cf5359f0363120887ef936f4c31c"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-20x20.png",
+      "bytes": 844,
+      "sha256": "4691892139d4bb25d976e4c737c137fc86c22729b6126f8737038aa12706f7ee"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-24x24.png",
+      "bytes": 1104,
+      "sha256": "b007c25724ecc76390400db1ebff0ce5ed8071cec0f3223c6287dc1afaccce89"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-256x256.png",
+      "bytes": 36305,
+      "sha256": "f427f03db0aca4bc9d2e9e48326fc0a8a02151c50c20fb47df06bce82de71615"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-32x32.png",
+      "bytes": 1690,
+      "sha256": "7ed70930f672d17f986a70dfe52abb6f353646c1b42775febd040b91be32427e"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-40x40.png",
+      "bytes": 2227,
+      "sha256": "827f0f414ba19e855d2b9c2f712b0b43b0d4519269ed446112e787ee9b28f1e2"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-48x48.png",
+      "bytes": 2936,
+      "sha256": "dbb179f3a69643e991b7ea18584c98cd09cdd171fbb50d7248f7067f83bdb6d9"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-512x512.png",
+      "bytes": 132858,
+      "sha256": "c5f20c63976a2e45eecf15f406851f35be021b2e1858f7d427795bb728c6e0b1"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-64x64.png",
+      "bytes": 4305,
+      "sha256": "e85e901211aebbd6af23931686bc36ae428b9b2fab04face9346f5dda959dac8"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-72x72.png",
+      "bytes": 5096,
+      "sha256": "40e64a2063d423140178ca5d611d81cb033d208cb2d6fa455c07922293688b3c"
+    },
+    {
+      "path": "variants/transparent/dark-mark/mark-96x96.png",
+      "bytes": 7750,
+      "sha256": "b919eadeb68dddbc4b7e6b6b1d72cbc3c753b16c6206f4e006eb85536ace8ce5"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-1024x1024.png",
+      "bytes": 554301,
+      "sha256": "dc009c5ff568d059753180f7f29f36750cbf141f53c5483d7c196df28906e9e6"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-128x128.png",
+      "bytes": 13570,
+      "sha256": "921f8ae7bc5a5036b5f53463ede704d7e263c0b2d305480150257519f5763d71"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-16x16.png",
+      "bytes": 615,
+      "sha256": "029ea08fbc25e8bc72242e5f72ea9b28deecb4bf82993039104ae466ad1e97cb"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-192x192.png",
+      "bytes": 25933,
+      "sha256": "92eb568ff1673998cee79521c504b9d38436f4d3a1ce1e34010984f40340c473"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-20x20.png",
+      "bytes": 783,
+      "sha256": "1cd05296526b37cb33dfb84547f6b30210c8c746ebe853bf3a87c8a211bff990"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-24x24.png",
+      "bytes": 1099,
+      "sha256": "4e2dfe8b41ff9d6d6078a78742dea047b856aefd80dd83200fbfb900f61fb71e"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-256x256.png",
+      "bytes": 42321,
+      "sha256": "f2dea2ed9c556e19393c22e8c9f0ce942a2dd648189d43c6d5a2eb2126ebc73d"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-32x32.png",
+      "bytes": 1701,
+      "sha256": "d80f677ae8539474b95d51fd7455be81c856e8933d57e6ca5b3ebf9ee6c15eae"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-40x40.png",
+      "bytes": 2267,
+      "sha256": "ef885ea429e90f30b95e9b39a634fef27eb4b22c6c3971db4ace134322d205b2"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-48x48.png",
+      "bytes": 3027,
+      "sha256": "9472dbc4b9be99acb16bab36a65797caaf65f6beb4f4170a047ea60f33b7009d"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-512x512.png",
+      "bytes": 155621,
+      "sha256": "01582c8d0de0eb63bce23088cdcf47ef3ba0b6f3b9f5ee34d4f571228703f60f"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-64x64.png",
+      "bytes": 4510,
+      "sha256": "0a8a5134ae3d93a0996ea591e562631f3d5b87c3920639250129de51458f0eb1"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-72x72.png",
+      "bytes": 5531,
+      "sha256": "eda5f42c4269d3770be7a437cffcfddd44f79bd089fc3101a24fa23ecfcf68e5"
+    },
+    {
+      "path": "variants/transparent/light-mark/mark-96x96.png",
+      "bytes": 8768,
+      "sha256": "02cb2da528523438b45e61a2240763e2274f7bd86853e33c87042a27fb5af3f6"
+    },
+    {
+      "path": "web/android-chrome-192x192.png",
+      "bytes": 35054,
+      "sha256": "5548e4d24eb8536be0c961aa7304471777e1bc1f50842c8c04b80b1db5601946"
+    },
+    {
+      "path": "web/android-chrome-512x512.png",
+      "bytes": 310725,
+      "sha256": "b6095b0eb5b774f7c1aaa9efb59b3b00054602bcf30f32d5ae44718691066c03"
+    },
+    {
+      "path": "web/app-icon-dark-box-green-192x192.png",
+      "bytes": 58738,
+      "sha256": "9c0bb7933c3aa9995c0f5fa3ae240efcecece2ad3fff2f573714f59f0aba8dc7"
+    },
+    {
+      "path": "web/app-icon-dark-box-green-512x512.png",
+      "bytes": 383545,
+      "sha256": "b9da29e0da4ef823ea183f96864d90f72f33e864d0d238d9637fbdc1f9183de2"
+    },
+    {
+      "path": "web/app-icon-green-box-192x192.png",
+      "bytes": 64458,
+      "sha256": "dd5fc7d912323f96683e5307d2bfd825ce461a670190aea766edb5e9f4c15c2c"
+    },
+    {
+      "path": "web/app-icon-green-box-512x512.png",
+      "bytes": 431800,
+      "sha256": "54ba9ce8c5bc8862810dc350189463ede3cbaf367e004b208ee2b7ab97dca537"
+    },
+    {
+      "path": "web/apple-touch-icon-precomposed.png",
+      "bytes": 30354,
+      "sha256": "7bb1eb1c7f0e9db49f52e5332360d7d284c51a667bd96d1cf212c312d8c1cc97"
+    },
+    {
+      "path": "web/apple-touch-icon.png",
+      "bytes": 30354,
+      "sha256": "7bb1eb1c7f0e9db49f52e5332360d7d284c51a667bd96d1cf212c312d8c1cc97"
+    },
+    {
+      "path": "web/browserconfig.xml",
+      "bytes": 379,
+      "sha256": "30c609913b7f12f13a2b375303f5d4c536ecf395d89f339e06be65db2ce118fe"
+    },
+    {
+      "path": "web/favicon-128x128.png",
+      "bytes": 15214,
+      "sha256": "f9d63ace904546fd1cfd95341aee1b0025c96d218528b4183bbd9ab8fbdea494"
+    },
+    {
+      "path": "web/favicon-16x16.png",
+      "bytes": 615,
+      "sha256": "56589855636566033144b99cc042a546b48d2bd2249d8c718d3f863077f467fc"
+    },
+    {
+      "path": "web/favicon-24x24.png",
+      "bytes": 1068,
+      "sha256": "d0951c7bd16492fceb8abd1ef800f8d4db75d28f6cc37be4763fc134533d28c6"
+    },
+    {
+      "path": "web/favicon-256x256.png",
+      "bytes": 67837,
+      "sha256": "260114fb6b04d22115c94732e2231ab7cdfea7dfccc02b14ed26f0da87705d3c"
+    },
+    {
+      "path": "web/favicon-32x32.png",
+      "bytes": 1596,
+      "sha256": "360bb675fc3b26e1739acf62c30933a57886ff4bbd959fd6f1ee6ad5e45ce6b3"
+    },
+    {
+      "path": "web/favicon-48x48.png",
+      "bytes": 2994,
+      "sha256": "47d849c95696604edd56e3c5dbc126c92156cbc33d56dfac8031ccdfafc79a55"
+    },
+    {
+      "path": "web/favicon-64x64.png",
+      "bytes": 4548,
+      "sha256": "4016a41870c08cb57598cf7bb2fee7cec2f2e6841fc313233ebe37a263ba3a93"
+    },
+    {
+      "path": "web/favicon-96x96.png",
+      "bytes": 8836,
+      "sha256": "fd326ad21e29f7b91b3ee71e8854184c5be3ff6b9c9949a54fa164933e675279"
+    },
+    {
+      "path": "web/favicon-dark-128x128.png",
+      "bytes": 14362,
+      "sha256": "c02f2658f4825c9f205e04900a4a282f4acffa0c37cb3b209230a1b13c49a663"
+    },
+    {
+      "path": "web/favicon-dark-16x16.png",
+      "bytes": 615,
+      "sha256": "029ea08fbc25e8bc72242e5f72ea9b28deecb4bf82993039104ae466ad1e97cb"
+    },
+    {
+      "path": "web/favicon-dark-24x24.png",
+      "bytes": 1099,
+      "sha256": "4e2dfe8b41ff9d6d6078a78742dea047b856aefd80dd83200fbfb900f61fb71e"
+    },
+    {
+      "path": "web/favicon-dark-256x256.png",
+      "bytes": 43965,
+      "sha256": "6ee816a88cc82d71c084f0818a69dc1068810fd1561b63ff86c75c58135ff180"
+    },
+    {
+      "path": "web/favicon-dark-32x32.png",
+      "bytes": 1701,
+      "sha256": "d80f677ae8539474b95d51fd7455be81c856e8933d57e6ca5b3ebf9ee6c15eae"
+    },
+    {
+      "path": "web/favicon-dark-48x48.png",
+      "bytes": 3117,
+      "sha256": "c420160e9940bdaf969283bdaeaae79723199e6bab32ee2b9bdac01545ef2f45"
+    },
+    {
+      "path": "web/favicon-dark-64x64.png",
+      "bytes": 4685,
+      "sha256": "695a730be241de61726f231ceda93047d75270f02918ee022e9145d2d69274c5"
+    },
+    {
+      "path": "web/favicon-dark-96x96.png",
+      "bytes": 8899,
+      "sha256": "65bbe6f558fcf1f8faf93d88f3c0fba56d08551d0283883dc5823b00add142fd"
+    },
+    {
+      "path": "web/favicon-light-128x128.png",
+      "bytes": 12151,
+      "sha256": "0cb917865103e1ee20ef45b82cc95caa8ed06cfd55770064fa1694312988223e"
+    },
+    {
+      "path": "web/favicon-light-16x16.png",
+      "bytes": 636,
+      "sha256": "53f94a27764b397d13c16d3e10a6df9f9a336f021eb95e84854e7d2a3adc6c7d"
+    },
+    {
+      "path": "web/favicon-light-24x24.png",
+      "bytes": 1104,
+      "sha256": "b007c25724ecc76390400db1ebff0ce5ed8071cec0f3223c6287dc1afaccce89"
+    },
+    {
+      "path": "web/favicon-light-256x256.png",
+      "bytes": 37737,
+      "sha256": "233f2e65f664364398ce04deb9333064f6ff3bc5e1edb4aa855619f38406e0c0"
+    },
+    {
+      "path": "web/favicon-light-32x32.png",
+      "bytes": 1690,
+      "sha256": "7ed70930f672d17f986a70dfe52abb6f353646c1b42775febd040b91be32427e"
+    },
+    {
+      "path": "web/favicon-light-48x48.png",
+      "bytes": 2971,
+      "sha256": "9035657e3df2e7b6c29339b4846f2f86a6ceaf5b9a14486dd17e491f7c72e768"
+    },
+    {
+      "path": "web/favicon-light-64x64.png",
+      "bytes": 4394,
+      "sha256": "dcfbb6ae3c16103513182f0bb80d58e9763bd32d1c830d5cb9151201d2045f2d"
+    },
+    {
+      "path": "web/favicon-light-96x96.png",
+      "bytes": 7865,
+      "sha256": "3ce2f425a3040bf0ed5e6a693e9b1b51b7e2e10efc087682b568e0de0846da55"
+    },
+    {
+      "path": "web/favicon.ico",
+      "bytes": 85681,
+      "sha256": "1baa3380acd9110bb7dd8219a197ac4ba7824b2d46eadb73bf6ba5890a823705"
+    },
+    {
+      "path": "web/mark-dark-transparent.png",
+      "bytes": 146596,
+      "sha256": "c4d8ff07093736cb23e6212e6965b9f6337ebd669403c7a410fdb7603a33247a"
+    },
+    {
+      "path": "web/mark-light-transparent.png",
+      "bytes": 170486,
+      "sha256": "da52c4023c0d742925ea8369dc4578ea631a85ec45d08078e9a41aae145c0c5b"
+    },
+    {
+      "path": "web/pwa/dark-icon-192x192.png",
+      "bytes": 58738,
+      "sha256": "9c0bb7933c3aa9995c0f5fa3ae240efcecece2ad3fff2f573714f59f0aba8dc7"
+    },
+    {
+      "path": "web/pwa/dark-icon-512x512.png",
+      "bytes": 383545,
+      "sha256": "b9da29e0da4ef823ea183f96864d90f72f33e864d0d238d9637fbdc1f9183de2"
+    },
+    {
+      "path": "web/pwa/icon-128x128.png",
+      "bytes": 15214,
+      "sha256": "f9d63ace904546fd1cfd95341aee1b0025c96d218528b4183bbd9ab8fbdea494"
+    },
+    {
+      "path": "web/pwa/icon-144x144.png",
+      "bytes": 19035,
+      "sha256": "d9209856dfa686fc9e85e013d60d2d629c86b136f3e561ddc90cf90ded452077"
+    },
+    {
+      "path": "web/pwa/icon-152x152.png",
+      "bytes": 21233,
+      "sha256": "88b4a0dbb02da838d58d95a6cd1f1e86bafa30cd8a769f9461408ae18fff295e"
+    },
+    {
+      "path": "web/pwa/icon-192x192.png",
+      "bytes": 35054,
+      "sha256": "5548e4d24eb8536be0c961aa7304471777e1bc1f50842c8c04b80b1db5601946"
+    },
+    {
+      "path": "web/pwa/icon-384x384.png",
+      "bytes": 172879,
+      "sha256": "6c0fb757a996deaafffd18e95efb042a039da33f8114f68970ab1ddcb7ca03ae"
+    },
+    {
+      "path": "web/pwa/icon-512x512.png",
+      "bytes": 310725,
+      "sha256": "b6095b0eb5b774f7c1aaa9efb59b3b00054602bcf30f32d5ae44718691066c03"
+    },
+    {
+      "path": "web/pwa/icon-72x72.png",
+      "bytes": 5407,
+      "sha256": "dc08a21a33b5175116e006b587d27d68011af0b39c0a44145b9120b760ae0d79"
+    },
+    {
+      "path": "web/pwa/icon-96x96.png",
+      "bytes": 8836,
+      "sha256": "fd326ad21e29f7b91b3ee71e8854184c5be3ff6b9c9949a54fa164933e675279"
+    },
+    {
+      "path": "web/pwa/maskable-icon-192x192.png",
+      "bytes": 64458,
+      "sha256": "dd5fc7d912323f96683e5307d2bfd825ce461a670190aea766edb5e9f4c15c2c"
+    },
+    {
+      "path": "web/pwa/maskable-icon-512x512.png",
+      "bytes": 431800,
+      "sha256": "54ba9ce8c5bc8862810dc350189463ede3cbaf367e004b208ee2b7ab97dca537"
+    },
+    {
+      "path": "web/site.webmanifest",
+      "bytes": 698,
+      "sha256": "ef7450369e5ea1ffe76be5cc60f809abf6b4d0c72ed67e627aa74af90102ffde"
+    },
+    {
+      "path": "web/windows-tiles/mstile-144x144.png",
+      "bytes": 12879,
+      "sha256": "086ce19f129d8529663e792bb680f7f53bf0ee944c8ddd198da5d2482dfd1f14"
+    },
+    {
+      "path": "web/windows-tiles/mstile-150x150.png",
+      "bytes": 13839,
+      "sha256": "62b20fd5b85d9a13cd006d80fcf1880d445fc4be6312e10ab3102b0c7f2b89d9"
+    },
+    {
+      "path": "web/windows-tiles/mstile-310x150.png",
+      "bytes": 15247,
+      "sha256": "1aac734ace9f70789d3b6d77d90eb4f07556b012a85e61040bf9cfc99d90b033"
+    },
+    {
+      "path": "web/windows-tiles/mstile-310x310.png",
+      "bytes": 50148,
+      "sha256": "7108d748ac0cbc66a9b6e43a3aef2aaf587eea423d01c0a6bdbb256322680ddd"
+    },
+    {
+      "path": "web/windows-tiles/mstile-70x70.png",
+      "bytes": 4097,
+      "sha256": "60e72d702715b6cb146678b8d92b7f5c095d8b03432b07970a98060dc8924a97"
+    }
+  ]
+}

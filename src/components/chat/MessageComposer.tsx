@@ -17,18 +17,26 @@ type Props = {
   value: string;
   onChangeText: (value: string) => void;
   onSend: (value: string) => void | Promise<void>;
+  onStop?: () => void | Promise<void>;
+  onOpenCredits?: () => void;
   placeholder?: string;
   disabled?: boolean;
   sending?: boolean;
+  insufficientCredits?: boolean;
+  creditCostLabel?: string;
 };
 
 export function MessageComposer({
   value,
   onChangeText,
   onSend,
+  onStop,
+  onOpenCredits,
   placeholder = "Message PowerChain Copilot",
   disabled = false,
   sending = false,
+  insufficientCredits = false,
+  creditCostLabel = "10,000 PWRC / response · ≈ $0.02 ref",
 }: Props) {
   const { theme } = usePowerChainTheme();
   const [inputHeight, setInputHeight] = useState(44);
@@ -38,12 +46,7 @@ export function MessageComposer({
   const remaining = MAX_MESSAGE_LENGTH - count;
   const nearLimit = remaining <= 200;
   const blocked =
-    disabled ||
-    sending ||
-    trimmed.length === 0 ||
-    count > MAX_MESSAGE_LENGTH;
-
-  const counterLabel = `${count} / ${MAX_MESSAGE_LENGTH}`;
+    disabled || trimmed.length === 0 || count > MAX_MESSAGE_LENGTH;
 
   const styles = useMemo(
     () =>
@@ -83,18 +86,33 @@ export function MessageComposer({
           alignItems: "center",
           justifyContent: "center",
           borderRadius: 10,
-          backgroundColor: blocked
-            ? theme.colors.surfaceSubtle
-            : theme.colors.primary,
+          backgroundColor: sending
+            ? theme.colors.danger
+            : insufficientCredits
+              ? theme.colors.surfaceSubtle
+              : blocked
+                ? theme.colors.surfaceSubtle
+                : theme.colors.primary,
         },
         footer: {
           minWidth: 0,
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
+          gap: 8,
           paddingHorizontal: 8,
-          paddingTop: 3,
+          paddingTop: 4,
           paddingBottom: 1,
+        },
+        cost: {
+          flex: 1,
+          minWidth: 0,
+          fontSize: 10,
+          lineHeight: 14,
+          fontWeight: "600",
+          color: insufficientCredits
+            ? theme.colors.warning
+            : theme.colors.textMuted,
         },
         counter: {
           fontSize: 11,
@@ -107,20 +125,26 @@ export function MessageComposer({
             : theme.colors.textMuted,
         },
       }),
-    [theme, blocked, nearLimit, remaining],
+    [theme, blocked, nearLimit, remaining, sending, insufficientCredits],
   );
 
   function handleContentSizeChange(
     event: NativeSyntheticEvent<TextInputContentSizeChangeEventData>,
   ) {
-    const next = Math.max(
-      44,
-      Math.min(132, event.nativeEvent.contentSize.height),
+    setInputHeight(
+      Math.max(44, Math.min(132, event.nativeEvent.contentSize.height)),
     );
-    setInputHeight(next);
   }
 
-  async function submit() {
+  async function action() {
+    if (sending) {
+      await onStop?.();
+      return;
+    }
+    if (insufficientCredits) {
+      onOpenCredits?.();
+      return;
+    }
     if (blocked) return;
     await onSend(trimmed);
   }
@@ -143,35 +167,48 @@ export function MessageComposer({
 
         <Pressable
           accessibilityRole="button"
-          accessibilityLabel="Send message"
-          accessibilityState={{ disabled: blocked, busy: sending }}
-          disabled={blocked}
+          accessibilityLabel={
+            sending
+              ? "Stop generation"
+              : insufficientCredits
+                ? "Open PWRC credit center"
+                : "Send message"
+          }
+          disabled={!sending && !insufficientCredits && blocked}
           hitSlop={6}
-          onPress={submit}
+          onPress={action}
           style={({ pressed }) => [
             styles.send,
-            pressed && !blocked && { opacity: 0.86 },
+            pressed && { opacity: 0.86 },
           ]}
         >
           <MaterialCommunityIcons
-            name={sending ? "dots-horizontal" : "arrow-up"}
+            name={
+              sending
+                ? "stop"
+                : insufficientCredits
+                  ? "wallet-outline"
+                  : "arrow-up"
+            }
             size={21}
             color={
-              blocked
-                ? theme.colors.textMuted
-                : theme.colors.primaryForeground
+              sending
+                ? theme.colors.primaryForeground
+                : insufficientCredits || blocked
+                  ? theme.colors.textMuted
+                  : theme.colors.primaryForeground
             }
           />
         </Pressable>
       </View>
 
       <View style={styles.footer}>
-        <Text
-          accessibilityLabel={`${count} of ${MAX_MESSAGE_LENGTH} characters`}
-          style={styles.counter}
-        >
-          {counterLabel}
+        <Text numberOfLines={1} style={styles.cost}>
+          {insufficientCredits
+            ? "Insufficient PWRC · Open credit center"
+            : creditCostLabel}
         </Text>
+        <Text style={styles.counter}>{count} / {MAX_MESSAGE_LENGTH}</Text>
       </View>
     </View>
   );

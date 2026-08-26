@@ -5,3 +5,4 @@ export * from "./ResponsiveHeader";
 export * from "./AdaptiveSplitPane";
 
 export * from "./AdaptiveDialog";
+export * from "./ScreenToolbar";

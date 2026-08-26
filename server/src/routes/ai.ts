@@ -452,7 +452,7 @@ export async function registerAiRoutes(app: FastifyInstance) {
             reservationId: reservation.id,
             conversationId: conversation!.id,
             content: verification.content,
-            provider: "openai",
+            provider: generated.provider,
             model: generated.model,
             upstreamResponseId: generated.responseId,
             mcpInvocations: generated.mcpInvocations,
@@ -467,7 +467,7 @@ export async function registerAiRoutes(app: FastifyInstance) {
               requestId: request.id,
               metadata: {
                 pendingResponseId: pending.pending.id,
-                provider: "openai",
+                provider: generated.provider,
                 model: generated.model,
                 creditReservationId: reservation.id,
                 pwrcChargeState: "reserved_not_settled",

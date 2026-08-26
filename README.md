@@ -383,7 +383,7 @@ GET    /api/v1/health/ready
 Mobile example:
 
 ```bash
-EXPO_PUBLIC_API_URL=http://localhost:3001/api/v1
+EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1
 EXPO_PUBLIC_SOLANA_NETWORK=devnet
 EXPO_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
 ```
@@ -1029,3 +1029,74 @@ The frontend editor config remains dependency-independent:
 
 while `frontend/tsconfig.expo.json` validates against the installed official
 Expo base after `pnpm install`.
+
+## Managed AI + chain infrastructure update
+
+PowerChain Copilot 1.0.0 now supports a managed provider router:
+
+```text
+OpenAI → Anthropic → DeepSeek → Llama-compatible → Emergent-compatible
+```
+
+The actual order is controlled by `AI_PRIMARY_PROVIDER` and
+`AI_PROVIDER_ORDER`. Provider fallback does not alter the PWRC accounting rule:
+one verified, delivery-acknowledged Copilot response settles one 10,000-PWRC
+message unit.
+
+Development public configuration:
+
+```env
+EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1
+EXPO_PUBLIC_NETWORK=devnet
+EXPO_PUBLIC_DATA_MODE=demo
+EXPO_PUBLIC_AI_MODE=managed
+```
+
+Server infrastructure now supports PostgreSQL/Prisma, optional MongoDB, optional
+Redis distributed rate limits, opaque or JWT-presented revocable sessions,
+Helius/public/custom Solana RPC routing, mainnet-beta/devnet profiles, standard
+Solana program identities and Metaplex program identities.
+
+Inspect sanitized chain configuration at:
+
+```text
+GET /api/v1/system/solana
+```
+
+The endpoint never returns Helius keys or secret RPC URLs. PowerChain-specific
+program IDs remain blank until verified deployed addresses are supplied.
+
+See `docs/AI-PROVIDERS-SOLANA.md`.
+
+## Interaction architecture
+
+PowerChain Copilot Mobile now uses five primary tabs:
+
+```text
+Overview · Actions · Copilot · Assets · Systems
+```
+
+The primary operational routes are centralized in `src/constants/routes.ts`. Batch approval review, asset details, reports, settlement review, service health, diagnostics, PWRC Credits and Settings all have explicit Expo Router destinations.
+
+See `docs/INTERACTION-DESIGN.md` for the route matrix, toolbar policy, trust-boundary UX and demo/live behavior.
+
+## Shared client infrastructure
+
+Application-wide client primitives now live under `frontend/src/shared`,
+`storage`, `store`, and `utils`. The API client consumes the shared session and
+error layers, while brand/PWRC UI consumes the semantic asset registry. See
+`docs/SHARED-APPLICATION-INFRASTRUCTURE.md`.
+
+
+## EMS / IoT / DePIN platform modules
+
+Version 1.0.0 now includes shared energy contracts, provider-neutral auth/wallet
+adapters, Solana/Sui/market-data clients, reusable operational hooks/components,
+safe-action contracts and an isolated Express + Prisma + Supabase backend under
+`backend/platform-express`.
+
+The existing deployed Copilot/Fastify API remains separate. The Expo application
+uses `EXPO_PUBLIC_ENERGY_API_URL` when supplied and falls back to the existing API
+URL otherwise.
+
+See `docs/ENERGY-PLATFORM-ARCHITECTURE.md`.

@@ -20,21 +20,19 @@ export function ConversationHeader({
 
   return (
     <View style={styles.row}>
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="Open conversations"
-        hitSlop={7}
-        onPress={onMenu}
-        style={styles.iconButton}
-      >
-        <MaterialCommunityIcons
-          name="menu"
-          size={22}
-          color={theme.colors.text}
-        />
-      </Pressable>
+      {onMenu ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="Open conversations"
+          hitSlop={7}
+          onPress={onMenu}
+          style={styles.iconButton}
+        >
+          <MaterialCommunityIcons name="menu" size={22} color={theme.colors.text} />
+        </Pressable>
+      ) : null}
 
-      <PowerChainLogo size={34} />
+      <PowerChainLogo size={34} variant="green" />
 
       <View style={styles.copy}>
         <Text numberOfLines={1} style={[styles.title, { color: theme.colors.text }]}>
@@ -60,25 +58,17 @@ export function ConversationHeader({
         </View>
       </View>
 
-      <Pressable
-        accessibilityRole="button"
-        accessibilityLabel="New conversation"
-        hitSlop={7}
-        onPress={onNewChat}
-        style={[
-          styles.iconButton,
-          {
-            borderColor: theme.colors.border,
-            backgroundColor: theme.colors.surface,
-          },
-        ]}
-      >
-        <MaterialCommunityIcons
-          name="square-edit-outline"
-          size={20}
-          color={theme.colors.text}
-        />
-      </Pressable>
+      {onNewChat ? (
+        <Pressable
+          accessibilityRole="button"
+          accessibilityLabel="New conversation"
+          hitSlop={7}
+          onPress={onNewChat}
+          style={[styles.iconButton,{borderColor:theme.colors.border,backgroundColor:theme.colors.surface}]}
+        >
+          <MaterialCommunityIcons name="square-edit-outline" size={20} color={theme.colors.text} />
+        </Pressable>
+      ) : null}
     </View>
   );
 }

@@ -1,0 +1,121 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  runtime  = "nodejs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model EnergySite {
+  id             String        @id @default(uuid())
+  organizationId String
+  name           String
+  country        String?
+  timezone       String?
+  assets         EnergyAsset[]
+  devices        IotDevice[]
+  depinNodes     DepinNode[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@index([organizationId])
+}
+
+model EnergyAsset {
+  id             String   @id @default(uuid())
+  organizationId String
+  siteId         String
+  site           EnergySite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name           String
+  kind           String
+  capacityMw     Decimal? @db.Decimal(24, 9)
+  status         String   @default("UNKNOWN")
+  resourceVersion Int     @default(1)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, siteId])
+}
+
+model IotDevice {
+  id             String   @id @default(uuid())
+  organizationId String
+  siteId         String
+  site           EnergySite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+  name           String
+  kind           String
+  manufacturer   String?
+  model          String?
+  serialNumber   String?
+  firmwareVersion String?
+  connectivity   String   @default("UNKNOWN")
+  lastSeenAt     DateTime?
+  telemetry      TelemetryReading[]
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, siteId])
+}
+
+model TelemetryReading {
+  id             String   @id @default(uuid())
+  organizationId String
+  deviceId       String
+  device         IotDevice @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  metric         String
+  value          Decimal  @db.Decimal(38, 12)
+  unit           String
+  quality        String   @default("GOOD")
+  source         String
+  observedAt     DateTime
+  receivedAt     DateTime @default(now())
+
+  @@index([organizationId, deviceId, metric, observedAt])
+}
+
+model DepinNode {
+  id             String   @id @default(uuid())
+  organizationId String
+  siteId         String?
+  site           EnergySite? @relation(fields: [siteId], references: [id], onDelete: SetNull)
+  network        String
+  nodeType       String
+  operatorId     String?
+  region         String?
+  status         String   @default("UNKNOWN")
+  identityReference String?
+  lastHeartbeatAt DateTime?
+  rewardAsset    String?
+  rewardAmountBaseUnits Decimal? @db.Decimal(78, 0)
+  rewardDecimals Int?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([organizationId, network])
+}
+
+model SafeAction {
+  id             String   @id @default(uuid())
+  organizationId String
+  actorId        String
+  type           String
+  payload        Json
+  summary        Json
+  state          String
+  policyReasons  Json
+  idempotencyKey String
+  requestId      String
+  expectedResourceVersion Int?
+  resourceVersion Int     @default(1)
+  confirmationTokenHash String?
+  confirmationExpiresAt DateTime?
+  externalReference String?
+  errorCode      String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@unique([organizationId, idempotencyKey])
+  @@index([organizationId, state])
+}

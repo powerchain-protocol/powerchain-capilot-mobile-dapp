@@ -16,6 +16,13 @@ const requiredPaths = [
   "app/index.tsx",
   "src/providers/AppProviders.tsx",
   "assets/icons/icon.png",
+  "assets/icons/app-icon-light-1024.png",
+  "assets/icons/app-icon-dark-1024.png",
+  "assets/icons/app-icon-tinted-1024.png",
+  "assets/icons/adaptive-foreground.png",
+  "assets/icons/monochrome.png",
+  "assets/icons/notification-icon.png",
+  "assets/icons/favicon.png",
   "index.js",
   "polyfill.js",
 ];

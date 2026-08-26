@@ -11,3 +11,7 @@ export * from "./ChatErrorState";
 export * from "./ConversationHeader";
 
 export * from "./ConversationRail";
+
+export * from "./CostedSuggestionCard";
+
+export * from "./McpProvenance";

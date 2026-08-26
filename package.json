@@ -8,7 +8,8 @@
     "frontend",
     "server",
     "packages/*",
-    "backend/express"
+    "backend/express",
+    "backend/platform-express"
   ],
   "engines": {
     "node": ">=22.13 <25"
@@ -30,7 +31,7 @@
     "server:typecheck": "pnpm --dir server run typecheck",
     "typecheck:frontend": "pnpm --dir frontend run typecheck",
     "typecheck:server": "pnpm --dir server run typecheck",
-    "typecheck": "pnpm run typecheck:credits && pnpm run typecheck:mcp && pnpm run typecheck:frontend && pnpm run typecheck:server && pnpm run typecheck:mcp-express",
+    "typecheck": "pnpm run typecheck:credits && pnpm run typecheck:mcp && pnpm run typecheck:frontend && pnpm run typecheck:server && pnpm run typecheck:mcp-express && pnpm run typecheck:energy-contracts && pnpm run typecheck:platform-adapters && pnpm run typecheck:platform-clients && pnpm run energy:backend:typecheck",
     "env:init": "node scripts/init-env.mjs",
     "env:check": "node scripts/check-env.mjs",
     "db:up": "docker compose up -d postgres",
@@ -41,7 +42,7 @@
     "prisma:deploy": "pnpm exec prisma migrate deploy --config prisma.config.ts",
     "dev:stack": "node scripts/dev-fullstack.mjs",
     "verify:deps": "node scripts/verify-dependencies.mjs",
-    "verify": "node scripts/verify-structure.mjs && node scripts/verify-release.mjs && node scripts/verify-imports.mjs && node scripts/verify-theme.mjs && node scripts/verify-frontend-layout.mjs && node scripts/verify-tsconfig-layout.mjs && node scripts/verify-api-namespace.mjs && node --experimental-strip-types --test server/test/api-namespace.test.ts && node scripts/verify-dependencies.mjs && node scripts/check-env.mjs && node scripts/verify-pwrc-credits.mjs && node --experimental-strip-types --test packages/pwrc-credits/test/*.test.ts && pnpm run verify:mcp",
+    "verify": "node scripts/verify-structure.mjs && node scripts/verify-release.mjs && node scripts/verify-imports.mjs && node scripts/verify-theme.mjs && node scripts/verify-interaction-design.mjs && node scripts/verify-frontend-layout.mjs && node scripts/verify-tsconfig-layout.mjs && node scripts/verify-api-namespace.mjs && node --experimental-strip-types --test server/test/api-namespace.test.ts && node scripts/verify-dependencies.mjs && node scripts/check-env.mjs && node scripts/verify-pwrc-credits.mjs && node --experimental-strip-types --test packages/pwrc-credits/test/*.test.ts && pnpm run verify:mcp && pnpm run verify:providers && pnpm run verify:icons && pnpm run verify:shared && pnpm run verify:energy-platform",
     "setup": "node scripts/setup-pnpm.mjs",
     "verify:credits": "node scripts/verify-pwrc-credits.mjs && node --experimental-strip-types --test packages/pwrc-credits/test/*.test.ts",
     "typecheck:credits": "pnpm --dir packages/pwrc-credits run typecheck",
@@ -52,6 +53,19 @@
     "mcp:python:check": "python3 -m compileall -q backend/python/app backend/python/tests",
     "verify:mcp": "node scripts/verify-mcp.mjs && node --experimental-strip-types --test packages/mcp-client/test/*.test.ts && python3 -m compileall -q backend/python/app backend/python/tests",
     "typecheck:mcp-express": "pnpm --dir backend/express run typecheck",
-    "verify:api": "node scripts/verify-api-namespace.mjs && node --experimental-strip-types --test server/test/api-namespace.test.ts"
+    "verify:api": "node scripts/verify-api-namespace.mjs && node --experimental-strip-types --test server/test/api-namespace.test.ts",
+    "verify:providers": "node scripts/verify-providers-solana.mjs",
+    "verify:interaction": "node scripts/verify-interaction-design.mjs",
+    "verify:icons": "node scripts/verify-app-icons.mjs",
+    "verify:shared": "node scripts/verify-shared-infra.mjs",
+    "energy:backend": "pnpm --dir backend/platform-express run dev",
+    "energy:backend:typecheck": "pnpm --dir backend/platform-express run typecheck",
+    "energy:prisma:generate": "pnpm --dir backend/platform-express run prisma:generate",
+    "energy:prisma:migrate": "pnpm --dir backend/platform-express run prisma:migrate",
+    "typecheck:energy-contracts": "pnpm --dir packages/energy-contracts run typecheck",
+    "typecheck:platform-adapters": "pnpm --dir packages/platform-adapters run typecheck",
+    "typecheck:platform-clients": "pnpm --dir packages/platform-clients run typecheck",
+    "test:energy-contracts": "pnpm --dir packages/energy-contracts run test",
+    "verify:energy-platform": "node scripts/verify-energy-platform.mjs && node --experimental-strip-types --test packages/energy-contracts/test/*.test.ts"
   }
 }

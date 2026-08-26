@@ -10,8 +10,7 @@ import type {
   Web3IconVariant,
 } from "../../types/web3-assets";
 import { usePowerChainTheme } from "../../theme";
-
-const pwrc = require("../../../assets/tokens/pwrc.png");
+import { APP_ASSETS } from "../../shared/assets";
 
 export function AssetIcon({
   symbol,
@@ -27,7 +26,7 @@ export function AssetIcon({
     return (
       <Image
         accessibilityLabel="PowerChain icon"
-        source={pwrc}
+        source={APP_ASSETS.tokens.pwrc}
         resizeMode="contain"
         style={{
           width: size,

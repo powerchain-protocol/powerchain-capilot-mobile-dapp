@@ -11,7 +11,7 @@ import {
   CostedSuggestionCard,
   type ChatMessageModel,
 } from "../../../src/components/chat";
-import { AdaptiveSplitPane } from "../../../src/components/layout";
+import { AdaptiveSplitPane, ScreenToolbar } from "../../../src/components/layout";
 import { quickPrompts } from "../../../src/data/quick-prompts";
 import {
   cancelCopilotMessage,
@@ -23,6 +23,7 @@ import { CreditBalanceBar } from "../../../src/components/credits";
 import { usePowerChainTheme } from "../../../src/theme";
 import { useResponsiveLayout } from "../../../src/hooks/useResponsiveLayout";
 import { LAYOUT } from "../../../src/constants/layout";
+import { APP_ROUTES } from "../../../src/constants/routes";
 
 function clientRequestId() {
   return `cop_${Date.now()}_${Math.random().toString(36).slice(2, 12)}`;
@@ -226,7 +227,7 @@ export default function CopilotScreen() {
     <View style={{ flex: 1, minWidth: 0, backgroundColor: theme.colors.background }}>
       {isMobile ? (
         <View style={{ paddingHorizontal: horizontalPadding }}>
-          <ConversationHeader />
+          <ConversationHeader onNewChat={newConversation} />
         </View>
       ) : null}
 
@@ -350,6 +351,18 @@ export default function CopilotScreen() {
           alignSelf: "center",
         }}
       >
+        {!isMobile ? (
+          <ScreenToolbar
+            eyebrow="Managed AI + MCP"
+            title="Copilot"
+            description="Grounded analysis with explicit PWRC accounting and read-only MCP provenance."
+            showBrand={false}
+            actions={[
+              { label: "Credits", icon: "cash-multiple", onPress: () => router.push(APP_ROUTES.credits as never), variant: "primary" },
+              { label: "Diagnostics", icon: "stethoscope", onPress: () => router.push(APP_ROUTES.diagnostics as never) },
+            ]}
+          />
+        ) : null}
         <AdaptiveSplitPane
           rail={
             <ConversationRail

@@ -16,6 +16,7 @@ const MOBILE_SAFE_ROOTS = new Set([
   "onboarding",
   "solana",
   "sui",
+  "system",
   "wallets",
 ]);
 

@@ -3,6 +3,9 @@ import { radius, spacing, typography } from "../../theme/tokens";
 import { usePowerChainTheme } from "../../theme";
 import { ChatAvatar, type ChatRole } from "./ChatAvatar";
 import { MessageContent } from "./MessageContent";
+import type { McpInvocationSummary, PwrcMessageReceipt } from "../../features/credits";
+import { MessageCreditReceipt } from "../credits";
+import { McpProvenance } from "./McpProvenance";
 
 export type ChatMessageModel = {
   id: string;
@@ -10,6 +13,8 @@ export type ChatMessageModel = {
   content: string;
   createdAt?: string;
   status?: "sending" | "sent" | "failed";
+  creditReceipt?: PwrcMessageReceipt;
+  mcpInvocations?: McpInvocationSummary[];
 };
 
 export function ChatMessage({
@@ -56,6 +61,14 @@ export function ChatMessage({
             inverse={!assistant}
           />
         </View>
+
+        {assistant && message.creditReceipt ? (
+          <MessageCreditReceipt receipt={message.creditReceipt} />
+        ) : null}
+
+        {assistant && message.mcpInvocations?.length ? (
+          <McpProvenance invocations={message.mcpInvocations} />
+        ) : null}
 
         {(message.createdAt || message.status === "failed") && (
           <Text

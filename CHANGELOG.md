@@ -267,3 +267,75 @@ The project follows Semantic Versioning. Internal development iterations do not 
 
 - CORS origin entries now fail environment validation if they contain paths, queries, fragments, credentials, or non-HTTP(S) schemes.
 - Added executable mobile namespace rewrite tests, including `/cors/`, corrected alias, and fail-closed internal/admin paths.
+
+## 1.0.0 — Managed providers, network profiles and infrastructure hardening
+
+- Added managed AI provider routing for OpenAI, Anthropic, DeepSeek, Llama-compatible endpoints and Emergent-compatible managed endpoints.
+- Preserved structured read-only MCP tool calling across provider adapters.
+- Added deterministic provider fallback without additional PWRC message charges.
+- Updated the Expo development API default to `http://127.0.0.1:8000/api/v1` and added `EXPO_PUBLIC_NETWORK`, `EXPO_PUBLIC_DATA_MODE`, and `EXPO_PUBLIC_AI_MODE`.
+- Added `POWERCHAIN_CREDIT_TOKEN=PWRC` and `POWERCHAIN_MINT` compatibility configuration.
+- Added devnet/mainnet-beta Solana RPC profiles, public/Helius/custom provider selection and safe Helius key-derived RPC endpoints.
+- Added sanitized `GET /api/v1/system/solana` runtime metadata without exposing RPC secrets.
+- Added standard Solana and Metaplex program registries; PowerChain program IDs remain explicit deployment inputs rather than invented defaults.
+- Added optional MongoDB health integration and Redis-backed distributed rate limiting.
+- Added global/auth/AI rate-limit policy.
+- Added optional signed JWT presentation while preserving revocable database sessions.
+- Added AES-256-GCM settings encryption helper.
+- Added network-specific Sui endpoint selection.
+- Expanded environment verification and production fail-closed validation.
+
+### Interaction design upgrade
+
+- Replaced the previous navigation with a strict five-tab model: Overview, Actions, Copilot, Assets and Systems.
+- Moved Settings out of primary navigation into a dedicated system route.
+- Added the Action Center tab and dedicated Service Health screen.
+- Rebuilt Assets as an operational portfolio surface with navigable asset-detail routes.
+- Added purpose-built toolbars and centralized route constants for every primary CTA.
+- Added batch approval review, reports, settlement review, diagnostics, settings and action/asset detail routes.
+- Added demo-only operational data guarded by `EXPO_PUBLIC_DATA_MODE=demo`; live/tba modes do not fabricate asset/action state.
+- Added sanitized diagnostics combining runtime config, Solana metadata, CORS, MCP and PWRC reconciliation reachability.
+- Added MCP Gateway to service-health configuration status.
+- Reworked Carbon Dark theme surfaces while retaining the `darkGreen` compatibility key.
+- Replaced the app/header green brand asset and generated Expo/iOS/adaptive/favicon assets from the supplied PowerChain logo.
+- Removed dead mobile Copilot header controls when callbacks are not wired.
+
+## App icon integration — 2026-08-26
+
+- Integrated the verified PowerChain icon pack without redrawing the artwork.
+- Added iOS light, dark and tinted icon variants.
+- Added Android adaptive foreground, monochrome themed icon and notification icon.
+- Added web favicon, PWA maskable icons, Apple touch icon and Windows tile assets.
+- Replaced in-app header marks with exact transparent light/dark pack masters.
+- Added icon-path and PNG-dimension verification.
+- Product/app version remains 1.0.0.
+
+### Shared application infrastructure
+
+- added `src/shared`, `src/storage`, `src/store`, and expanded `src/utils`
+- centralized application errors and HTTP error mapping
+- centralized PWRC/Solana/Metaplex public token constants
+- added semantic brand/icon/PWRC asset registry
+- added SecureStore-backed session storage and small preference persistence
+- added dependency-free external store primitive using `useSyncExternalStore`
+- added session and role/organization preference stores
+- refactored API authentication persistence through the shared session store
+- added import aliases `@shared`, `@storage`, `@store`, and `@utils`
+- added `verify:shared` architecture validation
+
+
+### Energy platform modularization
+
+- Added `@powerchain/energy-contracts` for EMS, IoT, DePIN, auth, wallet, market, health and safe-action contracts.
+- Added provider-neutral auth and wallet adapters.
+- Added provider-neutral Solana, Sui and backend market-data clients.
+- Added Energy/IoT/DePIN frontend services, hooks, operational components and routes.
+- Added safe-action preview/confirm flow with fail-closed execution and UNKNOWN transport handling.
+- Added isolated `backend/platform-express` workspace using Express, Prisma/PostgreSQL and optional Supabase Auth.
+- Added `/api/v1/health`, `/api/v1/config`, EMS, IoT, DePIN and safe-action API routes to the isolated backend.
+- Preserved the existing deployed Copilot/Fastify API and product version 1.0.0.
+
+### Frontend TypeScript bootstrap correction
+
+- Confirmed `frontend/tsconfig.json` extends the checked-in `./expo/tsconfig.base.json`.
+- Preserved `frontend/tsconfig.expo.json` for post-install validation against the official `expo/tsconfig.base`.

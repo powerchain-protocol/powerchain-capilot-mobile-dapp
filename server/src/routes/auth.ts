@@ -10,6 +10,8 @@ import {
   revokeCurrentSession,
 } from "../lib/session";
 import { accountView } from "../lib/account-view";
+import { rateLimit } from "../lib/rate-limit";
+import { env } from "../config/env";
 
 const registerSchema = z.object({
   email: z.string().email().max(254),
@@ -23,7 +25,7 @@ const loginSchema = z.object({
 });
 
 export async function registerAuthRoutes(app: FastifyInstance) {
-  app.post("/api/v1/auth/register", async (request, reply) => {
+  app.post("/api/v1/auth/register", { preHandler: rateLimit({ namespace: "auth-register", limit: env.AUTH_RATE_LIMIT, windowMs: env.GLOBAL_RATE_WINDOW_MS }) }, async (request, reply) => {
     const input = registerSchema.parse(request.body);
     const email = input.email.trim().toLowerCase();
 
@@ -72,7 +74,7 @@ export async function registerAuthRoutes(app: FastifyInstance) {
     });
   });
 
-  app.post("/api/v1/auth/login", async (request, reply) => {
+  app.post("/api/v1/auth/login", { preHandler: rateLimit({ namespace: "auth-login", limit: env.AUTH_RATE_LIMIT, windowMs: env.GLOBAL_RATE_WINDOW_MS }) }, async (request, reply) => {
     const input = loginSchema.parse(request.body);
     const email = input.email.trim().toLowerCase();
 

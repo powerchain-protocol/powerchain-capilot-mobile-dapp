@@ -1,4 +1,4 @@
-import { Pressable, ScrollView, StyleSheet, Text } from "react-native";
+import { Pressable, ScrollView, StyleSheet, Text, View } from "react-native";
 import type { QuickPrompt } from "../../data/quick-prompts";
 import { usePowerChainTheme } from "../../theme";
 
@@ -31,12 +31,14 @@ export function QuickPrompts({
             },
           ]}
         >
-          <Text
-            numberOfLines={1}
-            style={[styles.label, { color: theme.colors.text }]}
-          >
-            {prompt.label}
-          </Text>
+          <View>
+            <Text numberOfLines={1} style={[styles.label, { color: theme.colors.text }]}>
+              {prompt.label}
+            </Text>
+            <Text numberOfLines={1} style={[styles.cost, { color: theme.colors.textMuted }]}>
+              {prompt.costLabel}
+            </Text>
+          </View>
         </Pressable>
       ))}
     </ScrollView>
@@ -44,20 +46,14 @@ export function QuickPrompts({
 }
 
 const styles = StyleSheet.create({
-  content: {
-    gap: 8,
-    paddingRight: 16,
-  },
+  content: { gap: 8, paddingRight: 16 },
   chip: {
-    minHeight: 36,
+    minHeight: 48,
     justifyContent: "center",
     paddingHorizontal: 12,
     borderWidth: StyleSheet.hairlineWidth,
     borderRadius: 10,
   },
-  label: {
-    fontSize: 13,
-    lineHeight: 18,
-    fontWeight: "600",
-  },
+  label: { fontSize: 13, lineHeight: 18, fontWeight: "600" },
+  cost: { marginTop: 1, fontSize: 10, lineHeight: 14, fontWeight: "500" },
 });

@@ -41,7 +41,8 @@ const checks = [
   ["native no-Origin requests are supported", cors.includes("if (!origin) return true")],
   ["production wildcard is fail-closed", cors.includes('env.NODE_ENV !== "production"')],
   ["strict CORS origin syntax validation", (await readFile("server/src/config/env.ts", "utf8")).includes("validCorsOrigin")],
-  ["frontend uses namespaced API", frontendEnv.includes("/api/v1/capilot-mobile")],
+  ["frontend uses canonical API root", frontendEnv.includes("EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1")],
+  ["system root is mobile-safe", namespace.includes('"system"')],
 ];
 
 for (const [label, ok] of checks) {

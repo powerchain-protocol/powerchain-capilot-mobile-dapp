@@ -24,6 +24,11 @@ import { registerPaymentKernelRoutes } from "./routes/payment-kernel";
 import { registerCorsRoutes } from "./routes/cors";
 import { registerCapilotMobileRoutes } from "./routes/capilot-mobile";
 import { startPwrcReservationReaper } from "./credits/reaper";
+import { registerSystemSolanaRoutes } from "./routes/system-solana";
+import { registerSystemPlatformRoutes } from "./routes/system-platform";
+import { rateLimit } from "./lib/rate-limit";
+import { closeMongo } from "./lib/mongo";
+import { closeRedis } from "./lib/redis";
 
 export async function buildApp() {
   const app = Fastify({
@@ -37,6 +42,16 @@ export async function buildApp() {
   });
 
   await app.register(cors, buildCorsOptions());
+
+  const globalLimiter = rateLimit({
+    namespace: "global-rate-limit",
+    limit: env.GLOBAL_RATE_LIMIT,
+    windowMs: env.GLOBAL_RATE_WINDOW_MS,
+  });
+  app.addHook("onRequest", async (request, reply) => {
+    if (/\/health\/(?:live|ready)(?:\?|$)/.test(request.url)) return;
+    return globalLimiter(request, reply);
+  });
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof ZodError) {
@@ -82,6 +97,8 @@ export async function buildApp() {
   await registerMarketRoutes(app);
   await registerAiRoutes(app);
   await registerSolanaRoutes(app);
+  await registerSystemSolanaRoutes(app);
+  await registerSystemPlatformRoutes(app);
   await registerSuiRoutes(app);
   await registerSessionRoutes(app);
   await registerConversationRoutes(app);
@@ -91,7 +108,10 @@ export async function buildApp() {
   await registerPaymentKernelRoutes(app);
 
   const stopCreditReaper = startPwrcReservationReaper(app.log);
-  app.addHook("onClose", async () => stopCreditReaper());
+  app.addHook("onClose", async () => {
+    stopCreditReaper();
+    await Promise.allSettled([closeMongo(), closeRedis()]);
+  });
 
   return app;
 }

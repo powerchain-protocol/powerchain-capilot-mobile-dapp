@@ -15,6 +15,10 @@ test("requested capilot-mobile routes rewrite to canonical API", () => {
     rewriteMobileApiUrl(`${MOBILE_API_PREFIX}/cors/`),
     "/api/v1/cors",
   );
+  assert.equal(
+    rewriteMobileApiUrl(`${MOBILE_API_PREFIX}/system/solana`),
+    "/api/v1/system/solana",
+  );
 });
 
 test("corrected copilot-mobile alias rewrites too", () => {

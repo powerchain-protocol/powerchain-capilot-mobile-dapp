@@ -1,3 +1,5 @@
+import type { McpInvocationSummary, PwrcMessageReceipt } from "../features/credits";
+
 export type MessageRole = "assistant" | "user" | "system";
 
 export type MessageStatus =
@@ -56,6 +58,8 @@ export type CopilotMessage = {
     message: string;
     retryable?: boolean;
   };
+  creditReceipt?: PwrcMessageReceipt;
+  mcpInvocations?: McpInvocationSummary[];
 };
 
 export type ConversationSummary = {

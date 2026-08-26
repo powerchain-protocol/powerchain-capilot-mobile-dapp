@@ -8,11 +8,12 @@ const required=[
 let failed=false;
 for(const path of required){try{await access(path);console.log(`✓ ${path}`)}catch{console.error(`✗ ${path}`);failed=true}}
 const ai=await readFile("server/src/integrations/ai.ts","utf8");
+const providers=await readFile("server/src/integrations/ai-providers.ts","utf8");
 const route=await readFile("server/src/routes/ai.ts","utf8");
 const sec=await readFile("packages/mcp-client/src/security.ts","utf8");
 const client=await readFile("packages/mcp-client/src/client.ts","utf8");
 const checks=[
- ["structured function calling",ai.includes("runCopilotMcpLoop")],
+ ["structured function calling",providers.includes("runCopilotMcpLoop")&&providers.includes("tool_calls")&&providers.includes("tool_use")],
  ["no assistant-text JSON tool parser",!ai.includes("parse_tool_call")&&!route.includes("parse_tool_call")],
  ["PWRC reservation ID passed to MCP audit",route.includes("reservationId: reservation.id")],
  ["credential egress guard",sec.includes("SECRET_KEY")&&sec.includes("assertSafeArguments")],

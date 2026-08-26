@@ -1,59 +1,109 @@
-import {
-  readFile,
-  access,
-} from "node:fs/promises";
+import { readFile, access } from "node:fs/promises";
 
 const secretPatterns = [
   /^OPENAI_API_KEY=/m,
+  /^ANTHROPIC_API_KEY=/m,
+  /^GEMINI_API_KEY=/m,
+  /^DEEPSEEK_API_KEY=/m,
+  /^OLLAMA_API_KEY=/m,
+  /^GRIDLLM_API_KEY=/m,
+  /^EMERGENT_LLM_KEY=/m,
+  /^HELIUS_API_KEY=/m,
   /^PYTH_API_KEY=/m,
   /^BIRDEYE_API_KEY=/m,
+  /^COINGECKO_API_KEY=/m,
+  /^COINMARKETCAP_API_KEY=/m,
+  /^JUPITER_API_KEY=/m,
   /^DATABASE_URL=/m,
+  /^DIRECT_URL=/m,
+  /^SUPABASE_SERVICE_ROLE_KEY=/m,
+  /^MONGO_URL=/m,
+  /^REDIS_URL=/m,
+  /^JWT_SECRET=/m,
+  /^SETTINGS_ENCRYPTION_KEY=/m,
   /^PAYMENT_KERNEL_WEBHOOK_SECRET=/m,
-  /^PWRC_TREASURY_ADDRESS=/m,
+  /^INTERNAL_HMAC_SECRET=/m,
 ];
 
 const requiredExamples = {
   ".env.example": [
     "DATABASE_URL",
-    "POSTGRES_USER",
-    "POSTGRES_PASSWORD",
-    "POSTGRES_DB",
+    "DIRECT_URL",
+    "SUPABASE_URL",
+    "MONGO_URL",
+    "REDIS_URL",
+    "POWERCHAIN_CREDIT_TOKEN",
+    "PWRC_MINT_MAINNET",
+    "PWRC_MINT_DEVNET",
+    "POWERCHAIN_MINT",
+    "SOLANA_NETWORK",
+    "METAPLEX_TOKEN_METADATA_PROGRAM_ID",
+    "AI_PROVIDER_ORDER",
   ],
   "frontend/.env.example": [
     "EXPO_PUBLIC_API_URL",
+    "EXPO_PUBLIC_NETWORK",
+    "EXPO_PUBLIC_DATA_MODE",
+    "EXPO_PUBLIC_AI_MODE",
     "EXPO_PUBLIC_SOLANA_NETWORK",
     "EXPO_PUBLIC_SOLANA_RPC_URL",
+    "EXPO_PUBLIC_CREDIT_TOKEN",
+    "EXPO_PUBLIC_CREDIT_NETWORK",
+    "EXPO_PUBLIC_PWRC_MINT_MAINNET",
+    "EXPO_PUBLIC_PWRC_MINT_DEVNET",
     "EXPO_PUBLIC_SUI_NETWORK",
     "EXPO_PUBLIC_SUI_RPC_URL",
   ],
   "server/.env.example": [
     "DATABASE_URL",
-    "CORS_ORIGIN",
-    "SOLANA_RPC_URL",
+    "DIRECT_URL",
+    "SUPABASE_URL",
+    "MONGO_URL",
+    "REDIS_URL",
+    "JWT_SECRET",
+    "SETTINGS_ENCRYPTION_KEY",
+    "CORS_ORIGINS",
+    "RATE_LIMIT_MAX",
+    "RATE_LIMIT_WINDOW_MS",
+    "AI_PRIMARY_PROVIDER",
+    "AI_PROVIDER_ORDER",
     "OPENAI_API_KEY",
-    "PYTH_API_KEY",
-    "BIRDEYE_API_KEY",
-    "SUI_RPC_URL",
-    "AI_RATE_LIMIT",
-    "MARKET_CACHE_FRESH_MS",
-    "MARKET_CACHE_STALE_MS",
+    "ANTHROPIC_API_KEY",
+    "GEMINI_API_KEY",
+    "DEEPSEEK_API_KEY",
+    "OLLAMA_BASE_URL",
+    "GRIDLLM_ENABLED",
+    "EMERGENT_LLM_KEY",
+    "SOLANA_NETWORK",
+    "SOLANA_RPC_PROVIDER",
+    "SOLANA_RPC_DEVNET_URL",
+    "SOLANA_RPC_MAINNET_URL",
+    "HELIUS_RPC_URL",
+    "HELIUS_API_KEY",
+    "POWERCHAIN_PROGRAM_ID",
+    "POWERCHAIN_ENERGY_RWA_PROGRAM_ID",
+    "POWERCHAIN_MARKET_PROGRAM_ID",
+    "POWERCHAIN_SETTLEMENT_PROGRAM_ID",
+    "METAPLEX_TOKEN_METADATA_PROGRAM_ID",
+    "METAPLEX_BUBBLEGUM_PROGRAM_ID",
+    "POWERCHAIN_CREDIT_TOKEN",
+    "PWRC_MINT_MAINNET",
+    "PWRC_MINT_DEVNET",
+    "POWERCHAIN_MINT",
     "PWRC_CREDITS_ENABLED",
     "PWRC_CREDIT_NETWORK",
-    "PWRC_CREDIT_RESERVATION_TTL_SECONDS",
-    "PWRC_CREDIT_ACK_TTL_SECONDS",
-    "PWRC_DEMO_GRANT_ENABLED",
-    "PWRC_TOPUPS_ENABLED",
-    "PWRC_TREASURY_ADDRESS",
-    "PAYMENT_KERNEL_WEBHOOK_SECRET",
-    "PAYMENT_KERNEL_WEBHOOK_MAX_SKEW_SECONDS",
+    "SUI_NETWORK",
+    "PYTH_API_KEY",
+    "BIRDEYE_API_KEY",
+    "COINGECKO_API_KEY",
+    "COINMARKETCAP_API_KEY",
+    "JUPITER_API_KEY",
   ],
 };
 
 let failed = false;
-
 for (const [file, keys] of Object.entries(requiredExamples)) {
   const text = await readFile(file, "utf8");
-
   for (const key of keys) {
     const present = new RegExp(`^${key}=`, "m").test(text);
     if (!present) {
@@ -61,22 +111,22 @@ for (const [file, keys] of Object.entries(requiredExamples)) {
       console.error(`✗ ${file}: missing ${key}`);
     }
   }
-
   console.log(`✓ ${file}`);
 }
 
-// Public frontend env must never carry server secrets.
 const frontend = await readFile("frontend/.env.example", "utf8");
 for (const pattern of secretPatterns) {
   if (pattern.test(frontend)) {
     failed = true;
-    console.error(
-      "✗ frontend/.env.example contains a server-only secret field",
-    );
+    console.error("✗ frontend/.env.example contains a server-only secret field");
   }
 }
 
-// Actual .env files are optional for repository verification.
+if (/EXPO_PUBLIC_PWRC_MINT=PWRCRXXZ/.test(frontend) && /EXPO_PUBLIC_CREDIT_NETWORK=devnet/.test(frontend)) {
+  failed = true;
+  console.error("✗ frontend devnet configuration must not default to the mainnet PWRC mint");
+}
+
 for (const file of [".env", "frontend/.env", "server/.env"]) {
   try {
     await access(file);
@@ -87,5 +137,4 @@ for (const file of [".env", "frontend/.env", "server/.env"]) {
 }
 
 if (failed) process.exit(1);
-
 console.log("✓ Environment contract");

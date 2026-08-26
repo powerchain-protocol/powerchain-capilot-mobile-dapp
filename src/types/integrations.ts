@@ -1,9 +1,19 @@
 export type IntegrationId =
+  | "ai"
   | "openai"
+  | "anthropic"
+  | "deepseek"
+  | "llama"
+  | "emergent"
   | "solana"
+  | "sui"
   | "pyth"
   | "birdeye"
-  | "database";
+  | "postgres"
+  | "database"
+  | "mongo"
+  | "redis"
+  | "mcp";
 
 export type IntegrationStatus =
   | "operational"
@@ -13,7 +23,7 @@ export type IntegrationStatus =
   | "unknown";
 
 export type IntegrationHealth = {
-  id: IntegrationId;
+  id: IntegrationId | string;
   name: string;
   status: IntegrationStatus;
   message?: string;

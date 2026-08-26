@@ -7,11 +7,15 @@ const config: ExpoConfig = {
   version: "1.0.0",
   orientation: "default",
   userInterfaceStyle: "automatic",
-  icon: "./assets/icons/icon.png",
+  icon: "./assets/icons/app-icon-light-1024.png",
 
   ios: {
     supportsTablet: true,
-    icon: "./assets/icons/ios-icon.png",
+    icon: {
+      light: "./assets/icons/app-icon-light-1024.png",
+      dark: "./assets/icons/app-icon-dark-1024.png",
+      tinted: "./assets/icons/app-icon-tinted-1024.png"
+    },
     bundleIdentifier: "ventures.powerchain.copilot",
     config: {
       usesNonExemptEncryption: false
@@ -22,7 +26,7 @@ const config: ExpoConfig = {
     package: "ventures.powerchain.copilot",
     adaptiveIcon: {
       foregroundImage: "./assets/icons/adaptive-foreground.png",
-      backgroundColor: "#123D2C",
+      backgroundColor: "#FFFFFF",
       monochromeImage: "./assets/icons/monochrome.png"
     }
   },
@@ -45,8 +49,8 @@ const config: ExpoConfig = {
     [
       "expo-notifications",
       {
-        "icon": "./assets/icons/monochrome.png",
-        "color": "#123D2C",
+        "icon": "./assets/icons/notification-icon.png",
+        "color": "#0B2F24",
         "defaultChannel": "powerchain"
       }
     ]
@@ -55,7 +59,7 @@ const config: ExpoConfig = {
   splash: {
     image: "./assets/icons/splash-icon.png",
     resizeMode: "contain",
-    backgroundColor: "#123D2C"
+    backgroundColor: "#0B2F24"
   },
 
   experiments: {
