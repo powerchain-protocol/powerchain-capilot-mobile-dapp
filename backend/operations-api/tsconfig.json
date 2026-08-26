@@ -1,0 +1,11 @@
+{
+  "extends": "../../tsconfig.node.json",
+  "compilerOptions": {
+    "baseUrl": "../.."
+  },
+  "include": [
+    "src/**/*.ts",
+    "prisma.config.ts",
+    "../../packages/operations-contracts/**/*.ts"
+  ]
+}

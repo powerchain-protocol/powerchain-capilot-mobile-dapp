@@ -1,0 +1,1 @@
+"""PowerChain MCP FastAPI gateway."""

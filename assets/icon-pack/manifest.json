@@ -1,0 +1,432 @@
+{
+  "name": "PowerChain Copilot icon pack integration",
+  "version": "1.0.0",
+  "sourcePolicy": "Supplied artwork; launcher/export variants are resize/composite derivatives without redrawing the emblem geometry.",
+  "files": [
+    {
+      "path": "assets/icon-pack/README.md",
+      "sha256": "46a99bc88425345dc7b95126c8fa6f8359b2a0d89acb95f7f7f39e4f9334b5ec",
+      "bytes": 585
+    },
+    {
+      "path": "assets/icon-pack/android/adaptive/background.png",
+      "sha256": "d9bd147ced77bca4a875af12714949cd17ddd3c11cc47218b4de30185bc0b4e9",
+      "bytes": 5334
+    },
+    {
+      "path": "assets/icon-pack/android/adaptive/foreground.png",
+      "sha256": "dddb2e24c6d0d585aab873c4b8d7ceeffbe5b20cad0a654468ef52001f0b7bde",
+      "bytes": 245423
+    },
+    {
+      "path": "assets/icon-pack/android/adaptive/monochrome.png",
+      "sha256": "82c5189ee550254237575d066b4db6f458cd93f6de140c344babbabca314eb06",
+      "bytes": 68428
+    },
+    {
+      "path": "assets/icon-pack/android/notification/notification-icon-96.png",
+      "sha256": "d41215acdffd803bc85d4344afffa11164b45a3c52f95728e3c0594a5b07e44f",
+      "bytes": 1503
+    },
+    {
+      "path": "assets/icon-pack/android/res/drawable-hdpi/ic_stat_powerchain.png",
+      "sha256": "e6baf2b80514e5a719bd9074535d8115ab69ff7f608622e1fb89b01b0230f7d3",
+      "bytes": 468
+    },
+    {
+      "path": "assets/icon-pack/android/res/drawable-mdpi/ic_stat_powerchain.png",
+      "sha256": "4161b31f91962c91e0c025c1ae343d168d4203ee303cf7159374c9d82f9c484a",
+      "bytes": 338
+    },
+    {
+      "path": "assets/icon-pack/android/res/drawable-xhdpi/ic_stat_powerchain.png",
+      "sha256": "001008f8cff21ccbfe8685a3cc35402384ce9935d899fa8601900e7e14412a60",
+      "bytes": 623
+    },
+    {
+      "path": "assets/icon-pack/android/res/drawable-xxhdpi/ic_stat_powerchain.png",
+      "sha256": "1a520a3fbf61f2b8ed1845f7d26156706b64c2483b98031d7faf02487b9e1d04",
+      "bytes": 1011
+    },
+    {
+      "path": "assets/icon-pack/android/res/drawable-xxxhdpi/ic_stat_powerchain.png",
+      "sha256": "d41215acdffd803bc85d4344afffa11164b45a3c52f95728e3c0594a5b07e44f",
+      "bytes": 1503
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-hdpi/ic_launcher.png",
+      "sha256": "23e7bf596ea7254c22aa52c7a1effeea6d9e0bb483d1ccb9698305c0f90c6afd",
+      "bytes": 4961
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-hdpi/ic_launcher_round.png",
+      "sha256": "23e7bf596ea7254c22aa52c7a1effeea6d9e0bb483d1ccb9698305c0f90c6afd",
+      "bytes": 4961
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-mdpi/ic_launcher.png",
+      "sha256": "f092ab9dc47385f21f9880255ee3a4441854fa61c9e705d0d891093a2eb3d09f",
+      "bytes": 2613
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-mdpi/ic_launcher_round.png",
+      "sha256": "f092ab9dc47385f21f9880255ee3a4441854fa61c9e705d0d891093a2eb3d09f",
+      "bytes": 2613
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-xhdpi/ic_launcher.png",
+      "sha256": "f2abec4eafa2cc428e479b46b15e00592859c8be482d723778b9351781c19dc1",
+      "bytes": 8050
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-xhdpi/ic_launcher_round.png",
+      "sha256": "f2abec4eafa2cc428e479b46b15e00592859c8be482d723778b9351781c19dc1",
+      "bytes": 8050
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-xxhdpi/ic_launcher.png",
+      "sha256": "3c378c339a166034bcc2907a3e761215df50359288e63f07e277984f3c5a5149",
+      "bytes": 16582
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "sha256": "3c378c339a166034bcc2907a3e761215df50359288e63f07e277984f3c5a5149",
+      "bytes": 16582
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-xxxhdpi/ic_launcher.png",
+      "sha256": "bd5dd85527493db176f7a03ef0629c5d254390de9e15daff0cca453f5424ed8c",
+      "bytes": 28484
+    },
+    {
+      "path": "assets/icon-pack/android/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "sha256": "bd5dd85527493db176f7a03ef0629c5d254390de9e15daff0cca453f5424ed8c",
+      "bytes": 28484
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-128.png",
+      "sha256": "e04630e57c12200e3b11106d7bade07c1f06bd44d1dae57b6f871cc290726b8f",
+      "bytes": 13507
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-16.png",
+      "sha256": "1287259b35450a21afa9e332e9394dedcc5ebc47d848183cecc312b8d8b1a085",
+      "bytes": 590
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-256.png",
+      "sha256": "5f914dfb576262f532f96b7f594e16177952c1e11070063f9f22fffa8e03311e",
+      "bytes": 49779
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-32.png",
+      "sha256": "1c1dd95948d2f9dc8376c57adde3ae856ebe3f1428ea85243eae2a9419beec4c",
+      "bytes": 1489
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-512.png",
+      "sha256": "59a920960cd126860abf295254ca19282905094159c4ede4a492215e3ec1de58",
+      "bytes": 184590
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon-64.png",
+      "sha256": "9456584347f34106dcb348faa5cef1b8cf22c94c416c09f248498be6a2ed630a",
+      "bytes": 4052
+    },
+    {
+      "path": "assets/icon-pack/desktop/electron/icon.ico",
+      "sha256": "999fae65c75b4b2dd79837368c4c22242069e7c2f47b3fd705fe6eb75d397dd9",
+      "bytes": 72132
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-128.png",
+      "sha256": "e04630e57c12200e3b11106d7bade07c1f06bd44d1dae57b6f871cc290726b8f",
+      "bytes": 13507
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-16.png",
+      "sha256": "1287259b35450a21afa9e332e9394dedcc5ebc47d848183cecc312b8d8b1a085",
+      "bytes": 590
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-256.png",
+      "sha256": "5f914dfb576262f532f96b7f594e16177952c1e11070063f9f22fffa8e03311e",
+      "bytes": 49779
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-32.png",
+      "sha256": "1c1dd95948d2f9dc8376c57adde3ae856ebe3f1428ea85243eae2a9419beec4c",
+      "bytes": 1489
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-512.png",
+      "sha256": "59a920960cd126860abf295254ca19282905094159c4ede4a492215e3ec1de58",
+      "bytes": 184590
+    },
+    {
+      "path": "assets/icon-pack/desktop/linux/icon-64.png",
+      "sha256": "9456584347f34106dcb348faa5cef1b8cf22c94c416c09f248498be6a2ed630a",
+      "bytes": 4052
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-128.png",
+      "sha256": "e04630e57c12200e3b11106d7bade07c1f06bd44d1dae57b6f871cc290726b8f",
+      "bytes": 13507
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-16.png",
+      "sha256": "1287259b35450a21afa9e332e9394dedcc5ebc47d848183cecc312b8d8b1a085",
+      "bytes": 590
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-256.png",
+      "sha256": "5f914dfb576262f532f96b7f594e16177952c1e11070063f9f22fffa8e03311e",
+      "bytes": 49779
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-32.png",
+      "sha256": "1c1dd95948d2f9dc8376c57adde3ae856ebe3f1428ea85243eae2a9419beec4c",
+      "bytes": 1489
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-512.png",
+      "sha256": "59a920960cd126860abf295254ca19282905094159c4ede4a492215e3ec1de58",
+      "bytes": 184590
+    },
+    {
+      "path": "assets/icon-pack/desktop/tauri/icon-64.png",
+      "sha256": "9456584347f34106dcb348faa5cef1b8cf22c94c416c09f248498be6a2ed630a",
+      "bytes": 4052
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Contents.json",
+      "sha256": "404a7f13099ad4ece551f5a92a9c1c7ae20cc70ee4cf629929d4dcb30da24145",
+      "bytes": 2900
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-1024-dark.png",
+      "sha256": "078219b837007f3f98d96329c79342b58ad61f087481ad553f7a96b6d5e93998",
+      "bytes": 260625
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-1024-light.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-1024-tinted.png",
+      "sha256": "534aeee216b7ac04e8ba236573fa456dd865773b6c4a23ad27cac622982007c1",
+      "bytes": 134890
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-20-ipad.png",
+      "sha256": "d4cccd0ef69cbfa4f5a78716a7fd7e821be28eeaf9dd85cfc50ea352163a595e",
+      "bytes": 777
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-20-ipad@2x.png",
+      "sha256": "501d5bd985a2572e39d4c1e687fc891578745c6f71ae6df1650cac0406cfb047",
+      "bytes": 1987
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-20@2x.png",
+      "sha256": "501d5bd985a2572e39d4c1e687fc891578745c6f71ae6df1650cac0406cfb047",
+      "bytes": 1987
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-20@3x.png",
+      "sha256": "45ba4714318369da5b955288bd0dfabe825062e11258c183bf488a1469b04a70",
+      "bytes": 3692
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-29-ipad.png",
+      "sha256": "f9b67ad1576c65dacfb93895022d35f96b15d25a2686b71738f26edde62692c3",
+      "bytes": 1296
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-29-ipad@2x.png",
+      "sha256": "b402b6bfc0ec9b349f93c93d5907ea3490ba02b63b2125dfbe0211104e469f10",
+      "bytes": 3501
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-29@2x.png",
+      "sha256": "b402b6bfc0ec9b349f93c93d5907ea3490ba02b63b2125dfbe0211104e469f10",
+      "bytes": 3501
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-29@3x.png",
+      "sha256": "a70b6ef033cf31fb190403d86180fa90146ecc31fc7f3398544789f26f72e7f3",
+      "bytes": 6903
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-40-ipad.png",
+      "sha256": "501d5bd985a2572e39d4c1e687fc891578745c6f71ae6df1650cac0406cfb047",
+      "bytes": 1987
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-40-ipad@2x.png",
+      "sha256": "bf048c49f92013cae9c0908bd9f83de05d1b8f58df0ccfc291d3a42ff9ab94f6",
+      "bytes": 5915
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-40@2x.png",
+      "sha256": "bf048c49f92013cae9c0908bd9f83de05d1b8f58df0ccfc291d3a42ff9ab94f6",
+      "bytes": 5915
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-40@3x.png",
+      "sha256": "59606dadae6cb61c6abc2ff2f34d2f7f1a6f50169323a8b5971007df7c909211",
+      "bytes": 11841
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-60@2x.png",
+      "sha256": "59606dadae6cb61c6abc2ff2f34d2f7f1a6f50169323a8b5971007df7c909211",
+      "bytes": 11841
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-60@3x.png",
+      "sha256": "4ac1d0cb78ea3568a6b7d39af57e7798b57acd8bc1c15ebe86db0e0b57f7c135",
+      "bytes": 25244
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-76.png",
+      "sha256": "35c0a40d33768fbbd754adf5d56ab02af7e022a3bd00e179b365225b80bb63d9",
+      "bytes": 5448
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-76@2x.png",
+      "sha256": "a4c05b9323846378bedf0b64dd0ef75932c1ea060d87aa46aac2a1e56070d89e",
+      "bytes": 18384
+    },
+    {
+      "path": "assets/icon-pack/ios/AppIcon.appiconset/Icon-83.5@2x.png",
+      "sha256": "4380c72f299977f827709ccda2220037c985948b14e77dc83ee9e14dbdb7efcb",
+      "bytes": 21791
+    },
+    {
+      "path": "assets/icon-pack/masters/app-icon-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/masters/brandmark-dark.png",
+      "sha256": "77e42b937f9f2ac592b0409b739192d110c6dc727d3f259bbb5eabcb8a19c091",
+      "bytes": 502205
+    },
+    {
+      "path": "assets/icon-pack/masters/brandmark-light.png",
+      "sha256": "77e42b937f9f2ac592b0409b739192d110c6dc727d3f259bbb5eabcb8a19c091",
+      "bytes": 502205
+    },
+    {
+      "path": "assets/icon-pack/masters/ios-dark-1024.png",
+      "sha256": "078219b837007f3f98d96329c79342b58ad61f087481ad553f7a96b6d5e93998",
+      "bytes": 260625
+    },
+    {
+      "path": "assets/icon-pack/masters/ios-light-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/masters/ios-tinted-1024.png",
+      "sha256": "534aeee216b7ac04e8ba236573fa456dd865773b6c4a23ad27cac622982007c1",
+      "bytes": 134890
+    },
+    {
+      "path": "assets/icon-pack/source/powerchain-app-icon-supplied.jpeg",
+      "sha256": "4492ea06342519b2b2490b41600ab08ac940a099212ca07fc1c8498e260f34ec",
+      "bytes": 188853
+    },
+    {
+      "path": "assets/icon-pack/source/powerchain-brandmark-supplied.png",
+      "sha256": "189dd12ceb6bed89a72709eee5f34fc682b00ba25164a98f282a3a4ea1c143d1",
+      "bytes": 589143
+    },
+    {
+      "path": "assets/icon-pack/store/app-store-1024.png",
+      "sha256": "1d18e57cb6c5c0952567693edf1e7889096f1f7d0ff9fb170f976c45e7c43576",
+      "bytes": 542278
+    },
+    {
+      "path": "assets/icon-pack/store/google-play-512.png",
+      "sha256": "59a920960cd126860abf295254ca19282905094159c4ede4a492215e3ec1de58",
+      "bytes": 184590
+    },
+    {
+      "path": "assets/icon-pack/web/apple-touch-icon.png",
+      "sha256": "4ac1d0cb78ea3568a6b7d39af57e7798b57acd8bc1c15ebe86db0e0b57f7c135",
+      "bytes": 25244
+    },
+    {
+      "path": "assets/icon-pack/web/favicon.ico",
+      "sha256": "2327307b3c7f9a56d5f1f568ea4f2154afe314bc21016176717b0afecdab844d",
+      "bytes": 8814
+    },
+    {
+      "path": "assets/icon-pack/web/icon-16.png",
+      "sha256": "1287259b35450a21afa9e332e9394dedcc5ebc47d848183cecc312b8d8b1a085",
+      "bytes": 590
+    },
+    {
+      "path": "assets/icon-pack/web/icon-192.png",
+      "sha256": "bd5dd85527493db176f7a03ef0629c5d254390de9e15daff0cca453f5424ed8c",
+      "bytes": 28484
+    },
+    {
+      "path": "assets/icon-pack/web/icon-32.png",
+      "sha256": "1c1dd95948d2f9dc8376c57adde3ae856ebe3f1428ea85243eae2a9419beec4c",
+      "bytes": 1489
+    },
+    {
+      "path": "assets/icon-pack/web/icon-48.png",
+      "sha256": "f092ab9dc47385f21f9880255ee3a4441854fa61c9e705d0d891093a2eb3d09f",
+      "bytes": 2613
+    },
+    {
+      "path": "assets/icon-pack/web/icon-512.png",
+      "sha256": "59a920960cd126860abf295254ca19282905094159c4ede4a492215e3ec1de58",
+      "bytes": 184590
+    },
+    {
+      "path": "assets/icon-pack/web/icon-96.png",
+      "sha256": "f2abec4eafa2cc428e479b46b15e00592859c8be482d723778b9351781c19dc1",
+      "bytes": 8050
+    },
+    {
+      "path": "assets/icon-pack/web/maskable-192.png",
+      "sha256": "0188a88eef82d979d336e0b5ae8b56043fa848a29eab98853e4eb6edd3605180",
+      "bytes": 10740
+    },
+    {
+      "path": "assets/icon-pack/web/maskable-512.png",
+      "sha256": "00b9c93e468f3d9119efdeb8dc379a1ca10d5fd58951ff8037ed8f136270675f",
+      "bytes": 58914
+    },
+    {
+      "path": "assets/icon-pack/web/mstile-144.png",
+      "sha256": "3c378c339a166034bcc2907a3e761215df50359288e63f07e277984f3c5a5149",
+      "bytes": 16582
+    }
+  ]
+}

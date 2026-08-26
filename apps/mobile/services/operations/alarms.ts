@@ -1,0 +1,1 @@
+export { getOperationalAlarms } from './client';

@@ -1,4 +1,3 @@
 /// <reference types="expo/types" />
 
-// This file is generated-compatible and intentionally checked in so editors
-// understand Expo globals before `.expo/types` exists.
+// This file is checked in so TypeScript understands Expo's public environment globals.

@@ -1,0 +1,132 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../server/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  sessions  Session[]
+  settings  UserSetting[]
+  mcpInvocations McpToolInvocation[]
+  conversations Conversation[]
+  chatMessages ChatMessage[]
+  aiMemories AiMemory[]
+
+  @@map("users")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  tokenHash String?  @unique @map("token_hash")
+  expiresAt DateTime @map("expires_at")
+  revokedAt DateTime? @map("revoked_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+  @@map("sessions")
+}
+
+model UserSetting {
+  id             String   @id @default(cuid())
+  userId         String   @map("user_id")
+  key            String
+  encryptedValue String   @map("encrypted_value")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, key])
+  @@map("user_settings")
+}
+
+model McpToolInvocation {
+  id                String    @id @default(cuid())
+  userId            String    @map("user_id")
+  conversationId    String?   @map("conversation_id")
+  pwrcReservationId String?   @map("pwrc_reservation_id")
+  requestId         String?   @map("request_id")
+  serverId          String    @map("server_id")
+  toolName          String    @map("tool_name")
+  functionName      String    @map("function_name")
+  readOnly          Boolean   @default(true) @map("read_only")
+  redactedArguments Json      @map("redacted_arguments")
+  argumentHash      String    @map("argument_hash")
+  resultHash        String?   @map("result_hash")
+  status            String
+  error             String?
+  latencyMs         Int?      @map("latency_ms")
+  startedAt         DateTime  @default(now()) @map("started_at")
+  completedAt       DateTime? @map("completed_at")
+  user              User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, startedAt])
+  @@index([conversationId, startedAt])
+  @@index([pwrcReservationId])
+  @@index([serverId, toolName, startedAt])
+  @@map("mcp_tool_invocations")
+}
+
+model Conversation {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  slug      String
+  title     String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  messages  ChatMessage[]
+  memories  AiMemory[]
+
+  @@unique([userId, slug])
+  @@index([userId, updatedAt])
+  @@map("conversations")
+}
+
+model ChatMessage {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  conversationId    String   @map("conversation_id")
+  role              String
+  contentCiphertext String   @map("content_ciphertext")
+  contentHash       String   @map("content_hash")
+  provider          String?
+  model             String?
+  reservationId       String?  @map("reservation_id")
+  messageUnitId       String?  @unique @map("message_unit_id")
+  receiptId           String?  @map("receipt_id")
+  receiptHash         String?  @map("receipt_hash")
+  pwrcDebitBaseUnits  String?  @map("pwrc_debit_base_units")
+  referenceValueUsd   String?  @map("reference_value_usd")
+  createdAt           DateTime @default(now()) @map("created_at")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation      Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([userId, conversationId, createdAt])
+  @@index([reservationId])
+  @@map("chat_messages")
+}
+
+model AiMemory {
+  id                String   @id @default(cuid())
+  userId            String   @map("user_id")
+  conversationId    String?  @map("conversation_id")
+  kind              String
+  contentCiphertext String   @map("content_ciphertext")
+  contentHash       String   @map("content_hash")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+  user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversation      Conversation? @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+
+  @@index([userId, updatedAt])
+  @@index([userId, conversationId, updatedAt])
+  @@map("ai_memories")
+}

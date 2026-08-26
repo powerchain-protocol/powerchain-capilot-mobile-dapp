@@ -1,0 +1,8 @@
+{
+  "name": "@powerchain/components",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "exports": { "./ui/exchanges": "./ui/exchanges/index.ts" },
+  "peerDependencies": { "react": ">=19", "react-native": ">=0.86" }
+}

@@ -1,0 +1,17 @@
+[project]
+name = "powerchain-mcp-fastapi-gateway"
+version = "1.0.0"
+description = "Internal read-only MCP gateway for PowerChain Copilot Mobile"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.116,<1",
+  "uvicorn[standard]>=0.35,<1",
+  "mcp>=1.13,<2",
+  "httpx>=0.28,<1"
+]
+
+[project.optional-dependencies]
+test = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

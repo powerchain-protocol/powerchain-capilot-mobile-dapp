@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.node.json",
+  "compilerOptions": {
+    "baseUrl": "."
+  },
+  "include": [
+    "server/**/*.ts",
+    "packages/ai-providers/**/*.ts",
+    "packages/mcp-client/**/*.ts",
+    "packages/operations-contracts/**/*.ts",
+    "shared/utils/**/*.ts",
+    "prisma.config.ts"
+  ]
+}

@@ -1,0 +1,1 @@
+export { getTelemetryIntegrity } from './client';

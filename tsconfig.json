@@ -1,15 +1,39 @@
 {
-  "extends": "./tsconfig.base.json",
+  "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "noEmit": true
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noEmit": true,
+    "allowJs": false,
+    "allowImportingTsExtensions": true,
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "apps/mobile/*"
+      ]
+    },
+    "types": [
+      "node"
+    ]
   },
   "include": [
-    "types/**/*.d.ts"
+    "apps/mobile/**/*.ts",
+    "apps/mobile/**/*.tsx",
+    "apps/mobile/.expo/types/**/*.ts",
+    "apps/mobile/expo-env.d.ts",
+    "apps/mobile/app.config.ts"
   ],
   "exclude": [
-    "apps",
+    "node_modules",
+    "server",
+    "backend",
+    "apps/docs",
     "packages",
-    "services",
-    "node_modules"
+    "scripts",
+    "prisma",
+    "dist",
+    "web-build"
   ]
 }

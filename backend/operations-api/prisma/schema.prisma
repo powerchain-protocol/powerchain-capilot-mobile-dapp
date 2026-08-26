@@ -1,0 +1,203 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model EnergySite {
+  id             String             @id
+  organizationId String?            @map("organization_id")
+  name           String
+  timezone       String             @default("UTC")
+  createdAt      DateTime           @default(now()) @map("created_at")
+  updatedAt      DateTime           @updatedAt @map("updated_at")
+  emsSnapshots   EmsSnapshot[]
+  iotDevices     IotDevice[]
+  depinNodes     DepinNode[]
+  alarms         OperationalAlarm[]
+  events         OperationalEvent[]
+  access         SiteAccess[]
+
+  @@index([organizationId])
+  @@map("energy_sites")
+}
+
+model SiteAccess {
+  id        String     @id @default(cuid())
+  userId    String     @map("user_id")
+  siteId    String     @map("site_id")
+  role      String     @default("viewer")
+  createdAt DateTime   @default(now()) @map("created_at")
+  site      EnergySite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, siteId])
+  @@index([siteId])
+  @@map("site_access")
+}
+
+model EmsSnapshot {
+  id                String     @id @default(cuid())
+  siteId            String     @map("site_id")
+  source            String
+  mode              String
+  status            String
+  generationKw      Decimal    @map("generation_kw") @db.Decimal(20, 6)
+  loadKw            Decimal    @map("load_kw") @db.Decimal(20, 6)
+  storagePowerKw    Decimal    @map("storage_power_kw") @db.Decimal(20, 6)
+  gridExchangeKw    Decimal    @map("grid_exchange_kw") @db.Decimal(20, 6)
+  batterySocPercent Decimal?   @map("battery_soc_percent") @db.Decimal(7, 4)
+  frequencyHz       Decimal?   @map("frequency_hz") @db.Decimal(8, 4)
+  sequence          String?
+  observedAt        DateTime   @map("observed_at")
+  receivedAt        DateTime   @default(now()) @map("received_at")
+  site              EnergySite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, observedAt(sort: Desc)])
+  @@index([source, observedAt(sort: Desc)])
+  @@map("ems_snapshots")
+}
+
+model IotDevice {
+  id         String     @id
+  siteId     String     @map("site_id")
+  kind       String
+  label      String
+  status     String
+  firmware   String?
+  lastSeenAt DateTime?  @map("last_seen_at")
+  sequence   String?
+  source     String
+  mode       String
+  updatedAt  DateTime   @updatedAt @map("updated_at")
+  createdAt  DateTime   @default(now()) @map("created_at")
+  site       EnergySite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, status, id])
+  @@index([lastSeenAt])
+  @@map("iot_devices")
+}
+
+model DepinNode {
+  id              String      @id
+  siteId          String?     @map("site_id")
+  network         String
+  status          String
+  peerId          String?     @map("peer_id")
+  endpoint        String?
+  lastHeartbeatAt DateTime?   @map("last_heartbeat_at")
+  sequence        String?
+  source          String
+  mode            String
+  updatedAt       DateTime    @updatedAt @map("updated_at")
+  createdAt       DateTime    @default(now()) @map("created_at")
+  site            EnergySite? @relation(fields: [siteId], references: [id], onDelete: SetNull)
+
+  @@index([siteId, status, id])
+  @@index([network, status])
+  @@map("depin_nodes")
+}
+
+model OperationalAlarm {
+  id             String     @id
+  siteId         String     @map("site_id")
+  resourceId     String?    @map("resource_id")
+  code           String
+  title          String
+  detail         String?
+  severity       String
+  state          String
+  source         String
+  mode           String
+  observedAt     DateTime   @map("observed_at")
+  openedAt       DateTime   @map("opened_at")
+  acknowledgedAt DateTime?  @map("acknowledged_at")
+  resolvedAt     DateTime?  @map("resolved_at")
+  updatedAt      DateTime   @updatedAt @map("updated_at")
+  createdAt      DateTime   @default(now()) @map("created_at")
+  site           EnergySite @relation(fields: [siteId], references: [id], onDelete: Cascade)
+
+  @@index([siteId, state, severity, openedAt(sort: Desc)])
+  @@index([resourceId, state])
+  @@map("operational_alarms")
+}
+
+model OperationalEvent {
+  id         String      @id
+  siteId     String?     @map("site_id")
+  resourceId String?     @map("resource_id")
+  kind       String
+  type       String
+  summary    String
+  actorType  String      @map("actor_type")
+  actorId    String?     @map("actor_id")
+  source     String
+  mode       String
+  metadata   Json
+  occurredAt DateTime    @map("occurred_at")
+  receivedAt DateTime    @default(now()) @map("received_at")
+  createdAt  DateTime    @default(now()) @map("created_at")
+  site       EnergySite? @relation(fields: [siteId], references: [id], onDelete: SetNull)
+
+  @@index([siteId, occurredAt(sort: Desc), id])
+  @@index([kind, occurredAt(sort: Desc)])
+  @@map("operational_events")
+}
+
+model IngestReceipt {
+  id             String   @id @default(cuid())
+  scope          String
+  idempotencyKey String   @map("idempotency_key")
+  requestHash    String   @map("request_hash")
+  recordCount    Int      @map("record_count")
+  source         String?
+  receivedAt     DateTime @default(now()) @map("received_at")
+
+  @@unique([scope, idempotencyKey])
+  @@index([receivedAt(sort: Desc)])
+  @@map("ingest_receipts")
+}
+
+model OperationalWallet {
+  id        String   @id @default(cuid())
+  userId    String   @map("user_id")
+  address   String
+  network   String
+  label     String?
+  isPrimary Boolean  @default(false) @map("is_primary")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@unique([network, address])
+  @@index([userId, network, isPrimary])
+  @@map("operational_wallets")
+}
+
+model SafeActionIntent {
+  id                      String   @id @default(cuid())
+  userId                  String   @map("user_id")
+  organizationId          String?  @map("organization_id")
+  action                  String
+  resourceId              String   @map("resource_id")
+  reason                  String
+  risk                    String
+  status                  String
+  idempotencyKey          String   @map("idempotency_key")
+  requestHash             String   @map("request_hash")
+  parameters              Json
+  simulation              Json?
+  requiresHumanApproval   Boolean  @map("requires_human_approval")
+  requiresWalletSignature Boolean  @map("requires_wallet_signature")
+  policyReasons           Json     @map("policy_reasons")
+  expiresAt               DateTime @map("expires_at")
+  createdAt               DateTime @default(now()) @map("created_at")
+  updatedAt               DateTime @updatedAt @map("updated_at")
+
+  @@unique([userId, idempotencyKey])
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([resourceId, action, createdAt(sort: Desc)])
+  @@index([status, expiresAt])
+  @@map("safe_action_intents")
+}

@@ -1,0 +1,1 @@
+export { getOperationalTwin } from './client';

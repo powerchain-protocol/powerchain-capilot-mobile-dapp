@@ -1,0 +1,1155 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "PowerChain Copilot Mobile API",
+    "version": "1.0.0",
+    "description": "API v1 for PWRC-metered Copilot, secure chat/memory/LLM/LoRA/agent boundaries, tenant-scoped EMS/IoT/DePIN operations, digital twin, telemetry integrity, alarms/events, diagnostics, and prepare-only Safe Actions. Physical execution, blockchain execution, and server-side wallet signing are disabled."
+  },
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8000",
+      "description": "Local development"
+    }
+  ],
+  "tags": [
+    {
+      "name": "System"
+    },
+    {
+      "name": "Credits"
+    },
+    {
+      "name": "Copilot"
+    },
+    {
+      "name": "Chat"
+    },
+    {
+      "name": "AI"
+    },
+    {
+      "name": "Operations"
+    },
+    {
+      "name": "Safe Actions"
+    },
+    {
+      "name": "Diagnostics"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "opaque-or-JWT"
+      }
+    },
+    "schemas": {
+      "Error": {
+        "type": "object",
+        "required": [
+          "error"
+        ],
+        "properties": {
+          "error": {
+            "type": "object",
+            "required": [
+              "code",
+              "message"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "message": {
+                "type": "string"
+              },
+              "requestId": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "SafeActionRequest": {
+        "type": "object",
+        "required": [
+          "action",
+          "resourceId",
+          "reason",
+          "idempotencyKey"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "ems.dispatch.prepare",
+              "iot.device.refresh",
+              "depin.node.refresh",
+              "alarm.acknowledge.prepare",
+              "wallet.signature.prepare",
+              "settlement.prepare"
+            ]
+          },
+          "resourceId": {
+            "type": "string",
+            "maxLength": 256
+          },
+          "reason": {
+            "type": "string",
+            "maxLength": 500
+          },
+          "idempotencyKey": {
+            "type": "string",
+            "minLength": 8,
+            "maxLength": 128
+          },
+          "parameters": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "ConversationCreate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "maxLength": 80
+          }
+        }
+      },
+      "TokenizedReceipt": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "version",
+          "receiptId",
+          "quoteId",
+          "quoteHash",
+          "reservationId",
+          "responseId",
+          "organizationId",
+          "accountId",
+          "mint",
+          "amountBaseUnits",
+          "amountDisplay",
+          "status",
+          "settledAt",
+          "ledgerEntryId",
+          "previousReceiptHash",
+          "receiptHash",
+          "signature"
+        ],
+        "properties": {
+          "version": {
+            "type": "string",
+            "const": "1"
+          },
+          "receiptId": {
+            "type": "string"
+          },
+          "quoteId": {
+            "type": "string"
+          },
+          "quoteHash": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          },
+          "reservationId": {
+            "type": "string"
+          },
+          "responseId": {
+            "type": "string"
+          },
+          "organizationId": {
+            "type": "string"
+          },
+          "accountId": {
+            "type": "string"
+          },
+          "mint": {
+            "type": "string"
+          },
+          "amountBaseUnits": {
+            "type": "string",
+            "const": "10000000000000"
+          },
+          "amountDisplay": {
+            "type": "string",
+            "const": "10000"
+          },
+          "status": {
+            "type": "string",
+            "const": "SETTLED"
+          },
+          "settledAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "ledgerEntryId": {
+            "type": "string"
+          },
+          "previousReceiptHash": {
+            "oneOf": [
+              {
+                "type": "string",
+                "pattern": "^[a-fA-F0-9]{64}$"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "receiptHash": {
+            "type": "string",
+            "pattern": "^[a-fA-F0-9]{64}$"
+          },
+          "signature": {
+            "type": "string",
+            "pattern": "^ed25519:"
+          }
+        }
+      },
+      "MemoryCreate": {
+        "type": "object",
+        "required": [
+          "content"
+        ],
+        "properties": {
+          "conversationId": {
+            "type": "string"
+          },
+          "kind": {
+            "type": "string",
+            "enum": [
+              "preference",
+              "context",
+              "decision",
+              "summary"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1500
+          }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/health/live": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Process liveness",
+        "responses": {
+          "200": {
+            "description": "Live"
+          }
+        }
+      }
+    },
+    "/health/ready": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Fastify readiness",
+        "responses": {
+          "200": {
+            "description": "Ready or degraded"
+          },
+          "503": {
+            "description": "Not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/health": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Provider and operations readiness",
+        "responses": {
+          "200": {
+            "description": "Operational health"
+          },
+          "503": {
+            "description": "Operations backend not ready"
+          }
+        }
+      }
+    },
+    "/api/v1/config": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Sanitized public runtime configuration",
+        "responses": {
+          "200": {
+            "description": "Safe configuration; never includes secrets"
+          }
+        }
+      }
+    },
+    "/api/v1/diagnostics": {
+      "get": {
+        "tags": [
+          "Diagnostics"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Sanitized service diagnostics",
+        "responses": {
+          "200": {
+            "description": "Diagnostics"
+          },
+          "401": {
+            "description": "Unauthenticated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/cors": {
+      "get": {
+        "tags": [
+          "System"
+        ],
+        "summary": "Sanitized CORS policy state",
+        "responses": {
+          "200": {
+            "description": "CORS state"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/pricing": {
+      "get": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Authenticated PWRC pricing snapshot",
+        "responses": {
+          "200": {
+            "description": "10,000 PWRC completed-response pricing"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/account": {
+      "get": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "User-scoped PWRC credit account",
+        "responses": {
+          "200": {
+            "description": "Available/reserved/spent/funded balances"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/ledger": {
+      "get": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Append-only user credit ledger",
+        "responses": {
+          "200": {
+            "description": "Ledger entries"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/quotes": {
+      "post": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Create and persist deterministic canonical quote snapshot",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          }
+        ],
+        "description": "The server owns price, scope, canonical serialization and SHA-256 quote hash. Persistence commits before any reservation.",
+        "responses": {
+          "201": {
+            "description": "Persisted immutable quote"
+          },
+          "400": {
+            "description": "Missing/invalid idempotency key"
+          },
+          "401": {
+            "description": "Unauthenticated"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/quotes/{hash}": {
+      "get": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Read persisted canonical quote snapshot",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "hash",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "pattern": "^[a-fA-F0-9]{64}$"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Persisted user-scoped quote"
+          },
+          "404": {
+            "description": "Quote not found"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/receipts/{receiptId}": {
+      "get": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Read signed immutable settlement receipt",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "receiptId",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Organization/account-scoped server-signed receipt",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "receipt": {
+                      "$ref": "#/components/schemas/TokenizedReceipt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Receipt not found"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/demo-grant": {
+      "post": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Grant 1,000,000 sample PWRC = 100 responses",
+        "responses": {
+          "201": {
+            "description": "Sample grant"
+          }
+        }
+      }
+    },
+    "/api/v1/credits/top-ups/solana-pay": {
+      "post": {
+        "tags": [
+          "Credits"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Create PWRC Solana Pay top-up intent",
+        "responses": {
+          "201": {
+            "description": "Pending payment intent; no credits yet"
+          }
+        }
+      }
+    },
+    "/api/v1/copilot/responses": {
+      "post": {
+        "tags": [
+          "Copilot"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Create a PWRC-metered Copilot response",
+        "description": "Requires Idempotency-Key. Server persists canonical quote before atomic reservation. Failed/cancelled generation releases the reservation. A completed response is durably stored before a separate atomic Reserved→Spent settlement transaction writes the append-only ledger, signed receipt and Solana-anchor outbox. Provider fallback and approved read-only MCP calls remain inside the same 10,000 PWRC message unit.",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Completed response already settled with signed receipt"
+          },
+          "402": {
+            "description": "INSUFFICIENT_PWRC_CREDITS",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/copilot/delivery-ack": {
+      "post": {
+        "tags": [
+          "Copilot"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Compatibility settlement readback",
+        "description": "Not a billing trigger. Successful responses settle before being returned. This endpoint idempotently returns the already-settled proof for legacy clients.",
+        "responses": {
+          "200": {
+            "description": "Already-settled receipt/readback"
+          }
+        }
+      }
+    },
+    "/api/v1/chat/conversations": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "List user-scoped conversations",
+        "responses": {
+          "200": {
+            "description": "Conversation summaries"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Chat"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Create a user-scoped encrypted conversation",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConversationCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Conversation created"
+          }
+        }
+      }
+    },
+    "/api/v1/chat/conversations/{conversationId}/messages": {
+      "get": {
+        "tags": [
+          "Chat"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "List decrypted API DTO messages from encrypted-at-rest storage",
+        "parameters": [
+          {
+            "name": "conversationId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Messages; ciphertext is never serialized"
+          },
+          "404": {
+            "description": "Conversation not found"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/memory": {
+      "get": {
+        "tags": [
+          "AI"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "List user-scoped AI memory DTOs",
+        "responses": {
+          "200": {
+            "description": "Memory records"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "AI"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Store encrypted user-scoped AI memory",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MemoryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Stored memory"
+          },
+          "400": {
+            "description": "Secret-like content rejected"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/runtime": {
+      "get": {
+        "tags": [
+          "AI"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Sanitized LLM/memory/LoRA/MCP-agent boundaries",
+        "responses": {
+          "200": {
+            "description": "Runtime policy and configured providers without secrets or adapter paths"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/readiness": {
+      "get": {
+        "tags": [
+          "AI"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Configured-provider readiness without probing or exposing secrets",
+        "responses": {
+          "200": {
+            "description": "At least one configured provider"
+          },
+          "503": {
+            "description": "No configured provider available"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/agents": {
+      "get": {
+        "tags": [
+          "AI"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "MCP agent profiles and tool-prefix boundaries",
+        "responses": {
+          "200": {
+            "description": "Agent profiles"
+          }
+        }
+      }
+    },
+    "/api/v1/ai/lora": {
+      "get": {
+        "tags": [
+          "AI"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Sanitized deployment-local LoRA registry",
+        "responses": {
+          "200": {
+            "description": "Adapter IDs/base models only"
+          }
+        }
+      }
+    },
+    "/api/v1/sites": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "List sites visible to authenticated tenant/user",
+        "responses": {
+          "200": {
+            "description": "Authorized sites only"
+          }
+        }
+      }
+    },
+    "/api/v1/twin": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Site-scoped digital twin projection",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Digital twin"
+          },
+          "403": {
+            "description": "Tenant/site access denied"
+          }
+        }
+      }
+    },
+    "/api/v1/telemetry/integrity": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Site-scoped telemetry integrity report",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Freshness, device/node availability and critical-alarm checks"
+          }
+        }
+      }
+    },
+    "/api/v1/ems/overview": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Site-scoped EMS overview",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "EMS state"
+          }
+        }
+      }
+    },
+    "/api/v1/iot/devices": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Paginated site-scoped IoT devices",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "IoT devices"
+          }
+        }
+      }
+    },
+    "/api/v1/depin/nodes": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Paginated site-scoped DePIN nodes",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "cursor",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "DePIN nodes"
+          }
+        }
+      }
+    },
+    "/api/v1/alarms": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Paginated site-scoped alarms",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "state",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "open",
+                "acknowledged",
+                "resolved"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Alarms"
+          }
+        }
+      }
+    },
+    "/api/v1/events": {
+      "get": {
+        "tags": [
+          "Operations"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Paginated site-scoped operational events",
+        "parameters": [
+          {
+            "name": "siteId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "maxLength": 256
+            }
+          },
+          {
+            "name": "kind",
+            "in": "query",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "telemetry",
+                "device",
+                "depin",
+                "alarm",
+                "action",
+                "provider",
+                "system"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Events"
+          }
+        }
+      }
+    },
+    "/api/v1/actions/prepare": {
+      "post": {
+        "tags": [
+          "Safe Actions"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Prepare an action without executing it",
+        "description": "Fail-closed preparation only. Physical execution, server-side transaction execution, and server-side wallet signing are disabled.",
+        "parameters": [
+          {
+            "name": "Idempotency-Key",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 8,
+              "maxLength": 128
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SafeActionRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Prepared/rejected decision"
+          },
+          "403": {
+            "description": "Resource or tenant authorization denied"
+          }
+        }
+      }
+    },
+    "/api/v1/actions/execute": {
+      "post": {
+        "tags": [
+          "Safe Actions"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "summary": "Disabled execution boundary",
+        "description": "Always fails closed. Physical execution, blockchain execution and server-side wallet signing are not available in this service.",
+        "responses": {
+          "405": {
+            "description": "PHYSICAL_EXECUTION_DISABLED"
+          }
+        }
+      }
+    }
+  }
+}

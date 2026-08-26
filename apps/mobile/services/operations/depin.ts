@@ -1,0 +1,1 @@
+export { getDepinNodes } from './client';

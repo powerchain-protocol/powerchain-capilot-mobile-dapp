@@ -1,14 +1,4 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-
-sharedWorkspaceLockfile: true
-
-onlyBuiltDependencies:
-  - "@prisma/engines"
-  - bigint-buffer
-  - bufferutil
-  - esbuild
-  - prisma
-  - sharp
-  - utf-8-validate
+  - 'apps/*'
+  - 'packages/*'
+  - 'backend/*'

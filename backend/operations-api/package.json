@@ -1,0 +1,32 @@
+{
+  "name": "@powerchain/operations-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx src/server.ts",
+    "start": "tsx src/server.ts",
+    "typecheck": "pnpm prisma:generate && tsc --noEmit",
+    "prisma:validate": "prisma validate --config prisma.config.ts",
+    "prisma:generate": "prisma generate --config prisma.config.ts",
+    "prisma:migrate:status": "prisma migrate status --config prisma.config.ts",
+    "test": "node --test --experimental-transform-types src/services/operations.test.ts"
+  },
+  "dependencies": {
+    "@powerchain/operations-contracts": "workspace:*",
+    "@prisma/client": "^7.9.1",
+    "@supabase/supabase-js": "^2.57.4",
+    "express": "^5.1.0",
+    "dotenv": "^17.2.0",
+    "@prisma/adapter-pg": "^7.9.1",
+    "pg": "^8.16.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.15.0",
+    "prisma": "^7.9.1",
+    "tsx": "^4.20.0",
+    "typescript": "~6.0.3",
+    "@types/pg": "^8.15.0"
+  }
+}

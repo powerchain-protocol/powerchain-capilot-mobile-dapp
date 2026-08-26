@@ -1,1080 +1,412 @@
-# PowerChain Copilot Monorepo
+# PowerChain Copilot Mobile
 
-## Monorepo layout
+Production-oriented Expo application foundation for the PowerChain Copilot mobile experience.
 
-The repository now has one canonical source tree: deployable Node/Expo applications live in `apps/`, the Python MCP service lives in `services/`, and cross-application contracts/clients live in `packages/`. See `docs/MONOREPO.md`.
+## Stack
 
+- Expo SDK 57
+- React Native 0.86
+- React 19.2
+- Expo Router with typed routes
+- TypeScript strict mode
+- pnpm 11.24.0
+- EAS-compatible configuration
 
-**Version 1.0.0** · Expo / React Native · Solana · AI · Renewable Energy · Energy RWA
+The application intentionally does not invent network, wallet, balance, telemetry, or settlement state. Until a backend is configured, operational surfaces render a clear `Not configured` state.
 
-PowerChain Copilot Mobile is the mobile operations client for the PowerChain platform. It combines AI-assisted operational workflows, renewable-energy context, Energy RWA data, Solana wallet connectivity, market data, evidence, conversations, account management, and review-first execution patterns in a compact Expo application.
+## Requirements
 
-> AI analyzes and prepares. Humans review. Wallets authorize. PowerChain records provenance.
-
-## Status
-
-Release: **1.0.0**
-
-Primary application targets:
-
-- iOS
-- Android
-- Expo development builds
-- Expo Web
-
-Default appearance: **Light**
-
-Additional appearances:
-
-- Dark
-- Dark Green
-- System
-
-## Core capabilities
-
-- PowerChain Copilot conversation interface
-- persistent conversations and message history
-- professional assistant/user message presentation
-- `0 / 2000` message composer
-- chat skeleton, typing, retry, and error states
-- OpenAI-backed server AI gateway
-- Solana RPC and wallet integration
-- signed wallet-ownership verification
-- Pyth oracle integration
-- Birdeye market-data integration
-- normalized and cached market prices
-- SOL, PWRC, USDC, EURC, and SUI asset registry
-- Solana and Sui network registry
-- Web3 token/network/wallet icons
-- accounts and server-backed sessions
-- resumable onboarding
-- PostgreSQL + Prisma 7 persistence
-- audit events and provenance hooks
-- provider health/status surfaces
-- Light, Dark, and Dark Green design themes
-- PowerChain app icons and brand assets
-
-## Architecture
-
-```text
-Expo Mobile App
-   │
-   ├── UI / Theme / Navigation
-   ├── Account + Session Client
-   ├── Onboarding
-   ├── Copilot Conversations
-   ├── Solana Wallet / Read Client
-   ├── Web3 Asset Registry
-   └── Integration Status
-          │
-          ▼
-PowerChain API /api/v1
-   │
-   ├── Auth / Accounts / Sessions
-   ├── AI Gateway
-   ├── Wallet Verification
-   ├── Solana RPC
-   ├── Pyth
-   ├── Birdeye
-   ├── Market Cache
-   └── Audit
-          │
-          ▼
-PostgreSQL + Prisma
-```
-
-External service credentials remain server-side. The Expo bundle must not contain `DATABASE_URL`, `OPENAI_API_KEY`, `PYTH_API_KEY`, or `BIRDEYE_API_KEY`.
-
-## Project structure
-
-```text
-apps/
-├── mobile/                 Expo Router iOS / Android / PWA
-├── api/                    Fastify auth / Copilot / PWRC / Payment Kernel
-│   └── prisma/             Copilot transactional schema + migrations
-├── operations-api/         Express EMS / IoT / DePIN + Prisma / Supabase
-└── mcp-gateway/            Internal TypeScript MCP gateway
-
-services/
-└── mcp-python/             Internal Python / FastAPI MCP gateway
-
-packages/
-├── pwrc-credits/           Exact bigint PWRC accounting
-├── mcp-client/             MCP policy + client boundary
-├── energy-contracts/       EMS / IoT / DePIN contracts
-├── platform-adapters/      Provider-neutral auth / wallet adapters
-└── platform-clients/       Solana / Sui / market-data clients
-
-docs/                      Architecture, operations and runbooks
-scripts/                   Verification and workspace tooling
-types/                      Root orchestration type anchors
-```
-
-**Dependency direction:** `apps → packages`; shared packages never import deployable applications. The mobile app communicates with backend apps through authenticated HTTP/contracts rather than direct backend imports.
-
-## Mobile UI system
-
-PowerChain uses a compact mobile system designed to fit operational information without excessive rounded surfaces.
-
-| Surface | Radius |
-|---|---:|
-| Card | 14px |
-| Button | 10px |
-| Input | 10px |
-| Chat bubble | 12px |
-| Conversational corner | 8px |
-| Badge / chip | 8px |
-| Sheet / modal | 20px |
-
-Cards should use content-driven height. Avoid arbitrary fixed card heights and fixed text widths.
-
-### Copilot message presentation
-
-Raw Markdown headings and list markers are normalized for the mobile conversation surface.
-
-```text
-• Energy overview
-Verified renewable generation is stable.
-
-• Solar production is above baseline
-• Battery reserve is available
-
-• Recommended action
-Review the evidence package before settlement.
-```
-
-Section titles use restrained medium-weight text rather than large document-style headings.
-
-## Web3 assets
-
-Supported assets:
-
-```text
-PWRC   PowerChain / Solana Token-2022
-SOL    Solana
-USDC   USD Coin
-EURC   EURC
-SUI    Sui
-```
-
-Supported networks:
-
-```text
-Solana
-Sui
-```
-
-Wallet registry:
-
-```text
-Phantom
-Solflare
-Backpack
-Ledger
-WalletConnect
-Generic Wallet
-```
-
-Expo Web uses `@web3icons/react`. Native iOS/Android use platform-safe components and local fallbacks so browser SVG DOM components are not bundled into native surfaces.
-
-PWRC uses the PowerChain-owned token mark in `assets/tokens/`.
-
-## Solana
-
-Mobile integration includes:
-
-- devnet / mainnet-beta configuration
-- read-only RPC client
-- SOL balance reads
-- Token-2022 account reads
-- Android Mobile Wallet Adapter provider
-- explicit iOS unsupported state for MWA
-- signed wallet challenge
-- server-side Ed25519 verification
-- verified linked-wallet persistence
-
-PowerChain does not receive or store wallet private keys.
-
-## AI
-
-The mobile app calls the PowerChain API rather than OpenAI directly.
-
-```text
-POST /api/v1/ai/chat
-```
-
-The server:
-
-- authenticates the account
-- validates the 2,000-character input limit
-- loads recent conversation context
-- calls the configured OpenAI model
-- persists user and assistant messages
-- records provider/model metadata
-- creates an audit event
-
-AI responses can analyze, recommend, and prepare an action. They must not claim to sign or authorize blockchain transactions.
-
-## Market data
-
-### Pyth
-
-Pyth is server-side and returns normalized price, confidence, exponent, and publish time.
-
-### Birdeye
-
-Birdeye is server-side and provides Solana token price and liquidity context.
-
-### Unified price endpoint
-
-```text
-GET /api/v1/market/price
-```
-
-Supported sources:
-
-```text
-PYTH
-BIRDEYE
-AUTO
-```
-
-Responses distinguish:
-
-```text
-cached
-stale
-observedAt
-source
-price
-confidence
-```
-
-Stale market data must never be presented as a fresh quote.
-
-## Accounts and sessions
-
-Authentication uses:
-
-- email/password account creation
-- `scrypt` password hashes
-- random bearer session tokens
-- SHA-256 session-token hashes at rest
-- server-side expiration and revocation
-- Expo SecureStore on the device
-
-Session API:
-
-```text
-GET    /api/v1/account/sessions
-DELETE /api/v1/account/sessions/:id
-DELETE /api/v1/account/sessions/others
-```
-
-## Onboarding
-
-```text
-Welcome
-  ↓
-Account
-  ↓
-Profile
-  ↓
-Solana Wallet
-  ↓
-AI + Market Integrations
-  ↓
-Complete
-```
-
-Onboarding progress is persisted and resumable. Wallet connection remains optional so unsupported platforms can finish account setup.
-
-## Prisma and PostgreSQL
-
-Prisma configuration:
-
-```text
-apps/api/prisma.config.ts
-apps/api/prisma/schema.prisma
-apps/api/prisma/migrations/
-```
-
-Core models:
-
-```text
-User
-AccountProfile
-Session
-Wallet
-WalletChallenge
-AiConversation
-AiMessage
-PriceSnapshot
-AuditEvent
-```
-
-Generate and migrate with the scripts used by the workspace. Server-local equivalents are documented in `apps/api/README.md`.
-
-## API
-
-```text
-POST   /api/v1/auth/register
-POST   /api/v1/auth/login
-POST   /api/v1/auth/logout
-
-GET    /api/v1/account/me
-PATCH  /api/v1/account/profile
-GET    /api/v1/account/sessions
-DELETE /api/v1/account/sessions/:id
-DELETE /api/v1/account/sessions/others
-
-PATCH  /api/v1/onboarding
-POST   /api/v1/onboarding/complete
-
-POST   /api/v1/wallets/challenge
-POST   /api/v1/wallets/verify
-
-POST   /api/v1/ai/chat
-GET    /api/v1/ai/conversations
-GET    /api/v1/ai/conversations/:id
-DELETE /api/v1/ai/conversations/:id
-
-GET    /api/v1/market/pyth
-GET    /api/v1/market/birdeye/price
-GET    /api/v1/market/price
-
-GET    /api/v1/solana/balance
-GET    /api/v1/solana/health
-
-GET    /api/v1/integrations/status
-GET    /api/v1/health
-GET    /api/v1/health/ready
-```
-
-## Environment
-
-Mobile example:
-
-```bash
-EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1
-EXPO_PUBLIC_SOLANA_NETWORK=devnet
-EXPO_PUBLIC_SOLANA_RPC_URL=https://api.devnet.solana.com
-```
-
-Server example:
-
-```bash
-DATABASE_URL=postgresql://postgres:postgres@localhost:5432/powerchain_copilot
-OPENAI_API_KEY=
-OPENAI_MODEL=
-PYTH_API_KEY=
-BIRDEYE_API_KEY=
-SOLANA_RPC_URL=https://api.devnet.solana.com
-SOLANA_NETWORK=devnet
-```
-
-Never put server secrets in an `EXPO_PUBLIC_*` variable.
+- Node.js 22.13+ (Node 22 LTS recommended for the SDK 57 line)
+- Corepack
+- Xcode for iOS native builds
+- Android Studio for Android native builds
 
 ## Install
 
-Use the repository's canonical package manager and merge the dependency additions into its package manifest.
-
-Web3 Icons:
-
 ```bash
-pnpm add @web3icons/react
+corepack enable
+corepack prepare pnpm@11.24.0 --activate
+pnpm install
+cp .env.example .env.local
 ```
 
-Then install the remaining dependencies declared by the repository and `package.additions.json`.
+### MCP SDK install note
+
+This release uses the MCP TypeScript SDK v2 split package `@modelcontextprotocol/client@2.0.0`. Do **not** change it back to `@modelcontextprotocol/sdk@^2.0.0`: the monolithic `@modelcontextprotocol/sdk` package is the v1 line and has no published 2.x release. Run `pnpm verify:mcp-sdk` to catch that regression before install/release.
+
+The project intentionally remains on ESLint 9 while Expo SDK 57's current `eslint-config-expo` dependency chain still includes `eslint-plugin-react` versions that are not fully compatible with ESLint 10. The npm EOL warning is non-fatal; do not force ESLint 10 until the Expo lint stack supports it cleanly.
+
+Use the public development contract in `.env.development.example`. The canonical API variable is:
+
+```dotenv
+EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1
+```
+
+`EXPO_PUBLIC_API_BASE_URL` remains accepted as a compatibility alias. For Android emulators or physical devices, replace the loopback host with the appropriate emulator/LAN address while preserving `/api/v1`.
+
+Do not put API keys, private keys, wallet seed phrases, service-role keys, or other secrets in `EXPO_PUBLIC_*` variables. Expo public variables are compiled into the client bundle.
 
 ## Development
 
-Typical Expo commands:
+```bash
+pnpm start
+pnpm ios
+pnpm android
+pnpm web
+```
+
+For native Continuous Native Generation:
 
 ```bash
-pnpm install
-pnpm exec expo start
-pnpm exec expo run:ios
-pnpm exec expo run:android
+pnpm prebuild
+pnpm native:ios
+pnpm native:android
 ```
 
-Server:
+Generated `ios/` and `android/` directories are ignored and should be regenerated from the Expo app config unless the project later adopts a deliberate bare/native workflow.
+
+## Quality gates
 
 ```bash
-cd apps/api
-pnpm install
-pnpm prisma:generate
-pnpm prisma:migrate
-pnpm dev
-```
-
-## Verification
-
-Run the workspace's canonical checks, plus:
-
-```bash
-node scripts/verify-structure.mjs
-pnpm exec expo-doctor
-```
-
-Before release verify:
-
-- iOS and Android native builds
-- small-phone layouts
-- tablet layouts
-- Light / Dark / Dark Green / System themes
-- keyboard and safe-area behavior
-- offline and degraded integrations
-- revoked and expired sessions
-- wallet connect/verify flows
-- `0 / 2000` composer behavior
-- long wallet addresses and organization names
-- Pyth/Birdeye stale-data handling
-- conversation retries and errors
-- app icons on real devices
-
-See `docs/PRODUCTION-CHECKLIST.md` for the full release checklist.
-
-## Release policy
-
-The application version remains **1.0.0** for this release. Internal implementation iterations are not exposed as product versions.
-
-Version sources:
-
-```text
-VERSION
-app.config.example.ts
-apps/api/package.json
-CHANGELOG.md
-```
-
-## Documentation
-
-- `docs/README.md` — documentation index
-- `docs/FULLSTACK-INTEGRATIONS.md` — service architecture and API boundaries
-- `docs/WEB3-ICONS.md` — token, network, and wallet icon system
-- `docs/PRODUCTION-CHECKLIST.md` — release hardening checklist
-- `apps/api/README.md` — API development and deployment
-- `prisma/README.md` — schema and migration workflow
-- `app/README.md` — Expo routing and onboarding
-- `CHANGELOG.md` — release history
-
-## Security
-
-Mainnet write operations should remain review-gated and disabled until transaction simulation, exact instruction review, program/mint validation, rate limiting, operational monitoring, and production wallet flows have been validated.
-
-Do not commit:
-
-- private keys
-- seed phrases
-- database credentials
-- OpenAI API keys
-- Pyth API keys
-- Birdeye API keys
-- signing certificates
-- provisioning profiles
-- Android keystores
-
-## License
-
-Licensed under the MIT License. See `LICENSE`.
-
-## PowerChain
-
-Website: `https://powerchain.ventures`
-
-Application: `https://app.powerchain.ventures`
-
-API: `https://api.powerchain.ventures`
-
-Documentation: `https://docs.powerchain.ventures`
-
-GitHub: `https://github.com/powerchain-protocol`
-
-## Production baseline improvements
-
-The 1.0.0 repository now includes a runnable Expo application root rather than only reusable feature modules.
-
-Primary routes:
-
-```text
-app/
-├── _layout.tsx
-├── index.tsx
-├── (auth)/
-│   └── login.tsx
-├── (onboarding)/
-└── (app)/
-    └── (tabs)/
-        ├── index.tsx
-        ├── copilot.tsx
-        ├── assets.tsx
-        ├── integrations.tsx
-        └── settings.tsx
-```
-
-The mobile runtime now includes:
-
-- `SafeAreaProvider`
-- PowerChain theme provider
-- network/offline provider
-- account/session provider
-- Solana wallet provider
-- top-level application error boundary
-
-### Expo baseline
-
-The project is configured for Expo SDK 57 / React Native 0.86 and uses Expo Router as the application entry point.
-
-After dependency installation, run:
-
-```bash
-pnpm expo:fix
-pnpm doctor
-pnpm verify
-```
-
-`expo install --fix` remains the canonical compatibility pass for Expo-managed native packages.
-
-### Offline behavior
-
-Loss of network connectivity no longer leaves the UI looking fully operational.
-
-The application shows:
-
-```text
-Offline • Showing locally available information
-```
-
-Remote actions should remain disabled or surface retryable errors until connectivity returns.
-
-### Verification
-
-Run:
-
-```bash
-pnpm verify
-```
-
-This validates:
-
-1. required repository structure
-2. release metadata at `1.0.0`
-3. local TypeScript/JavaScript import resolution
-
-For full validation also run:
-
-```bash
-pnpm typecheck
-pnpm server:typecheck
+pnpm check
 pnpm doctor
 ```
 
-## Frontend install recovery
+`pnpm check` now verifies the configuration contract first, then runs ESLint plus separate strict TypeScript checks for the Expo app, Fastify server, Express MCP gateway, operations API, and docs workspace. `pnpm doctor` runs Expo Doctor against the installed dependency graph.
 
-If the `apps/mobile` package reports:
+The first successful `pnpm install` should generate `pnpm-lock.yaml`. Commit that lockfile before release builds and switch CI to `pnpm install --frozen-lockfile` once it exists.
 
-```text
-expo: command not found
-```
-
-or:
-
-```text
-File 'expo/tsconfig.base' not found
-```
-
-use the dedicated repair flow:
-
-```bash
-cd apps/mobile
-npm run repair:npm
-npm run verify
-npm run web
-```
-
-The repository keeps `expo/tsconfig.base` intact and repairs the dependency tree instead of weakening TypeScript configuration.
-
-## Responsive application shell
-
-PowerChain Copilot uses device-aware presentation rather than scaling the phone interface.
-
-```text
-Mobile       < 768px      Floating bottom navigation
-Tablet       768–1199px   Persistent top header
-Desktop      ≥ 1200px     Full top header + wider content grids
-```
-
-Core responsive modules:
-
-```text
-src/constants/layout.ts
-src/hooks/useResponsiveLayout.ts
-
-src/components/layout/
-├── FloatingMobileTabBar.tsx
-├── ResponsiveGrid.tsx
-├── ResponsiveHeader.tsx
-└── index.ts
-```
-
-Mobile uses 16px gutters and a safe-area-aware floating navigation dock. Tablet uses 24px gutters and top navigation. Desktop uses 32px gutters, a 1280px application maximum width, and up to three operational columns.
-
-See `docs/RESPONSIVE-LAYOUT.md`.
-
-## Adaptive UI improvements
-
-The responsive shell now uses both width and shortest-edge classification.
-
-A wide phone in landscape remains a mobile interaction surface rather than switching to the tablet header simply because its width exceeds 768px.
-
-### Copilot split view
-
-Tablet and desktop now use:
-
-```text
-┌──────────────────────────────────────────────┐
-│ Conversations │ Copilot thread              │
-│               │                             │
-│ Recent thread │ Assistant / user messages   │
-│ Recent thread │ Charts / evidence           │
-│ Recent thread │                             │
-│               │ Composer                    │
-└──────────────────────────────────────────────┘
-```
-
-Mobile continues to use the focused single-thread experience with floating bottom navigation.
-
-### Adaptive dialogs
-
-`AdaptiveDialog` renders as:
-
-```text
-Mobile         bottom sheet
-Tablet         centered dialog
-Desktop        centered constrained dialog
-```
-
-### Theme correctness
-
-Chat avatars, message bubbles, message content, skeletons, and charts now resolve colors from the active PowerChain theme.
-
-Run:
-
-```bash
-node scripts/verify-theme.mjs
-```
-
-to detect stale static theme-color imports.
-
-## Frontend workspace
-
-The runnable Expo application now lives entirely under:
+## Application structure
 
 ```text
 apps/mobile/
+  app/                 Expo Router routes only
+  components/
+    chat/               Copilot chat UI
+    common/             Reusable mobile UI primitives
+    operations/         Operational/twin/alarm UI
+  config/               Public runtime configuration
+  constants/            Theme and product constants
+  context/              Auth, role, theme and site context
+  hooks/                Stateful application hooks
+  lib/                  Transport and low-level utilities
+  services/             Backend adapters and domain clients
+  types/                Canonical application contracts
+  skills/               Copilot operational skill documents
+  app.config.ts         Expo application configuration
+  tsconfig.json         Extends expo/tsconfig.base
 ```
 
-Repository:
+Routes stay thin. Product logic belongs in hooks/services and reusable UI belongs in components.
+
+## Copilot API contract
+
+The mobile adapter currently targets:
 
 ```text
-https://github.com/powerchain-protocol/powerchain-capilot-mobile-app
+POST /api/v1/copilot/responses
 ```
 
-Recommended setup:
-
-```bash
-git clone https://github.com/powerchain-protocol/powerchain-capilot-mobile-app.git
-cd powerchain-capilot-mobile-app
-corepack use pnpm@11.23.0
-pnpm install
-pnpm --dir apps/mobile run verify:installed
-pnpm --dir apps/mobile exec expo start
-```
-
-If the repository is already cloned, run the same commands from the repository root. Repository documentation uses clone-relative paths only.
-
-### TypeScript before and after install
-
-Before dependencies are installed:
-
-```text
-apps/mobile/tsconfig.json
-→ apps/mobile/expo/tsconfig.base.json
-```
-
-After dependencies are installed:
-
-```text
-apps/mobile/tsconfig.expo.json
-→ node_modules/expo/tsconfig.base
-```
-
-Validate both layers with:
-
-```bash
-npm run verify
-npm run verify:installed
-```
-
-## TypeScript workspace ownership
-
-The repository root is an orchestration workspace and does not compile the frontend or backend itself.
-
-```text
-tsconfig.json
-└── types/workspace.d.ts
-
-apps/mobile/tsconfig.json
-└── Expo / React Native frontend
-
-apps/mobile/tsconfig.expo.json
-└── official installed Expo TypeScript base validation
-
-apps/api/tsconfig.json
-└── API / Prisma backend
-```
-
-Run:
-
-```bash
-npm run typecheck:frontend
-npm run typecheck:server
-```
-
-or both:
-
-```bash
-npm run typecheck
-```
-
-The root configuration intentionally excludes `apps/mobile`, `apps/api`, and `node_modules`.
-
-## Full-stack environment
-
-Environment configuration is now split by trust boundary:
-
-```text
-.env.example
-apps/mobile/.env.example
-apps/mobile/.env.production.example
-apps/api/.env.example
-apps/api/.env.production.example
-```
-
-Initialize local files:
-
-```bash
-npm run env:init
-npm run env:check
-```
-
-Start PostgreSQL and migrate:
-
-```bash
-npm run db:up
-npm run prisma:generate
-npm run prisma:migrate
-```
-
-Start API + Expo:
-
-```bash
-npm run dev:stack
-```
-
-Safe runtime configuration is exposed through:
-
-```text
-GET /api/v1/config
-```
-
-Health endpoints:
-
-```text
-/api/v1/health
-/api/v1/health/live
-/api/v1/health/ready
-/health/live
-/health/ready
-```
-
-See `docs/ENVIRONMENT.md`.
-
-## pnpm / Expo installation
-
-The workspace now standardizes on:
-
-```text
-pnpm 11.23.0
-```
-
-Install:
-
-```bash
-corepack use pnpm@11.23.0
-pnpm install
-```
-
-Or:
-
-```bash
-pnpm run setup
-```
-
-Frontend Expo workflow:
-
-```bash
-cd powerchain-capilot-mobile-app/frontend
-
-pnpm exec expo start
-pnpm exec expo run:ios
-pnpm exec expo run:android
-pnpm exec expo start --web
-```
-
-The invalid dependency:
-
-```text
-@wallet-ui/react-native-web3js@^1.0.0
-```
-
-has been replaced with the published stable:
-
-```text
-@wallet-ui/react-native-web3js@4.3.0
-```
-
-`apps/mobile/tsconfig.json` again extends the official:
-
-```text
-expo/tsconfig.base
-```
-
-so TypeScript and Expo share one canonical configuration after installation.
-
-## PWRC Copilot Credits
-
-PowerChain Copilot v1.0.0 now includes a message-credit kernel:
-
-```text
-Quote → Reserve 10,000 PWRC → Generate → Verify → Settle
-```
-
-Only a completed, non-empty verified response is settled. Cancellation,
-disconnection, generation/setup failure, empty output, and reservation expiry
-release the reserved credits.
-
-Reference economics:
-
-```text
-1 PWRC = $0.000002 configured reference value
-1 completed response = 10,000 PWRC = ≈ $0.02 reference value
-```
-
-The reference value is explicitly **not a live market price**.
-
-See `docs/PWRC-COPILOT-CREDITS.md`.
-
-## PWRC Credits hardening
-
-The 1.0.0 credit path now separates generated content from a settled message debit:
-
-```text
-Reserve → Generate → Verify → Prepare → Client ACK → Settle
-```
-
-This makes a disconnect-before-delivery recoverable without charging the response.
-
-Additional controls include:
-
-```text
-Payment Kernel event-id replay protection
-Payment Kernel timestamp/HMAC window
-atomic top-up intent claim
-settlement-id idempotency
-append-only webhook receipts
-credit-account reconciliation
-pending-response expiry recovery
-one-time demo-grant concurrency guard
-```
-
-The Credits Center can inspect pricing, balance, runway, top-up state, funding history,
-ledger history and reconciliation status without consuming a Copilot response credit.
-
-### PWRC delivery and settlement recovery
-
-PWRC credits now use a short delivery acknowledgement boundary after generation. The server reserves credits while generating, verifies the non-empty assistant response, stores it as a temporary pending response, and settles only after the client acknowledges delivery.
-
-```text
-Generate → Verify → Pending delivery → ACK → pmsg receipt
-```
-
-The default ACK window is `120` seconds. Recovery through `POST /api/v1/ai/chat/recover` is keyed by the original `clientRequestId` and never regenerates a response solely to determine payment state.
-
-Copilot idempotency keys are request-fingerprinted; reusing one for different prompt/context data is a conflict. Payment Kernel event IDs and settlement IDs receive the same strict content-matching treatment.
-
-Settled message receipts and funding records are database-immutable, while abandoned unacknowledged response content is scrubbed during expiry recovery.
-
-## Canonical PWRC credit module
-
-PWRC Copilot accounting is implemented as a real full-stack module, not UI mock
-state:
-
-```text
-packages/pwrc-credits     canonical bigint/domain + DTO contract
-apps/api/src/credits        transactional persistence and Payment Kernel binding
-prisma                    DECIMAL(38,0), reservations, ledger, receipts, funding
-apps/mobile/src/features/credits authenticated API client + presentation state
-apps/mobile/app/(app)/copilot-credits.tsx operator credit center
-```
-
-The numeric boundary is fixed:
-
-```text
-bigint internally → decimal-string JSON → bigint only when client arithmetic is needed
-```
-
-Core tests:
-
-```bash
-pnpm run test:credits
-```
-
-Full credit verification:
-
-```bash
-pnpm run verify:credits
-```
-
-## PWRC quote-snapshot hardening
-
-PWRC credit reservations now persist the complete deterministic message quote. The quote hash binds the canonical PWRC asset/network identity and the `delivery_acknowledged` billing trigger, while settlement receipts copy the stored reservation economics rather than recomputing them.
-
-The reconciliation endpoint now checks both account conservation and cross-table evidence consistency across reservations, message receipts, funding records and the append-only ledger.
-
-## MCP Copilot backend
-
-PowerChain Copilot now supports read-only Model Context Protocol tools through the canonical Fastify + PWRC billing path. MCP calls are internal evidence/context reads; they do not create a second message charge. One successfully delivered Copilot response remains one MSG UNIT / 10,000 PWRC.
-
-Runtime boundaries:
-
-```text
-frontend → Fastify Copilot/PWRC → OpenAI structured function calls → @powerchain/mcp-client → allowlisted read-only MCP server
-                                           ├─ Express internal compatibility gateway
-                                           └─ Python/FastAPI internal compatibility gateway
-```
-
-Production rules include explicit host and tool allowlists, HTTPS, DNS/private-address checks, credential-field egress blocking, bounded schemas/arguments/results, timeouts, durable invocation hashes/audit, and untrusted-result prompting.
-
-Frontend TypeScript uses a checked-in editor bootstrap at `apps/mobile/expo/tsconfig.base.json`; `apps/mobile/tsconfig.expo.json` validates against the official installed Expo base after `pnpm install`.
-
-## Mobile API namespace and CORS
-
-The Expo client now uses the compatibility namespace:
-
-```text
-/api/v1/capilot-mobile
-```
-
-with a correctly spelled alias:
-
-```text
-/api/v1/copilot-mobile
-```
-
-Only explicitly reviewed mobile-safe API roots are rewritten to canonical
-`/api/v1/*` handlers. `/internal/*` routes are not mirrored.
-
-CORS configuration is centralized and exposes safe diagnostics at:
-
-```text
-GET /api/v1/capilot-mobile/cors/
-```
-
-See `docs/API-NAMESPACE-CORS.md`.
-
-The frontend editor config remains dependency-independent:
+Request:
 
 ```json
-"extends": "./expo/tsconfig.base.json"
+{
+  "message": "Summarize operational risk for this asset",
+  "conversationId": "optional-existing-conversation-id"
+}
 ```
 
-while `apps/mobile/tsconfig.expo.json` validates against the installed official
-Expo base after `pnpm install`.
+Accepted response text fields are `message`, `outputText`, or `output_text`, with an optional `conversationId`. If the server contract changes, update `apps/mobile/services/copilot.ts` rather than coupling screens directly to API payloads.
 
-## Managed AI + chain infrastructure update
+## Release checklist
 
-PowerChain Copilot 1.0.0 now supports a managed provider router:
+1. Configure production `EXPO_PUBLIC_API_URL` in the EAS environment (the legacy `EXPO_PUBLIC_API_BASE_URL` alias remains supported).
+2. Generate and commit `pnpm-lock.yaml`.
+3. Run `pnpm check` and `pnpm doctor`.
+4. Run `pnpm prebuild` and validate both native projects.
+5. Test authentication, API timeouts, offline/error states, deep links, and keyboard/safe-area behavior on real devices.
+6. Configure store icons, splash assets, privacy declarations, signing, and EAS project identifiers before submission.
+
+## Security baseline
+
+See [SECURITY.md](./SECURITY.md). The client never treats locally displayed status as authoritative evidence for financial or energy operations; privileged actions must be verified and authorized by server-side policy and wallet controls.
+
+## PWRC Copilot credits
+
+This repository now includes the PWRC Copilot credit kernel and the mobile Credits surface.
+
+Core properties:
+
+- 9-decimal integer PWRC base-unit accounting with `bigint` domain values and decimal-string JSON.
+- User-scoped `available`, `reserved`, `spent`, and `funded` balances.
+- Append-only ledger with Postgres update/delete protection.
+- SHA-256 deterministic quote hashes.
+- Persist canonical quote -> atomic reserve -> generate -> durably persist completed response -> atomic settle lifecycle for completed Copilot responses.
+- Automatic release on generation failure plus user-scoped expiry recovery on account reads and batch recovery for workers.
+- HTTP `402 INSUFFICIENT_PWRC_CREDITS` before generation when funds are insufficient.
+- One-time sample grant: `1,000,000 PWRC = 100` response credits.
+- Authenticated pricing, account, ledger, quote, grant, and top-up endpoints.
+- PWRC Solana Pay funding intents with user-scoped `Idempotency-Key` support and authenticated status polling.
+- Credit funding only from an HMAC-authenticated, replay-window-checked Payment Kernel `payment.settled` event bound to the exact top-up recipient and Solana Pay reference.
+- Canonical Solana mainnet-beta Token-2022 mint identity and Solana Explorer access.
+- Authenticated credit state injected into Copilot grounding.
+- Dedicated PWRC Credits prompts in the Prompt Library.
+
+The mobile application never stores authoritative credit balances locally. Its `AuthSessionProvider` expects the product authentication flow to set a server-issued `{ userId, accessToken }` session; no bearer token belongs in `EXPO_PUBLIC_*` configuration.
+
+See [docs/PWRC_CREDITS.md](./docs/PWRC_CREDITS.md) for the accounting model, API contract, Payment Kernel webhook, Solana Pay flow, Postgres migration, and integration details.
+
+### Credit kernel tests
+
+```bash
+pnpm test:credits
+```
+
+The 25-test PWRC suite verifies base-unit arithmetic, the 100-response sample grant, deterministic/tamper-checked quote hashing, persisted-quote preconditions, organization/account scope, durable-response preconditions, exactly-once terminal transitions, Ed25519 receipt signatures/hash chaining, provider-failure release, expiry recovery, HTTP 402 behavior, top-up verification, compensating refunds, and retryable Merkle-root anchoring. `pnpm verify:billing` adds release-structure tests and the static lifecycle verifier.
+
+## Managed AI + infrastructure runtime
+
+Version `1.0.0` now includes a production backend/runtime layer rather than environment-only placeholders.
 
 ```text
-OpenAI → Anthropic → DeepSeek → Llama-compatible → Emergent-compatible
+PowerChain Copilot Mobile
+  -> Fastify API
+  -> one PWRC quote + reservation
+  -> Managed AI Router
+       -> OpenAI Responses
+       -> Anthropic Messages
+       -> DeepSeek Responses-compatible API
+       -> Llama / Ollama / vLLM
+       -> Emergent-compatible gateway
+  -> structured MCP function calls
+  -> policy + explicit per-server tool allowlists
+  -> approved read-only MCP execution
+  -> untrusted tool-result boundary
+  -> durably persisted completed response
+  -> atomic Reserved→Spent settlement
+  -> signed receipt + Solana anchor outbox
+  -> exactly one 10,000 PWRC charge
 ```
 
-The actual order is controlled by `AI_PRIMARY_PROVIDER` and
-`AI_PROVIDER_ORDER`. Provider fallback does not alter the PWRC accounting rule:
-one verified, delivery-acknowledged Copilot response settles one 10,000-PWRC
-message unit.
+Provider fallback is inside the existing reservation. It never creates a second quote, reservation, or charge. If generation ultimately fails, the reservation is released.
 
-Development public configuration:
+Runtime additions include:
 
-```env
-EXPO_PUBLIC_API_URL=http://127.0.0.1:8000/api/v1
-EXPO_PUBLIC_NETWORK=devnet
-EXPO_PUBLIC_DATA_MODE=demo
-EXPO_PUBLIC_AI_MODE=managed
+- Fastify production API with `/health/live` and readiness based on configured managed AI providers.
+- Managed provider routing for OpenAI, Anthropic, DeepSeek, Llama-compatible local inference, and Emergent-compatible gateways.
+- Structured model tool calls; no assistant-text JSON tool parser.
+- TypeScript MCP client plus authenticated Express and Python/FastAPI internal gateways.
+- Fail-closed production MCP host/tool allowlists, DNS/IP SSRF checks, read-only metadata enforcement, request/schema/argument/result limits, credential-field egress blocking, and durable invocation audit.
+- Explicit Solana devnet/mainnet-beta profiles with `auto | public | helius | custom` RPC selection.
+- Canonical Solana + Metaplex program identities and optional validated PowerChain deployment IDs.
+- Canonical PWRC Token-2022 mainnet-beta identity retained independently from the app's devnet operational cluster.
+- Sui devnet/testnet/mainnet RPC profiles.
+- PostgreSQL/Prisma as authoritative transactional state, optional MongoDB auxiliary storage, and optional Redis distributed rate limiting.
+- Opaque or HS256 JWT bearer sessions backed by revocable PostgreSQL sessions.
+- AES-256-GCM protected server settings.
+- Sanitized Solana system endpoints that disclose configuration identity/status but never RPC URLs, provider keys, database URLs, or AI secrets.
+- Compatibility API prefixes for `/api/v1/*`, `/api/v1/capilot-mobile/*`, and `/api/v1/copilot-mobile/*`.
+
+Environment templates:
+
+- `.env.development.example` — Expo/public development contract.
+- `.env.server.example` — server/provider/network/database/auth/rate-limit/MCP contract.
+- `.env.example` — safe local starting point.
+
+The invalid shell variable spelling `POWERCHAN_:CREDIT_TOKEN` is intentionally unsupported. The canonical setting is `POWERCHAIN_CREDIT_TOKEN=PWRC`.
+
+See [docs/PROVIDER_INFRASTRUCTURE.md](./docs/PROVIDER_INFRASTRUCTURE.md) for the full runtime architecture and security boundaries.
+
+### Backend verification
+
+```bash
+pnpm verify:backend
 ```
 
-Server infrastructure now supports PostgreSQL/Prisma, optional MongoDB, optional
-Redis distributed rate limits, opaque or JWT-presented revocable sessions,
-Helius/public/custom Solana RPC routing, mainnet-beta/devnet profiles, standard
-Solana program identities and Metaplex program identities.
+This runs the PWRC, MCP, managed-provider, infrastructure, and Python gateway suites plus static provider/infrastructure invariants. Dependency-bound `pnpm check`, Prisma validation/generation, and Expo Doctor should also run after `pnpm install` produces the lockfile.
 
-Inspect sanitized chain configuration at:
+## Documentation application and whitepaper
+
+The repository now includes a dedicated technical documentation surface under `apps/docs/` plus reusable documentation primitives and brand assets:
 
 ```text
-GET /api/v1/system/solana
+apps/docs/                      Next.js static documentation application
+components/docs/                Composed documentation sections
+shared/components/ui/docs/      Reusable docs cards, figures, callouts, metrics
+shared/ui/logo.tsx              Shared PowerChain logo primitive
+shared/ui/icons.tsx             Shared line icon set
+public/images/brand/            Canonical brand and app icon assets
+public/images/mockups/          Mobile UI mockups
+public/images/illustrations/    Architecture and credit-flow illustrations
+public/images/illustractions/   Compatibility alias for requested path
+public/icons/                   Favicons and platform icon sizes
+public/assets/                  Whitepaper DOCX, PDF and cover
+references/                     Architecture, token, design and standards references
 ```
 
-The endpoint never returns Helius keys or secret RPC URLs. PowerChain-specific
-program IDs remain blank until verified deployed addresses are supplied.
+Run the documentation app:
 
-See `docs/AI-PROVIDERS-SOLANA.md`.
+```bash
+pnpm docs:dev
+```
 
-## Interaction architecture
+Build the static documentation site:
 
-PowerChain Copilot Mobile now uses five primary tabs:
+```bash
+pnpm docs:build
+```
+
+The generated whitepaper deliverables are:
+
+- `public/assets/powerchain-copilot-mobile-whitepaper.docx`
+- `public/assets/powerchain-copilot-mobile-whitepaper.pdf`
+
+The docs application links directly to the PDF and the canonical PWRC Explorer view.
+
+## App icons and brand assets
+
+PowerChain Copilot Mobile 1.0.0 includes the integrated launcher/brand pack under `assets/icon-pack/`:
+
+- iOS light, dark and tinted 1024×1024 icon masters;
+- Android adaptive foreground/background plus Android 13+ monochrome source;
+- dedicated 96×96 Android notification glyph;
+- branded Expo splash assets;
+- favicon, Apple touch, PWA, maskable and Windows tile exports;
+- iOS AppIcon, Android density, store and desktop export resources;
+- theme-aware in-app PowerChain brandmark components.
+
+Run `pnpm verify:icons` after any icon or app-config change. This validation is static; it does not claim a fresh native iOS/Android build.
+
+## EMS / IoT / DePIN operations integration
+
+Version `1.0.0` now includes an isolated operational backend contract for EMS, IoT, DePIN, wallets, chain reads and market data. The public Fastify surface remains the stable mobile API; `backend/operations-api/` is an independently buildable Express + Prisma + optional Supabase workspace behind an internal bearer boundary.
+
+Key additions:
+
+- source/freshness-aware EMS overview service;
+- site-scoped IoT and DePIN services with database-backed access checks;
+- provider-neutral auth and public-wallet registry adapters;
+- read-only Solana and Sui JSON-RPC clients;
+- provider-neutral HTTP market-data client;
+- sanitized `GET /api/v1/health` and `GET /api/v1/config`;
+- idempotent safe-action preparation with review/wallet-signature gates;
+- mobile operational hooks and reusable source/status/action components;
+- compatibility aliases under `/api/v1/capilot-mobile/*` and `/api/v1/copilot-mobile/*`.
+
+No safe-action route directly dispatches physical equipment or signs blockchain transactions. See [docs/OPERATIONS_INTEGRATION.md](./docs/OPERATIONS_INTEGRATION.md).
+Verification evidence: [docs/OPERATIONS_VERIFICATION.md](./docs/OPERATIONS_VERIFICATION.md).
+
+## Operations hardening v1.0.0
+
+The EMS/IoT/DePIN layer now adds site discovery, bounded cursor pagination, alarms, append-only events, a read-only site digital twin, idempotent provider ingestion, source sequence tracking, request-bound safe-action idempotency, resource-level action authorization, bounded provider I/O, request IDs, and a mobile stale-while-revalidate cache.
+
+Canonical public routes remain under `/api/v1/*` with `/api/v1/capilot-mobile/*` and `/api/v1/copilot-mobile/*` compatibility aliases. Provider ingestion stays private inside `backend/operations-api/` and is intentionally not proxied through the public Fastify surface.
+
+See [docs/OPERATIONS_HARDENING.md](./docs/OPERATIONS_HARDENING.md) and [docs/OPERATIONS_INTEGRATION.md](./docs/OPERATIONS_INTEGRATION.md).
+
+## Platform hardening v3 — chat, memory, roles and diagnostics
+
+Version `1.0.0` now also includes:
+
+- managed routing across OpenAI, Anthropic, Gemini, DeepSeek, Ollama/Llama-compatible runtimes, GRIDLLM and the existing Emergent-compatible adapter;
+- encrypted user-scoped chat persistence with conversation IDs, stable slugs, content hashes and no plaintext-at-rest message column;
+- encrypted, bounded AI memory with credential-pattern blocking and a strict rule that memory is context rather than live operational truth;
+- explicit CORS allowlist policy under `server/src/cors/` plus sanitized `/api/v1/cors` status;
+- authenticated `/api/v1/diagnostics` with provider, chat, operations, Solana, Sui and rate-limit readiness without secrets;
+- deployment-local LoRA registry under `server/lora/`, disabled by default and rejecting remote adapter URLs;
+- MCP task-agent profiles under `server/src/mcp/agents/` that only narrow model-visible read-only tools and never grant authorization;
+- shared `storage/`, `store/` and `utils/` modules for provider-neutral reusable state infrastructure;
+- five visible responsive tabs: Copilot, Command, Assets, Alerts and Profile;
+- authenticated role-oriented surfaces for operator, asset manager, maintenance, treasury and admin presentation;
+- explicit Light / Carbon Dark / System theme selection;
+- mobile skill contracts in `apps/mobile/skills/SKILLS.md`, `CHARACTERS.md`, `CAPILOT.md` and `COPILOT.md`.
+
+The PWRC metering invariant is unchanged: provider fallback, approved MCP calls, memory grounding and operational context happen inside one reservation; only a completed delivered response settles `10,000 PWRC`.
+
+See [docs/PLATFORM_HARDENING_V3.md](./docs/PLATFORM_HARDENING_V3.md).
+
+## PWRC Credit Kernel v4
+
+PWRC credits are server-authoritative 9-decimal integer accounting. One completed, delivered Copilot response settles exactly **10,000 PWRC** from one reservation. Provider fallback and approved MCP calls remain inside that single message unit. The one-time **1,000,000 sample PWRC** grant is an internal evaluation credit and does not mint or transfer on-chain PWRC.
+
+Run `pnpm verify:credits` to execute the accounting/API regression suite and the static 14-invariant release verifier.
+
+## API v1 / Swagger / Postman platform extension
+
+The v1.0.0 release includes a generated OpenAPI 3.1 contract and Postman collection for the secure platform and operations surfaces:
 
 ```text
-Overview · Actions · Copilot · Assets · Systems
+GET /api/v1/openapi.json
+GET /api/v1/swagger
 ```
 
-The primary operational routes are centralized in `src/constants/routes.ts`. Batch approval review, asset details, reports, settlement review, service health, diagnostics, PWRC Credits and Settings all have explicit Expo Router destinations.
+Source artifacts live under `docs/api/`. Run `pnpm api:docs` to regenerate and `pnpm verify:api-v1` to validate the contract.
 
-See `docs/INTERACTION-DESIGN.md` for the route matrix, toolbar policy, trust-boundary UX and demo/live behavior.
+The extension covers encrypted user-scoped chat/memory, sanitized LLM/LoRA/agent state, AI provider readiness, tenant-scoped site/digital-twin/telemetry-integrity/alarm/event APIs, provider diagnostics and prepare-only Safe Actions.
 
-## Shared client infrastructure
+**Physical execution remains disabled.** `POST /api/v1/actions/execute` intentionally fails closed with `405 PHYSICAL_EXECUTION_DISABLED`; blockchain submission and wallet signing remain outside the server execution boundary.
 
-Application-wide client primitives now live under `apps/mobile/src/shared`,
-`storage`, `store`, and `utils`. The API client consumes the shared session and
-error layers, while brand/PWRC UI consumes the semantic asset registry. See
-`docs/SHARED-APPLICATION-INFRASTRUCTURE.md`.
+## Mobile workspace layout
+
+The Expo application now lives under `apps/mobile/` instead of the repository root `src/` tree:
+
+```text
+apps/mobile/
+├── app/
+├── components/
+├── services/
+├── hooks/
+├── config/
+├── constants/
+├── context/
+├── lib/
+├── types/
+├── skills/
+├── app.config.ts
+├── expo-env.d.ts
+├── package.json
+└── tsconfig.json
+```
+
+`apps/mobile/tsconfig.json` extends `expo/tsconfig.base`. Root Expo commands delegate to the mobile workspace and load the repository-root `.env.local` before launching Expo. The root `.env.example` is the canonical environment contract; `.env.local` is local-only and git-ignored.
+
+## PWRC quote-to-receipt billing proof chain
+
+Completed Copilot responses now follow the canonical evidence sequence:
+
+```text
+SERVER QUOTE
+   ↓
+canonical quote payload
+   ↓
+SHA-256 quote hash
+   ↓
+PERSIST QUOTE
+   ↓
+ATOMIC RESERVATION
+   ↓
+AI GENERATION
+   ↓
+completed response proof
+   ↓
+durably persist completed response
+   ↓
+ATOMIC SETTLEMENT — 10,000 PWRC
+   ↓
+SPENT BALANCE
+   ↓
+APPEND-ONLY LEDGER
+   ↓
+TOKENIZED RECEIPT
+```
+
+The receipt is an immutable, Ed25519-signed, non-transferable cryptographic billing proof. It is not an SPL token, NFT, wallet balance, or investment asset. Receipt hashes are batched into a Merkle-root transactional outbox for retry-safe Solana anchoring. See `docs/PWRC_BILLING_LIFECYCLE.md` and migration `server/db/migrations/004_pwrc_authoritative_billing_lifecycle.sql`.
 
 
-## EMS / IoT / DePIN platform modules
+## Authoritative PWRC billing v6.3
 
-Version 1.0.0 now includes shared energy contracts, provider-neutral auth/wallet
-adapters, Solana/Sui/market-data clients, reusable operational hooks/components,
-safe-action contracts and an isolated Express + Prisma + Supabase backend under
-`apps/operations-api`.
+Product version remains `1.0.0`. The billing path is server-owned and fail-closed: persisted canonical quote → atomic reservation → AI/MCP work → durable completed response → atomic Reserved→Spent settlement → append-only ledger → Ed25519-signed, hash-chained receipt → transactional outbox for batched Solana Merkle anchoring. Delivery ACK remains compatibility/readback only. See `docs/PWRC_BILLING_LIFECYCLE.md`.
 
-The existing deployed Copilot/Fastify API remains separate. The Expo application
-uses `EXPO_PUBLIC_ENERGY_API_URL` when supplied and falls back to the existing API
-URL otherwise.
+## PWRC Copilot credit economics
 
-See `docs/ENERGY-PLATFORM-ARCHITECTURE.md`.
-
-
-## API v1 contract
-
-The monorepo now includes a canonical API-v1 composition boundary at `apps/api/v1/`, OpenAPI 3.1 contract `powerchain-capilot.yaml`, Postman artifacts under `api/postman/`, and Swagger UI under `swagger/`. Runtime docs are available at `/swagger`, `/api/v1/openapi.yaml`, and `/api/v1/postman/collection`.
+The configured v1.0.0 reference economics are **1 PWRC = $0.000002** and **1 completed response = 1 MSG UNIT = 10,000 PWRC ≈ $0.02 reference value**. The reference value is not a live market price. Completed responses receive `pmsg_...` accounting identifiers and signed, non-transferable billing receipts. See `docs/PWRC_COPILOT_CREDITS.md` and `docs/PWRC_COPILOT_CREDITS_VERIFICATION.md`.
