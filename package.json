@@ -80,7 +80,7 @@
     "expo-splash-screen": "~57.0.5",
     "expo-system-ui": "~57.0.2",
     "@powerchain/operations-contracts": "workspace:*",
-    "@modelcontextprotocol/client": "2.0.0"
+    "@modelcontextprotocol/client": "2.2.0"
   },
   "devDependencies": {
     "@types/react": "~19.2.2",
